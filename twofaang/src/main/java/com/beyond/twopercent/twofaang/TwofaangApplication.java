@@ -1,7 +1,8 @@
-package com.twopercent.twofaang;
+package com.beyond.twopercent.twofaang;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 public class TwofaangApplication {
