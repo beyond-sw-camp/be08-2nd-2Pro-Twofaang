@@ -86,14 +86,12 @@ public class SecurityConfig {
         http
                 .httpBasic((auth) -> auth.disable());
 
-
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/login", "/", "/join").permitAll()
+                        .requestMatchers("/login", "/", "/join","/swagger-ui/**").permitAll()
                         .requestMatchers("/admin").hasRole("ADMIN")
                         .requestMatchers("/reissue").permitAll()
                         .anyRequest().authenticated());
-
         http
                 .addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class);
         http
