@@ -1,4 +1,4 @@
-package com.beyond.twopercent.twofaang.login.entity;
+package com.beyond.twopercent.twofaang.auth.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -12,7 +12,7 @@ public class RefreshToken {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
+    private String email;
     private String refresh;
     private String expiration;
 }

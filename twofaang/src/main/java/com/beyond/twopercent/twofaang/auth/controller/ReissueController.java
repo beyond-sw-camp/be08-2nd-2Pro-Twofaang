@@ -1,8 +1,8 @@
-package com.beyond.twopercent.twofaang.login.controller;
+package com.beyond.twopercent.twofaang.auth.controller;
 
-import com.beyond.twopercent.twofaang.login.entity.RefreshToken;
-import com.beyond.twopercent.twofaang.login.jwt.JWTUtil;
-import com.beyond.twopercent.twofaang.login.repository.RefreshRepository;
+import com.beyond.twopercent.twofaang.auth.entity.RefreshToken;
+import com.beyond.twopercent.twofaang.auth.jwt.JWTUtil;
+import com.beyond.twopercent.twofaang.auth.repository.RefreshRepository;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -95,7 +95,7 @@ public class ReissueController {
         Date date = new Date(System.currentTimeMillis() + expiredMs);
 
         RefreshToken refreshToken = new RefreshToken();
-        refreshToken.setUsername(username);
+        refreshToken.setEmail(username);
         refreshToken.setRefresh(refresh);
         refreshToken.setExpiration(date.toString());
 

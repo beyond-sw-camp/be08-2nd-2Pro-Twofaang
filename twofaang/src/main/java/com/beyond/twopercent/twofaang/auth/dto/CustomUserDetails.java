@@ -1,4 +1,4 @@
-package com.beyond.twopercent.twofaang.login.dto;
+package com.beyond.twopercent.twofaang.auth.dto;
 
 import com.beyond.twopercent.twofaang.member.entity.Member;
 import org.springframework.security.core.GrantedAuthority;

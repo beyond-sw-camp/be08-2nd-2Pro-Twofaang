@@ -1,7 +1,7 @@
-package com.beyond.twopercent.twofaang.login.service;
+package com.beyond.twopercent.twofaang.auth.service;
 
-import com.beyond.twopercent.twofaang.login.dto.JoinDTO;
-import com.beyond.twopercent.twofaang.login.repository.UserRepository;
+import com.beyond.twopercent.twofaang.auth.dto.JoinDTO;
+import com.beyond.twopercent.twofaang.auth.repository.UserRepository;
 import com.beyond.twopercent.twofaang.member.entity.Member;
 import com.beyond.twopercent.twofaang.member.entity.Role;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

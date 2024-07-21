@@ -1,7 +1,7 @@
-package com.beyond.twopercent.twofaang.login.controller;
+package com.beyond.twopercent.twofaang.auth.controller;
 
-import com.beyond.twopercent.twofaang.login.dto.JoinDTO;
-import com.beyond.twopercent.twofaang.login.service.JoinService;
+import com.beyond.twopercent.twofaang.auth.dto.JoinDTO;
+import com.beyond.twopercent.twofaang.auth.service.JoinService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 

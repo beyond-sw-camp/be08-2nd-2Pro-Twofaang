@@ -1,4 +1,4 @@
-package com.beyond.twopercent.twofaang.login.jwt;
+package com.beyond.twopercent.twofaang.auth.jwt;
 
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;

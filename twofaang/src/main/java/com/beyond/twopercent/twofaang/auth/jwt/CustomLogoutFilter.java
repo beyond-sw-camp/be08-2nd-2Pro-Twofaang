@@ -1,6 +1,6 @@
-package com.beyond.twopercent.twofaang.login.jwt;
+package com.beyond.twopercent.twofaang.auth.jwt;
 
-import com.beyond.twopercent.twofaang.login.repository.RefreshRepository;
+import com.beyond.twopercent.twofaang.auth.repository.RefreshRepository;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

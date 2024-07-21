@@ -1,4 +1,4 @@
-package com.beyond.twopercent.twofaang.login.repository;
+package com.beyond.twopercent.twofaang.auth.repository;
 
 import com.beyond.twopercent.twofaang.member.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;

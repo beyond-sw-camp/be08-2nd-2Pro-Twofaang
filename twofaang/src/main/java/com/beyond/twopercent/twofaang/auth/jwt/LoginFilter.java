@@ -1,8 +1,8 @@
-package com.beyond.twopercent.twofaang.login.jwt;
+package com.beyond.twopercent.twofaang.auth.jwt;
 
-import com.beyond.twopercent.twofaang.login.dto.LoginDTO;
-import com.beyond.twopercent.twofaang.login.entity.RefreshToken;
-import com.beyond.twopercent.twofaang.login.repository.RefreshRepository;
+import com.beyond.twopercent.twofaang.auth.dto.LoginDTO;
+import com.beyond.twopercent.twofaang.auth.entity.RefreshToken;
+import com.beyond.twopercent.twofaang.auth.repository.RefreshRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletInputStream;
@@ -97,7 +97,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         Date date = new Date(System.currentTimeMillis() + expiredMs);
 
         RefreshToken refreshToken = new RefreshToken();
-        refreshToken.setUsername(username);
+        refreshToken.setEmail(username);
         refreshToken.setRefresh(refresh);
         refreshToken.setExpiration(date.toString());
 
