@@ -1,6 +1,6 @@
 package com.beyond.twopercent.twofaang.auth.service;
 
-import com.beyond.twopercent.twofaang.auth.dto.CustomUserDetails;
+import com.beyond.twopercent.twofaang.auth.dto.form.CustomMemberDetails;
 import com.beyond.twopercent.twofaang.auth.repository.UserRepository;
 import com.beyond.twopercent.twofaang.member.entity.Member;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,7 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         if (userData != null) {
 
-            return new CustomUserDetails(userData);
+            return new CustomMemberDetails(userData);
         }
         return null;
     }

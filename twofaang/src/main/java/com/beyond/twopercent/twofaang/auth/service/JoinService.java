@@ -1,6 +1,6 @@
 package com.beyond.twopercent.twofaang.auth.service;
 
-import com.beyond.twopercent.twofaang.auth.dto.JoinDTO;
+import com.beyond.twopercent.twofaang.auth.dto.form.JoinDTO;
 import com.beyond.twopercent.twofaang.auth.repository.UserRepository;
 import com.beyond.twopercent.twofaang.member.entity.Member;
 import com.beyond.twopercent.twofaang.member.entity.Role;
@@ -19,7 +19,7 @@ public class JoinService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public String joinProcess(JoinDTO joinDTO) {
+    public String join(JoinDTO joinDTO) {
 
         String email = joinDTO.getEmail();
         String password = joinDTO.getPassword();

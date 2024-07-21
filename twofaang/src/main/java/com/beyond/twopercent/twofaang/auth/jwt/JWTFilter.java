@@ -1,6 +1,6 @@
 package com.beyond.twopercent.twofaang.auth.jwt;
 
-import com.beyond.twopercent.twofaang.auth.dto.CustomUserDetails;
+import com.beyond.twopercent.twofaang.auth.dto.form.CustomMemberDetails;
 import com.beyond.twopercent.twofaang.member.entity.Member;
 import com.beyond.twopercent.twofaang.member.entity.Role;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 @Component
 @RequiredArgsConstructor
@@ -61,9 +60,9 @@ public class JWTFilter extends OncePerRequestFilter {
         Member member = new Member();
         member.setEmail(email);
         member.setRole(Role.valueOf(role));
-        CustomUserDetails customUserDetails = new CustomUserDetails(member);
+        CustomMemberDetails customMemberDetails = new CustomMemberDetails(member);
 
-        Authentication authToken = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
+        Authentication authToken = new UsernamePasswordAuthenticationToken(customMemberDetails, null, customMemberDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authToken);
 
         filterChain.doFilter(request, response);

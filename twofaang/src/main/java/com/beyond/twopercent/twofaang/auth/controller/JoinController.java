@@ -1,25 +1,19 @@
 package com.beyond.twopercent.twofaang.auth.controller;
 
-import com.beyond.twopercent.twofaang.auth.dto.JoinDTO;
+import com.beyond.twopercent.twofaang.auth.dto.form.JoinDTO;
 import com.beyond.twopercent.twofaang.auth.service.JoinService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 public class JoinController {
-
     private final JoinService joinService;
-
-    public JoinController(JoinService joinService) {
-
-        this.joinService = joinService;
-    }
-
     @PostMapping("/join")
-    public String joinProcess(JoinDTO joinDTO) {
-
-        String result = joinService.joinProcess(joinDTO);
-
-        return result;
+    public String joinProc(@ModelAttribute JoinDTO joinDto) {
+        joinService.join(joinDto);
+        return "ok";
     }
 }

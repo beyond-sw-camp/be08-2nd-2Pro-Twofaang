@@ -1,6 +1,6 @@
 package com.beyond.twopercent.twofaang.auth.jwt;
 
-import com.beyond.twopercent.twofaang.auth.dto.LoginDTO;
+import com.beyond.twopercent.twofaang.auth.dto.form.LoginDTO;
 import com.beyond.twopercent.twofaang.auth.entity.RefreshToken;
 import com.beyond.twopercent.twofaang.auth.repository.RefreshRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
