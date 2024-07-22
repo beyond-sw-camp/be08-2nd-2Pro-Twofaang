@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<h1>Login</h1>
+<form th:action="@{/login}" method="post">
+    <label for="username">Email:</label>
+    <input type="text" id="username" name="username" required>
+    <br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <br>
+    <button type="submit">Login</button>
+</form>
+<p><a href="/oauth2/authorization/google">Login with Google</a></p>
+<p><a href="/oauth2/authorization/naver">Login with Naver</a></p>
+</body>
+</html>
