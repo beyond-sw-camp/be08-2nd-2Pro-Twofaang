@@ -32,6 +32,8 @@ public class Order {
 
     // jijeon
 
+    // juhee
+
     @Column(name = "member_id")
     private Long memberId; // 회원 번호
 
