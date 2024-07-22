@@ -24,6 +24,8 @@ public class Order {
 //    @Column(name = "member_id2")
 //    private Long memberId2; // 회원 번호
 
+    //adsfasdfa
+
     @Column(name = "member_id")
     private Long memberId; // 회원 번호
 
