@@ -26,6 +26,8 @@ public class Order {
 
     //adsfasdfa
 
+    // jongwon
+
     @Column(name = "member_id")
     private Long memberId; // 회원 번호
 
