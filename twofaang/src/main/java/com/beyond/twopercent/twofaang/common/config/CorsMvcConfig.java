@@ -1,4 +1,4 @@
-package com.beyond.twopercent.twofaang.login.config;
+package com.beyond.twopercent.twofaang.common.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
