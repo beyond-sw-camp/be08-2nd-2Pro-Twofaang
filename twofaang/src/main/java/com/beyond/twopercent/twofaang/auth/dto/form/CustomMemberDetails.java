@@ -15,6 +15,9 @@ public class CustomMemberDetails implements UserDetails {
         this.member = member;
     }
 
+    public String getEmail(){
+        return member.getEmail();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -39,6 +42,7 @@ public class CustomMemberDetails implements UserDetails {
 
         return member.getEmail();
     }
+
 
     @Override
     public boolean isAccountNonExpired() {

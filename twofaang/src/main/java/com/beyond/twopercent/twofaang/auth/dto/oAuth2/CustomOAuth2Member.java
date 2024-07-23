@@ -10,7 +10,7 @@ import java.util.Map;
 
 
 @RequiredArgsConstructor
-public class    CustomOAuth2Member implements OAuth2User {
+public class CustomOAuth2Member implements OAuth2User {
     private final OAuth2MemberDto oAuth2MemberDto;
 
     // 통일 x -> return null
@@ -36,10 +36,11 @@ public class    CustomOAuth2Member implements OAuth2User {
         return oAuth2MemberDto.getName();
     }
 
-    public String getUsername(){
+    public String getUsername() {
         return oAuth2MemberDto.getUsername();
     }
-    public String getEmail(){
+
+    public String getEmail() {
         return oAuth2MemberDto.getEmail();
     }
 }

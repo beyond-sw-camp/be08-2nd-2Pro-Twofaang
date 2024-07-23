@@ -15,11 +15,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * 폼 로그인 성공 후 JWT 발급
- * access -> 헤더
- * refresh -> 쿠키
- */
 @RequiredArgsConstructor
 public class CustomFormSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final JWTUtil jwtUtil;
@@ -33,7 +28,7 @@ public class CustomFormSuccessHandler extends SimpleUrlAuthenticationSuccessHand
 
         // access
         String access = jwtUtil.createJwt("access", email, role, 60 * 10 * 1000L);
-        response.setHeader("access", access);
+        response.addCookie(CookieUtil.createCookie("access", access, 60 * 10));
 
         // refresh
         Integer expireS = 24 * 60 * 60;
@@ -48,5 +43,6 @@ public class CustomFormSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         responseData.put("name", email);
 
         new ObjectMapper().writeValue(response.getWriter(), responseData);
+        response.sendRedirect("http://localhost:8080/my");
     }
 }

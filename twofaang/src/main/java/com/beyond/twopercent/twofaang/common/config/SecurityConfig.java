@@ -1,12 +1,10 @@
 package com.beyond.twopercent.twofaang.common.config;
 
-import com.beyond.twopercent.twofaang.auth.dto.oAuth2.CustomOAuth2Member;
 import com.beyond.twopercent.twofaang.auth.handler.CustomFormSuccessHandler;
 import com.beyond.twopercent.twofaang.auth.handler.CustomLogoutFilter;
 import com.beyond.twopercent.twofaang.auth.handler.CustomOAuth2SuccessHandler;
 import com.beyond.twopercent.twofaang.auth.jwt.JWTFilter;
 import com.beyond.twopercent.twofaang.auth.jwt.JWTUtil;
-import com.beyond.twopercent.twofaang.auth.jwt.LoginFilter;
 import com.beyond.twopercent.twofaang.auth.repository.RefreshRepository;
 import com.beyond.twopercent.twofaang.auth.service.CustomOAuth2UserService;
 import com.beyond.twopercent.twofaang.auth.service.RefreshTokenService;
@@ -86,28 +84,6 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
-        http
-                .cors(corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
-
-                    @Override
-                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-
-                        CorsConfiguration configuration = new CorsConfiguration();
-
-                        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
-                        configuration.setAllowedMethods(Collections.singletonList("*"));
-                        configuration.setAllowCredentials(true);
-                        configuration.setAllowedHeaders(Collections.singletonList("*"));
-                        configuration.setMaxAge(3600L);
-
-                        configuration.setExposedHeaders(Collections.singletonList("Set-Cookie"));
-                        configuration.setExposedHeaders(Collections.singletonList("access"));
-
-                        return configuration;
-                    }
-                }));
-
         // disable
         http
                 .httpBasic((basic) -> basic.disable())
@@ -139,10 +115,11 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/login", "/", "/join", "/myinfo", "/reissue").permitAll()
+                        .requestMatchers("/login", "/", "/join", "/reissue").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN") // 관리자만 접근할 수 있도록 설정
                         .anyRequest().authenticated());
         http
-                .addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class);
+                .addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
         http
                 .addFilterBefore(new CustomLogoutFilter(jwtUtil, refreshRepository), LogoutFilter.class);
         //세션 설정

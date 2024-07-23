@@ -1,23 +1,19 @@
 package com.beyond.twopercent.twofaang.auth.service;
 
 import com.beyond.twopercent.twofaang.auth.dto.form.JoinDTO;
-import com.beyond.twopercent.twofaang.auth.repository.UserRepository;
 import com.beyond.twopercent.twofaang.member.entity.Member;
 import com.beyond.twopercent.twofaang.member.entity.Role;
+import com.beyond.twopercent.twofaang.member.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class JoinService {
 
-    private final UserRepository userRepository;
+    private final MemberRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    public JoinService(UserRepository userRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
-
-        this.userRepository = userRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
 
     public String join(JoinDTO joinDTO) {
 
