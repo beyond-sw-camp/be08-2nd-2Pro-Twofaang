@@ -44,10 +44,6 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
         response.addCookie(CookieUtil.createCookie("access", access, 60 * 10));
         response.addCookie(CookieUtil.createCookie("refresh", refresh, expireS));
 
-        // redirect query param 인코딩 후 전달
-        // 이후에 JWT 를 읽어서 데이터를 가져올 수도 있지만, JWT 파싱 비용이 많이 들기 때문에
-        // 처음 JWT 발급할 때 이름을 함께 넘긴 후, 로컬 스토리지에 저장한다.
-        String encodedName = URLEncoder.encode(name, "UTF-8");
-        response.sendRedirect("http://localhost:8080/");
+        response.sendRedirect("http://localhost:8080/my");
     }
 }

@@ -1,10 +1,11 @@
 package com.beyond.twopercent.twofaang.auth.dto.oAuth2;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Data
 public class OAuth2MemberDto {
     private String username;
     private String name;
