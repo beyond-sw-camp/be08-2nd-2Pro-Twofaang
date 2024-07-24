@@ -67,11 +67,11 @@
                     <span class="badge bg-dark text-white ms-1 rounded-pill" th:text="${cartCount}">0</span>
                 </a>
             </form>
-            <a sec:authorize="!isAuthenticated()" href="/user/login" class="btn btn-outline-dark" role="button">
+            <a sec:authorize="!isAuthenticated()" href="/login" class="btn btn-outline-dark" role="button">
                 <i class="bi-person-fill me-1"></i>
                 login
             </a>
-            <a sec:authorize="isAuthenticated()" href="/user/logout" class="btn btn-outline-dark" role="button">
+            <a sec:authorize="isAuthenticated()" href="/logout" class="btn btn-outline-dark" role="button">
                 <i class="bi-person-fill me-1"></i>
                 logout
             </a>
@@ -126,7 +126,7 @@
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" th:href="@{/user/product/detail(id=${x.productId})}">View options</a></div>
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" th:href="@{/templates/member/product/detail(id=${x.productId})}">View options</a></div>
                     </div>
                 </div>
             </div>

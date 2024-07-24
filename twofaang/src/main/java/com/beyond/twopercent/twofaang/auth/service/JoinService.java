@@ -24,7 +24,7 @@ public class JoinService {
         String password = joinDTO.getPassword();
         String name = joinDTO.getName();
         String mobile = joinDTO.getMobile();
-        Role role = Role.valueOf(joinDTO.getRole());
+        Role role = Role.ROLE_USER;
 
         Boolean isExist = userRepository.existsByEmail(email);
 

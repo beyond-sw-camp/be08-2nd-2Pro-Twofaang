@@ -6,33 +6,33 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!------ Include the above in your HEAD tag ---------->
-<style>
-    .container {
-        position: absolute;
-        left:50%;
-        top:50%;
-        margin-left:-560px;
-        margin-top:-330px;
-    }
-</style>
-<script>
-    $(function(){
-        $('form').submit(function(){
-            var password = $(this).find('input[name=password]').val();
-            var confirm = $(this).find('input[name=confirm]').val();
+    <style>
+        .container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-left: -560px;
+            margin-top: -330px;
+        }
+    </style>
+    <script>
+        $(function(){
+            $('form').submit(function(){
+                var password = $(this).find('input[name=password]').val();
+                var confirm = $(this).find('input[name=confirm]').val();
 
-            if(password != confirm){
-                alert("비밀번호가 일치하지 않습니다.");
-                return false;
-            }
+                if(password != confirm){
+                    alert("비밀번호가 일치하지 않습니다.");
+                    return false;
+                }
+            });
+        });
 
-
-        })
-
-
-    });
-</script>
+        function showAlertAndRedirect(username) {
+            alert(username + "님 환영합니다");
+            window.location.href = "/login";
+        }
+    </script>
 </head>
 <body>
 <div class="container">
@@ -42,23 +42,23 @@
                 <div class="card-header">회원가입</div>
                 <div class="card-body">
 
-                    <form class="form-horizontal" method="post">
+                    <form class="form-horizontal" method="post" onsubmit="return handleFormSubmit(event)">
 
                         <div class="form-group">
-                            <label for="userId" class="cols-sm-2 control-label">아이디(이메일) 입력</label>
+                            <label for="email" class="cols-sm-2 control-label">아이디(이메일) 입력</label>
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                                    <input type="email" class="form-control" name="userId" id="userId" placeholder="Enter your Email" />
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="Enter your Email" />
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="userName" class="cols-sm-2 control-label">이름 입력</label>
+                            <label for="name" class="cols-sm-2 control-label">이름 입력</label>
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                                    <input type="text" class="form-control" name="userName" id="userName" placeholder="Enter your Username" />
+                                    <input type="text" class="form-control" name="name" id="name" placeholder="Enter your Username" />
                                 </div>
                             </div>
                         </div>
@@ -81,11 +81,11 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="phone" class="cols-sm-2 control-label">전화번호 입력</label>
+                            <label for="mobile" class="cols-sm-2 control-label">전화번호 입력</label>
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                    <input type="tel" class="form-control" name="phone" id="phone" placeholder="Enter your Phone" />
+                                    <input type="tel" class="form-control" name="mobile" id="mobile" placeholder="Enter your Phone" />
                                 </div>
                             </div>
                         </div>
@@ -93,7 +93,7 @@
                             <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Register</button>
                         </div>
                         <div>
-                            <a href="/user/login">로그인</a>
+                            <a href="/login">로그인</a>
                             <a class="ml-3" href="/">메인으로</a>
                         </div>
 
@@ -104,6 +104,23 @@
         </div>
     </div>
 </div>
+
+<script>
+    function handleFormSubmit(event) {
+        event.preventDefault();
+
+        var form = event.target;
+        var formData = $(form).serialize();
+
+        $.post('/join', formData, function(data) {
+            if(data.success) {
+                showAlertAndRedirect(data.username);
+            } else {
+                alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+            }
+        });
+    }
+</script>
 
 </body>
 </html>
