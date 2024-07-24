@@ -86,7 +86,8 @@ public class    SecurityConfig {
                 "/js/**",
                 "/product/**",
                 "/admin/**",
-                "/inquiries/**"
+                "/inquiries/**",
+                "/user/**"
         );
     }
 
