@@ -1,5 +1,6 @@
 package com.beyond.twopercent.twofaang.member.service;
 
+import com.beyond.twopercent.twofaang.member.dto.GradeRequestDto;
 import com.beyond.twopercent.twofaang.member.entity.Grade;
 import com.beyond.twopercent.twofaang.member.entity.enums.GradeName;
 import com.beyond.twopercent.twofaang.member.repository.GradeRepository;
@@ -17,7 +18,13 @@ public class GradeServiceImpl implements GradeService {
     private final GradeRepository gradeRepository;
 
     @Override
-    public Grade createGrade(Grade grade) {
+    public Grade createGrade(GradeRequestDto requestDto) {
+
+        Grade grade = new Grade();
+        grade.setGradeName(requestDto.getGradeName());
+        grade.setDiscountRate(requestDto.getDiscountRate());
+        grade.setTargetAmount(requestDto.getTargetAmount());
+
         return gradeRepository.save(grade);
     }
 

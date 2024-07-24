@@ -1,5 +1,6 @@
 package com.beyond.twopercent.twofaang.member.controller;
 
+import com.beyond.twopercent.twofaang.member.dto.GradeRequestDto;
 import com.beyond.twopercent.twofaang.member.entity.Grade;
 import com.beyond.twopercent.twofaang.member.entity.enums.GradeName;
 import com.beyond.twopercent.twofaang.member.service.GradeService;
@@ -33,7 +34,7 @@ public class GradeController {
 
     // Grade 추가
     @PostMapping
-    public Grade createGrade(@RequestBody Grade grade) {
+    public Grade createGrade(@RequestBody GradeRequestDto grade) {
         return gradeService.createGrade(grade);
     }
 
