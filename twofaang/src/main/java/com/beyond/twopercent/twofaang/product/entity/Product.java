@@ -28,10 +28,10 @@ public class Product {
     private String productName; // 상품이름
 
     @Column(name = "register_date")
-    private Date registerDate; //등록일
+    private LocalDateTime registerDate; //등록일
 
     @Column(name = "update_date")
-    private Date updateDate; // 수정일
+    private LocalDateTime updateDate; // 수정일
 
     @Lob
     @Column(name = "description")
@@ -60,5 +60,8 @@ public class Product {
 
     @Column(name = "view_cnt")
     private int viewCnt; // 조회수
+
+    private String filename;
+    private String urlFilename;
 
 }
