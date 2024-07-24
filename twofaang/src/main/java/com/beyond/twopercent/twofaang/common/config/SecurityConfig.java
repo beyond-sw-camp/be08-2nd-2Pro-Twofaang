@@ -36,7 +36,7 @@ import java.util.Collections;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig {
+public class    SecurityConfig {
 
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JWTUtil jwtUtil;
@@ -85,7 +85,8 @@ public class SecurityConfig {
                 "/images/**",
                 "/js/**",
                 "/product/**",
-                "/admin/**"
+                "/admin/**",
+                "/inquiries/**"
         );
     }
 

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.beyond.twopercent.twofaang.inquiry.mapper.InquiryMapper">
+
+    <resultMap id="inquiryResultMap" type="com.beyond.twopercent.twofaang.inquiry.entity.InquiryEntity">
+        <id property="inquiryId" column="inquiry_id"/>
+        <result property="memberId" column="member_id"/>
+        <result property="productId" column="product_id"/>
+        <result property="inquiryTitle" column="inquiry_title"/>
+        <result property="inquiryText" column="inquiry_text"/>
+        <result property="inquiryType" column="inquiry_type"/>
+        <result property="inquiryDate" column="inquiry_date"/>
+    </resultMap>
+
+    <select id="getAllInquiries" resultMap="inquiryResultMap">
+        SELECT * FROM tb_inquiry
+    </select>
+
+    <select id="getInquiryById" parameterType="long" resultMap="inquiryResultMap">
+        SELECT * FROM tb_inquiry WHERE inquiry_id = #{inquiryId}
+    </select>
+
+    <insert id="addInquiry" parameterType="com.beyond.twopercent.twofaang.inquiry.entity.InquiryEntity">
+        INSERT INTO tb_inquiry (member_id, product_id, inquiry_title, inquiry_text, inquiry_type, inquiry_date)
+        VALUES (#{memberId}, #{productId}, #{inquiryTitle}, #{inquiryText}, #{inquiryType}, #{inquiryDate})
+    </insert>
+
+    <update id="updateInquiry" parameterType="com.beyond.twopercent.twofaang.inquiry.entity.InquiryEntity">
+        UPDATE tb_inquiry
+        SET member_id = #{memberId},
+            product_id = #{productId},
+            inquiry_title = #{inquiryTitle},
+            inquiry_text = #{inquiryText},
+            inquiry_type = #{inquiryType},
+            inquiry_date = #{inquiryDate}
+        WHERE inquiry_id = #{inquiryId}
+    </update>
+
+    <delete id="deleteInquiry" parameterType="long">
+        DELETE FROM tb_inquiry WHERE inquiry_id = #{inquiryId}
+    </delete>
+
+</mapper>
