@@ -1,5 +1,8 @@
 package com.beyond.twopercent.twofaang.member.entity;
 
+import com.beyond.twopercent.twofaang.member.entity.enums.Role;
+import com.beyond.twopercent.twofaang.member.entity.enums.Status;
+import com.beyond.twopercent.twofaang.member.repository.GradeRepository;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +12,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
+import java.util.Optional;
 
 @Entity
 @Data
@@ -35,8 +39,9 @@ public class Member {
     @Column(name = "mobile")
     private String mobile;   // 전화번호
 
-    @Column(name = "grade_id")
-    private int gradeId;     // 등급 코드
+    @ManyToOne
+    @JoinColumn(name = "grade_id", nullable = false)
+    private Grade grade;     // 등급
 
     @CreationTimestamp
     @Column(name = "join_date", updatable = false)
@@ -56,4 +61,5 @@ public class Member {
 
     @Column(name = "point", nullable = false)
     private int point = 0; // 포인트
+
 }

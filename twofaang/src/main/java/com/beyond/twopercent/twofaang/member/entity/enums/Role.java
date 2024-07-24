@@ -1,4 +1,4 @@
-package com.beyond.twopercent.twofaang.member.entity;
+package com.beyond.twopercent.twofaang.member.entity.enums;
 
 public enum Role {
     ROLE_ADMIN, // 관리자

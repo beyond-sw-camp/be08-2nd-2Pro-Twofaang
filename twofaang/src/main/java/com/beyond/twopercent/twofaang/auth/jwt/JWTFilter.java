@@ -2,7 +2,7 @@ package com.beyond.twopercent.twofaang.auth.jwt;
 
 import com.beyond.twopercent.twofaang.auth.dto.form.CustomMemberDetails;
 import com.beyond.twopercent.twofaang.member.entity.Member;
-import com.beyond.twopercent.twofaang.member.entity.Role;
+import com.beyond.twopercent.twofaang.member.entity.enums.Role;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
