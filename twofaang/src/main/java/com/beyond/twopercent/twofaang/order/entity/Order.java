@@ -34,6 +34,8 @@ public class Order {
 
     // juhee
 
+    // sujin sujin sujin 2222 
+
     @Column(name = "member_id")
     private Long memberId; // 회원 번호
 
