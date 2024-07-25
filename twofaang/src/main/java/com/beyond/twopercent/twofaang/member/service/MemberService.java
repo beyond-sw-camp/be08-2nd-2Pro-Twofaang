@@ -17,4 +17,7 @@ public interface MemberService {
 
     MemberResponseDto updateMemberStatus(String email, String status);
 
+    MemberResponseDto getMemberByEmail(String email);
+
+    void SetTempPassword(String to, String authNum);
 }
