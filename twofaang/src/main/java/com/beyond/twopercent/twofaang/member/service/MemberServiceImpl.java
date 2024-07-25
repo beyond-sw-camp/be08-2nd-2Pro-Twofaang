@@ -1,17 +1,15 @@
 package com.beyond.twopercent.twofaang.member.service;
 
-import com.beyond.twopercent.twofaang.auth.dto.form.CustomMemberDetails;
 import com.beyond.twopercent.twofaang.member.dto.ModifyMemberRequestDto;
 import com.beyond.twopercent.twofaang.member.dto.MemberResponseDto;
 import com.beyond.twopercent.twofaang.member.entity.Member;
 import com.beyond.twopercent.twofaang.member.entity.enums.Status;
 import com.beyond.twopercent.twofaang.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -77,6 +75,19 @@ public class MemberServiceImpl implements MemberService {
 
         member = memberRepository.save(member);
         return convertToDto(member);
+    }
+
+    @Override
+    public MemberResponseDto getMemberByEmail(String email) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 회원"));
+
+        return convertToDto(member);
+    }
+
+    @Override
+    public void SetTempPassword(String to, String authNum) {
+
     }
 
     // DTO로 변환 후 반환

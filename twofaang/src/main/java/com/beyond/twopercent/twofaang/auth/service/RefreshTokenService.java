@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -65,5 +66,9 @@ public class RefreshTokenService {
                 .build();
 
         refreshRepository.save(refreshEntity);
+    }
+
+    public List<RefreshToken> getAllRefresh() {
+        return refreshRepository.findAll();
     }
 }

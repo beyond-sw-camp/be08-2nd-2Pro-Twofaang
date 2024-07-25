@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = "com.beyond.twopercent.twofaang")
 @MapperScan(basePackages = "com.beyond.twopercent.twofaang.inquiry.mapper")
 public class TwofaangApplication {
 

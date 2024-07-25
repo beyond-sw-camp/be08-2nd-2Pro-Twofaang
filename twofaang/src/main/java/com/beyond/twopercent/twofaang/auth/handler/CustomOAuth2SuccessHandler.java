@@ -44,6 +44,10 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
         response.addCookie(CookieUtil.createCookie("access", access, 60 * 10));
         response.addCookie(CookieUtil.createCookie("refresh", refresh, expireS));
 
-        response.sendRedirect("http://localhost:8080/my");
+        if (role.equals("ADMIN")) {
+            response.sendRedirect("http://localhost:8080/admin/main.do");
+        } else {
+            response.sendRedirect("http://localhost:8080/");
+        }
     }
 }

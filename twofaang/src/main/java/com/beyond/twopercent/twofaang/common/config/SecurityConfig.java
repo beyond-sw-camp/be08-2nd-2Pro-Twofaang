@@ -87,7 +87,9 @@ public class    SecurityConfig {
                 "/product/**",
                 "/admin/**",
                 "/inquiries/**",
-                "/user/**"
+                "/user/**",
+                "/grades/**",
+                "/mails/**"
         );
     }
 

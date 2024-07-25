@@ -38,11 +38,11 @@ public class CustomFormSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         // refresh 토큰 DB 저장
         refreshTokenService.saveRefresh(email, expireS, refresh);
 
-        // json 을 ObjectMapper 로 직렬화하여 전달
-        Map<String, Object> responseData = new HashMap<>();
-        responseData.put("name", email);
+        if (role.equals("ADMIN")) {
+            response.sendRedirect("http://localhost:8080/admin/main.do");
+        } else {
+            response.sendRedirect("http://localhost:8080/");
+        }
 
-        new ObjectMapper().writeValue(response.getWriter(), responseData);
-        response.sendRedirect("http://localhost:8080/my");
     }
 }
