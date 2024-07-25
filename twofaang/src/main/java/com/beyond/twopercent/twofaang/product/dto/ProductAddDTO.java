@@ -25,7 +25,7 @@ public class ProductAddDTO {
 
     private int price; // 상품 가격
 
-    private boolean isDiscount; // 할인여부
+    private boolean saleYn; // 할인여부
 
     private double discountRate; //할인율
 

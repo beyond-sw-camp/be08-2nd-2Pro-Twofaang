@@ -41,15 +41,12 @@ public class ProductServiceImpl implements ProductService{
                 .description(parameter.getDescription())
                 .quantity(parameter.getQuantity())
                 .price(parameter.getPrice())
-                .isDiscount(parameter.isDiscount())
+                .saleYn(parameter.isSaleYn())
                 .discountRate(parameter.getDiscountRate())
                 .discountEndDate(discountEndDate)
                 .filename(parameter.getFilename())
                 .urlFilename(parameter.getUrlFilename())
                 .build();
-
-        System.out.println("=========== SERVICE =============");
-        System.out.println("product = " + product);
 
         productRepository.save(product);
 

@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Data
@@ -44,7 +43,7 @@ public class Product {
     private int price; // 상품 가격
 
     @Column(name = "is_discount")
-    private boolean isDiscount; // 할인여부
+    private boolean saleYn; // 할인여부
 
     @Column(name = "discount_rate")
     private double discountRate; //할인율

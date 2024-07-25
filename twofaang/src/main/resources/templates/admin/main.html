@@ -84,21 +84,15 @@
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
             <div class="col mb-5" th:each="x : ${products}">
                 <div class="card h-100">
-                    <!-- Sale badge-->
-                    <div sec:authorize="hasRole('ROLE_ADMIN')" class="badge bg-dark text-white position-absolute"
+
+                    <div class="badge bg-dark text-white position-absolute"
                          style="top: 0.5rem; right: 0.5rem">
                         <a style="text-decoration: none; color: white"
                            th:href="@{/admin/product/update.do(id=${x.productId})}">수정</a>
-                        |
-                        <a style="text-decoration: none; color: white;"
-                           onclick="if(!confirm('정말 삭제 하시겠습니까?')){
-                                     return false;
-                            }"
-                           th:href="@{/admin/product/delete.do(id=${x.productId})}">삭제</a>
                     </div>
 
                     <!-- Product image-->
-                    <img class="card-img-top" th:src="${x.urlFilename}" alt="..."/>
+                    <img class="card-img-top" th:src="@{${x.getUrlFilename()}}" alt="..."/>
                     <!-- Product details-->
                     <div class="card-body p-4">
                         <div class="text-center">
@@ -113,10 +107,9 @@
                                 <div class="bi-star-fill"></div>
                             </div>
                             <!-- Product price-->
-<!--                            <p th:if="${!x.isIsDiscount()}" th:text="${#numbers.formatInteger(x.price, 0, 'COMMA')}"></p>-->
-<!--                            <p th:if="${x.isIsDiscount()}" style="text-decoration: line-through"-->
-<!--                               th:text="${#numbers.formatInteger(x.price, 0, 'COMMA')}">$40.00 - $80.00</p>-->
-<!--                            <p th:if="${x.isIsDiscount()}" th:text="${#numbers.formatInteger(x.price, 0, 'COMMA')}"></p>-->
+                            <p th:if="${!x.isSaleYn()}" th:text="${#numbers.formatInteger(x.price, 0, 'COMMA')}"></p>
+                            <p th:if="${x.isSaleYn()}" style="text-decoration: line-through" th:text="${#numbers.formatInteger(x.price, 0, 'COMMA')}">$40.00 - $80.00</p>
+                            <p th:if="${x.isSaleYn()}" th:text="${#numbers.formatInteger(x.price - (x.price * x.discountRate), 0, 'COMMA')}"></p>
                         </div>
                     </div>
                     <!-- Product actions-->
