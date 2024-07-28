@@ -26,12 +26,14 @@ public class CustomFormSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         String email = authentication.getName();
         String role = authentication.getAuthorities().iterator().next().getAuthority();
 
+        // refresh
+        Integer expireA = 60 * 10;  // 10분
         // access
-        String access = jwtUtil.createJwt("access", email, role, 60 * 10 * 1000L);
+        String access = jwtUtil.createJwt("access", email, role, expireA * 1000L);
         response.addCookie(CookieUtil.createCookie("access", access, 60 * 10));
 
         // refresh
-        Integer expireS = 24 * 60 * 60;
+        Integer expireS = 60 * 30;  // 30분
         String refresh = jwtUtil.createJwt("refresh", email, role, expireS * 1000L);
         response.addCookie(CookieUtil.createCookie("refresh", refresh, expireS));
 

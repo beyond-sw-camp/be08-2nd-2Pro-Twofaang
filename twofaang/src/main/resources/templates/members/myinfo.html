@@ -16,8 +16,6 @@
             <p><strong>전화번호:</strong> <span th:text="${member.mobile}"></span></p>
             <p><strong>등급:</strong> <span th:text="${member.gradeName}"></span></p>
             <p><strong>가입일:</strong> <span th:text="${#dates.format(member.joinDate, 'yyyy-MM-dd')}"></span></p>
-            <p><strong>역할:</strong> <span th:text="${member.role}"></span></p>
-            <p><strong>상태:</strong> <span th:text="${member.status}"></span></p>
             <p><strong>포인트:</strong> <span th:text="${member.point}"></span></p>
         </div>
     </div>

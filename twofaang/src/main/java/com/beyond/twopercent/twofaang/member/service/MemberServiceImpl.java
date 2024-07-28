@@ -6,6 +6,7 @@ import com.beyond.twopercent.twofaang.member.entity.Member;
 import com.beyond.twopercent.twofaang.member.entity.enums.Status;
 import com.beyond.twopercent.twofaang.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public MemberResponseDto getCurrentMemberInfo(String email) {
@@ -39,26 +41,16 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 회원"));
 
-        // 회원 삭제
-        memberRepository.delete(member);
+        // 회원 정보 업데이트
+        member.setName(requestDto.getName());
+        member.setMobile(requestDto.getMobile());
 
-        // 새로운 회원 객체 생성 및 정보 설정
-        Member newMember = Member.builder()
-                .email(email)
-                .name(requestDto.getName())
-                .mobile(requestDto.getMobile())
-                .grade(member.getGrade()) // 기존 등급 정보 유지
-                .joinDate(member.getJoinDate()) // 기존 가입일 유지
-                .role(member.getRole()) // 기존 역할 정보 유지
-                .status(member.getStatus()) // 기존 상태 유지
-                .point(member.getPoint()) // 기존 포인트 유지
-                .build();
+        // 업데이트된 회원 정보 저장
+        Member updatedMember = memberRepository.save(member);
 
-        // 새로운 회원 저장
-        Member savedMember = memberRepository.save(newMember);
-
-        return convertToDto(savedMember);
+        return convertToDto(updatedMember);
     }
+
 
 
 
@@ -100,8 +92,18 @@ public class MemberServiceImpl implements MemberService {
 
     // 임시 비밀번호로 비밀번호 변경
     @Override
-    public void SetTempPassword(String email, String tempPW) {
+    public String SetTempPassword(String email, String tempPW) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 회원"));
 
+        try {
+            member.setPassword(bCryptPasswordEncoder.encode(tempPW));
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("상태 값 이상함");
+        }
+
+        member = memberRepository.save(member);
+        return member.getName().toString() + "님의 임시 비밀번호가 발급되었습니다.\n" + "가입하신 이메일을 확인해주세요";
     }
 
     // DTO로 변환 후 반환

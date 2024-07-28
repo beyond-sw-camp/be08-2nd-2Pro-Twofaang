@@ -12,7 +12,6 @@ import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/user")
 public class SignController {
 
     private final JoinService joinService;
@@ -43,7 +42,7 @@ public class SignController {
         }
     }
 
-    @GetMapping("/user/change-password")
+    @GetMapping("/change-password")
     public String showChangePasswordPage() {
         return "change-password"; // Thymeleaf 템플릿 파일 이름
     }

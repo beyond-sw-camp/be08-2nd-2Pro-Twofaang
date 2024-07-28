@@ -9,7 +9,7 @@
 <body>
 <div class="container mt-5">
     <h2>회원 정보 수정</h2>
-    <form th:action="@{/members/update}" method="get">
+    <form th:action="@{/members/update}" method="post">
         <div class="mb-3">
             <label for="name" class="form-label">이름</label>
             <input type="text" class="form-control" id="name" name="name" th:value="${member.name}" required>

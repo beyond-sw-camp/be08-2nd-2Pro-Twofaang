@@ -5,6 +5,7 @@ import com.beyond.twopercent.twofaang.auth.service.JoinService;
 import com.beyond.twopercent.twofaang.auth.service.ReissueService;
 import com.beyond.twopercent.twofaang.member.dto.ModifyMemberRequestDto;
 import com.beyond.twopercent.twofaang.member.dto.MemberResponseDto;
+import com.beyond.twopercent.twofaang.member.entity.enums.Status;
 import com.beyond.twopercent.twofaang.member.service.MemberService;
 import com.beyond.twopercent.twofaang.auth.dto.form.CustomMemberDetails;
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,6 +31,7 @@ public class MemberController {
 
     private final ReissueService reissueService;
     @PostMapping("/reissue")
+    @ResponseBody
     public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) {
         return reissueService.reissue(request, response);
     }
@@ -50,7 +52,6 @@ public class MemberController {
         return "/members/edit";  // 회원 정보 수정 페이지로 이동
     }
 
-    // 회원 정보 업데이트
     @PostMapping("/update")
     @ResponseBody
     public ResponseEntity<MemberResponseDto> updateMember(
@@ -61,6 +62,7 @@ public class MemberController {
         MemberResponseDto updatedMember = memberService.updateMember(email, requestDto);
         return ResponseEntity.ok(updatedMember);
     }
+
 
 
     // 모든 회원 정보를 반환
@@ -92,5 +94,14 @@ public class MemberController {
         return ResponseEntity.ok(updatedMember);
     }
 
+    // 회원 탈퇴
+    @PutMapping("/leave")
+    @ResponseBody
+    public ResponseEntity<MemberResponseDto> updateMemberStatus(
+            @AuthenticationPrincipal CustomMemberDetails customMemberDetails
+    ) {
+        MemberResponseDto updatedMember = memberService.updateMemberStatus(customMemberDetails.getEmail(), String.valueOf(Status.N));
+        return ResponseEntity.ok(updatedMember);
+    }
 
 }
