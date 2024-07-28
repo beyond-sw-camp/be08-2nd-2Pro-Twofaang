@@ -37,16 +37,29 @@ public class MemberServiceImpl implements MemberService {
     public MemberResponseDto updateMember(String email, ModifyMemberRequestDto requestDto) {
         // 이메일로 회원 조회
         Member member = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 회권"));
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 회원"));
 
-        // 회원 정보 업데이트
-        member.setName(requestDto.getName());
-        member.setMobile(requestDto.getMobile());
+        // 회원 삭제
+        memberRepository.delete(member);
 
-        // 저장 및 반환
-        Member updatedMember = memberRepository.save(member);
-        return convertToDto(updatedMember);
+        // 새로운 회원 객체 생성 및 정보 설정
+        Member newMember = Member.builder()
+                .email(email)
+                .name(requestDto.getName())
+                .mobile(requestDto.getMobile())
+                .grade(member.getGrade()) // 기존 등급 정보 유지
+                .joinDate(member.getJoinDate()) // 기존 가입일 유지
+                .role(member.getRole()) // 기존 역할 정보 유지
+                .status(member.getStatus()) // 기존 상태 유지
+                .point(member.getPoint()) // 기존 포인트 유지
+                .build();
+
+        // 새로운 회원 저장
+        Member savedMember = memberRepository.save(newMember);
+
+        return convertToDto(savedMember);
     }
+
 
 
     @Override
@@ -85,8 +98,9 @@ public class MemberServiceImpl implements MemberService {
         return convertToDto(member);
     }
 
+    // 임시 비밀번호로 비밀번호 변경
     @Override
-    public void SetTempPassword(String to, String authNum) {
+    public void SetTempPassword(String email, String tempPW) {
 
     }
 

@@ -24,6 +24,7 @@ public class EmailService {
 
     private final MemberService memberService;
 
+    // 임시 비밀번호 발급
     public String sendMail(EmailMessage emailMessage, String type) {
         String authNum = createCode();
 

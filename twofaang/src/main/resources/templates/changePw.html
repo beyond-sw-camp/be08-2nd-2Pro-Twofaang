@@ -6,13 +6,8 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.84.0">
-    <title>로그인 페이지</title>
+    <title>비밀번호 변경 페이지</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
-
-
-
-    <!-- Bootstrap core CSS -->
     <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
@@ -31,42 +26,43 @@
         }
     </style>
 
-
-    <!-- Custom styles for this template -->
     <link href="/css/signin.css" rel="stylesheet">
 </head>
 <body class="text-center">
 
 <main class="form-signin">
-    <form th:action="@{/login}" method="post">
+    <form th:action="@{/members/}" method="post">
         <a href="/">
             <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
         </a>
-        <h1 class="h3 mb-3 fw-normal">로그인</h1>
+        <h1 class="h3 mb-3 fw-normal">비밀번호 변경</h1>
+
+        <!-- 비밀번호 변경 성공 또는 실패 메시지 -->
+        <div th:if="${param.success}" class="alert alert-success py-0" role="alert">
+            <p class="mt-3">비밀번호가 성공적으로 변경되었습니다.</p>
+        </div>
         <div th:if="${param.error}" class="alert alert-danger py-0" role="alert">
             <p class="mt-3" th:text="${errorMessage}"></p>
         </div>
+
         <div class="form-floating">
-            <input type="email" class="form-control" id="username" name="username" placeholder="name@example.com">
-            <label for="username">Email address</label>
+            <input type="password" class="form-control" id="currentPassword" name="currentPassword" placeholder="현재 비밀번호" required>
+            <label for="currentPassword">현재 비밀번호</label>
         </div>
         <div class="form-floating">
-            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-            <label for="password">Password</label>
+            <input type="password" class="form-control" id="newPassword" name="newPassword" placeholder="새 비밀번호" required>
+            <label for="newPassword">새 비밀번호</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="새 비밀번호 확인" required>
+            <label for="confirmPassword">새 비밀번호 확인</label>
         </div>
 
-        <div class="mb-2">
-            <a href="/user/find/password">비밀번호 찾기</a>
-        </div>
-        <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
-        <a href="/oauth2/authorization/google" class="w-100 btn btn-lg btn-primary mt-2" role="button">구글 로그인</a>
-        <a href="/oauth2/authorization/naver" class="w-100 btn btn-lg btn-primary mt-2" role="button">네이버 로그인</a>
-        <a href="/user/join" class="w-100 btn btn-lg btn-primary mt-2" role="button">회원가입</a>
-        <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+        <button class="w-100 btn btn-lg btn-primary mt-3" type="submit">비밀번호 변경</button>
+        <a href="/" class="w-100 btn btn-lg btn-secondary mt-2" role="button">취소</a>
+        <p class="mt-5 mb-3 text-muted">&copy; 2024</p>
     </form>
 </main>
-
-
 
 </body>
 </html>

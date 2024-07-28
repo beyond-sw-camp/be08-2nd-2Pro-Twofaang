@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -27,50 +28,40 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    private final JoinService joinService;
-
-    @GetMapping("/login")
-    public String loginPage() {
-        return "login";  // 타임리프 템플릿 이름
-    }
-
-    @GetMapping("/join")
-    public String joinPage() {
-        return "join";
-    }
-
-    @PostMapping("/join")
-    @ResponseBody
-    public ResponseEntity<?> join(@ModelAttribute JoinDTO joinDto) {
-        Map<String, Object> response = new HashMap<>();
-        try {
-            joinService.join(joinDto);
-            response.put("success", true);
-            response.put("username", joinDto.getName());
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            response.put("success", false);
-            response.put("message", e.getMessage());
-            return ResponseEntity.status(500).body(response);
-        }
-    }
-
     private final ReissueService reissueService;
     @PostMapping("/reissue")
     public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) {
         return reissueService.reissue(request, response);
     }
 
-    // 현재 로그인된 회원의 정보를 반환
     @GetMapping("/myinfo")
-    @ResponseBody
-    public ResponseEntity<MemberResponseDto> getCurrentMemberInfo(
-            @AuthenticationPrincipal CustomMemberDetails customMemberDetails
-    ) {
+    public String myInfoPage(Model model, @AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
         String email = customMemberDetails.getEmail();
         MemberResponseDto memberResponseDto = memberService.getCurrentMemberInfo(email);
-        return ResponseEntity.ok(memberResponseDto);
+        model.addAttribute("member", memberResponseDto);
+        return "/members/myinfo";  // 회원 정보 확인 페이지로 이동
     }
+
+    @GetMapping("/edit")
+    public String editPage(Model model, @AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
+        String email = customMemberDetails.getEmail();
+        MemberResponseDto memberResponseDto = memberService.getCurrentMemberInfo(email);
+        model.addAttribute("member", memberResponseDto);
+        return "/members/edit";  // 회원 정보 수정 페이지로 이동
+    }
+
+    // 회원 정보 업데이트
+    @PostMapping("/update")
+    @ResponseBody
+    public ResponseEntity<MemberResponseDto> updateMember(
+            @AuthenticationPrincipal CustomMemberDetails customMemberDetails,
+            @Valid @RequestBody ModifyMemberRequestDto requestDto
+    ) {
+        String email = customMemberDetails.getEmail();
+        MemberResponseDto updatedMember = memberService.updateMember(email, requestDto);
+        return ResponseEntity.ok(updatedMember);
+    }
+
 
     // 모든 회원 정보를 반환
     @GetMapping("/list")
@@ -90,29 +81,6 @@ public class MemberController {
         return ResponseEntity.ok(members);
     }
 
-    // 회원 정보 업데이트
-    @PutMapping("/update")
-    @ResponseBody
-    public ResponseEntity<MemberResponseDto> updateMember(
-            @AuthenticationPrincipal CustomMemberDetails customMemberDetails,
-            @Valid @RequestBody ModifyMemberRequestDto requestDto
-    ) {
-        String email = customMemberDetails.getEmail();
-        MemberResponseDto updatedMember = memberService.updateMember(email, requestDto);
-        return ResponseEntity.ok(updatedMember);
-    }
-
-    // 회원 포인트 업데이트
-    @PutMapping("/points-update/{email}")
-    @ResponseBody
-    public ResponseEntity<MemberResponseDto> updateMemberPoint(
-            @PathVariable String email,
-            @RequestParam int point
-    ) {
-        MemberResponseDto updatedMember = memberService.updateMemberPoint(email, point);
-        return ResponseEntity.ok(updatedMember);
-    }
-
     // 회원 상태 변경
     @PutMapping("/status/{email}")
     @ResponseBody
@@ -123,4 +91,6 @@ public class MemberController {
         MemberResponseDto updatedMember = memberService.updateMemberStatus(email, status);
         return ResponseEntity.ok(updatedMember);
     }
+
+
 }

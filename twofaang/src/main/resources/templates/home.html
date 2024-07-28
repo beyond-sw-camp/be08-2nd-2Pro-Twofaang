@@ -14,26 +14,6 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/css/styles.css" rel="stylesheet"/>
 </head>
-<script>
-
-
-
-</script>
-<style>
-    .starR {
-        background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
-        background-size: auto 100%;
-        width: 15px;
-        height: 15px;
-        display: inline-block;
-        text-indent: -9999px;
-    }
-
-    .starR.on {
-        background-position: 0 0;
-
-    }
-</style>
 <body>
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -50,31 +30,49 @@
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">내 정보</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/user/info">회원 정보</a></li>
+                        <form th:action="@{/members/myinfo}" method="get">
+                            <button type="submit" class="dropdown-item">
+                                회원 정보
+                            </button>
+                        </form>
                         <li>
                             <hr class="dropdown-divider"/>
                         </li>
-                        <li><a class="dropdown-item" href="/user/order/orderList">주문내역</a></li>
-                        <li><a class="dropdown-item" href="/user/product/inquiry">문의하기</a></li>
-                        <li><a class="dropdown-item" href="#!">커뮤니티</a></li>
+                        <form th:action="@{/orders/list}" method="get">
+                            <button type="submit" class="dropdown-item">
+                                주문 내역
+                            </button>
+                        </form>
+                        <form th:action="@{/inquirys}" method="get">
+                            <button type="submit" class="dropdown-item">
+                                문의 하기
+                            </button>
+                        </form>
                     </ul>
                 </li>
             </ul>
             <form class="d-flex">
-                <a href="/user/product/cart" class="btn btn-outline-dark" role="button">
+                <a href="/carts" class="btn btn-outline-dark" role="button">
                     <i class="bi-cart-fill me-1"></i>
                     Cart
                     <span class="badge bg-dark text-white ms-1 rounded-pill" th:text="${cartCount}">0</span>
                 </a>
             </form>
-            <a sec:authorize="!isAuthenticated()" href="/login" class="btn btn-outline-dark" role="button">
-                <i class="bi-person-fill me-1"></i>
-                login
-            </a>
-            <a sec:authorize="isAuthenticated()" href="/logout" class="btn btn-outline-dark" role="button">
-                <i class="bi-person-fill me-1"></i>
-                logout
-            </a>
+            <!-- 로그인 버튼 -->
+            <form th:action="@{/login}" method="get" sec:authorize="isAnonymous()">
+                <button type="submit" class="btn btn-outline-dark">
+                    <i class="bi-person-fill me-1"></i>
+                    login
+                </button>
+            </form>
+            <!-- 로그아웃 버튼 -->
+            <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+                <button type="submit" class="btn btn-outline-dark">
+                    <i class="bi-person-fill me-1"></i>
+                    logout
+                </button>
+            </form>
+
         </div>
     </div>
 </nav>
@@ -83,13 +81,14 @@
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
             <h1 class="display-4 fw-bolder">Shop in style</h1>
-            <p class="lead fw-normal text-white-50 mb-0">With this shop hompeage template</p>
+            <p class="lead fw-normal text-white-50 mb-0">With this shop homepage template</p>
         </div>
     </div>
 </header>
 <div class="mt-3 position-absolute end-0">
     <form class="d-flex" method="GET" action="/">
-        <input type="search" id="searchText" name="searchText" th:value="${param.searchText}" placeholder="Search" aria-label="Search">
+        <input type="search" id="searchText" name="searchText" th:value="${param.searchText}" placeholder="Search"
+               aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
 </div>
@@ -97,12 +96,8 @@
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-3">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-
             <div class="col mb-5" th:each="x : ${list}">
                 <div class="card h-100">
-                    <!-- Sale badge-->
-<!--                    <div th:if="${x.isSaleYn()}" class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale-->
-<!--                    </div>-->
                     <!-- Product image-->
                     <img class="card-img-top" th:src="@{${x.getUrlFilename()}}" alt="..."/>
                     <!-- Product details-->
@@ -110,43 +105,40 @@
                         <div class="text-center">
                             <!-- Product name-->
                             <h5 class="fw-bolder" th:text="${x.productName}">Fancy Product</h5>
-                            <!-- Product reviews-->
-<!--                            <div class="starRev">-->
-<!--                                <span class="starR on"></span>-->
-<!--                                <span class="starR" th:classappend="${x.reviewCnt != 0 && x.reviewScore/x.reviewCnt >= 2} ? 'on'"></span>-->
-<!--                                <span class="starR" th:classappend="${x.reviewCnt != 0 && x.reviewScore/x.reviewCnt >= 3} ? 'on'"></span>-->
-<!--                                <span class="starR" th:classappend="${x.reviewCnt != 0 && x.reviewScore/x.reviewCnt >= 4} ? 'on'"></span>-->
-<!--                                <span class="starR" th:classappend="${x.reviewCnt != 0 && x.reviewScore/x.reviewCnt == 5} ? 'on'"></span>-->
-<!--                            </div>-->
                             <!-- Product price-->
                             <p th:if="${!x.isSaleYn()}" th:text="${#numbers.formatInteger(x.price, 0, 'COMMA')}"></p>
-                            <p th:if="${x.isSaleYn()}" style="text-decoration: line-through" th:text="${#numbers.formatInteger(x.price, 0, 'COMMA')}">$40.00 - $80.00</p>
-                            <p th:if="${x.isSaleYn()}" th:text="${#numbers.formatInteger(x.price - (x.price * x.discountRate), 0, 'COMMA')}"></p>
+                            <p th:if="${x.isSaleYn()}" style="text-decoration: line-through"
+                               th:text="${#numbers.formatInteger(x.price, 0, 'COMMA')}">$40.00 - $80.00</p>
+                            <p th:if="${x.isSaleYn()}"
+                               th:text="${#numbers.formatInteger(x.price - (x.price * x.discountRate), 0, 'COMMA')}"></p>
                         </div>
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" th:href="@{/templates/member/product/detail(id=${x.productId})}">View options</a></div>
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto"
+                                                    th:href="@{/templates/member/product/detail(id=${x.productId})}">View
+                            options</a></div>
                     </div>
                 </div>
             </div>
-
         </div>
-
         <div>
             <nav aria-label="Page navigation example">
                 <ul class="pagination justify-content-center">
                     <li class="page-item" th:classappend="${1 == list.pageable.pageNumber + 1} ? 'disabled'">
-                        <a class="page-link" th:href="@{/(page=${list.pageable.pageNumber - 1},searchText=${param.searchText})}"
+                        <a class="page-link"
+                           th:href="@{/(page=${list.pageable.pageNumber - 1},searchText=${param.searchText})}"
                            tabindex="-1">Previous</a>
                     </li>
                     <li class="page-item" th:classappend="${i == list.pageable.pageNumber + 1} ? 'disabled'"
                         th:each="i : ${#numbers.sequence(startPage, endPage)}">
-                        <a class="page-link" th:href="@{/(page=${i - 1},searchText=${param.searchText})}" th:text="${i}">1</a>
+                        <a class="page-link" th:href="@{/(page=${i - 1},searchText=${param.searchText})}"
+                           th:text="${i}">1</a>
                     </li>
                     <li class="page-item"
                         th:classappend="${list.totalPages == list.pageable.pageNumber + 1} ? 'disabled'">
-                        <a class="page-link" th:href="@{/(page=${list.pageable.pageNumber + 1},searchText=${param.searchText})}">Next</a>
+                        <a class="page-link"
+                           th:href="@{/(page=${list.pageable.pageNumber + 1},searchText=${param.searchText})}">Next</a>
                     </li>
                 </ul>
             </nav>

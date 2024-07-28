@@ -112,7 +112,7 @@
         var form = event.target;
         var formData = $(form).serialize();
 
-        $.post('/join', formData, function(data) {
+        $.post('/user/join', formData, function(data) {
             if(data.success) {
                 showAlertAndRedirect(data.username);
             } else {

@@ -19,5 +19,5 @@ public interface MemberService {
 
     MemberResponseDto getMemberByEmail(String email);
 
-    void SetTempPassword(String to, String authNum);
+    void SetTempPassword(String email, String tempPW);
 }

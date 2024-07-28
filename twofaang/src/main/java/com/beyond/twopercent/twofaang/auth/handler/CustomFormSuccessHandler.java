@@ -38,7 +38,8 @@ public class CustomFormSuccessHandler extends SimpleUrlAuthenticationSuccessHand
         // refresh 토큰 DB 저장
         refreshTokenService.saveRefresh(email, expireS, refresh);
 
-        if (role.equals("ADMIN")) {
+        // equals
+        if (role.contains("ADMIN")) {
             response.sendRedirect("http://localhost:8080/admin/main.do");
         } else {
             response.sendRedirect("http://localhost:8080/");
