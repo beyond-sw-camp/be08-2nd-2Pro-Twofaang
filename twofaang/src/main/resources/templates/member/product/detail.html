@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <title>Shop Item - Start Bootstrap Template</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico"/>
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="/css/styles.css" rel="stylesheet"/>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+</head>
+<script>
+    $(function () {
+        $(".plus").on("click", function () {
+            var $div = $(this).closest('div');
+            var qty = parseInt($div.find('input[name=qty]').val()) + 1;
+            var price = $('input[name=inputPrice]').val();
+            var salePrice = $('input[name=inputSalePrice]').val();
+            var quantity = $('input[name=quantity]').val();
+
+            if (qty - 1 == quantity) {
+                alert("잔여 재고 : " + quantity + "개");
+                return false;
+            }
+
+
+            if (salePrice == null) {
+                $("#spanPrice").text(comma(qty * price) + " 원");
+            }
+            if (salePrice != null) {
+                $("#spanPrice").text(comma(qty * salePrice) + " 원");
+            }
+        })
+
+        $(".minus").on("click", function () {
+            var $div = $(this).closest('div');
+            var qty = parseInt($div.find('input[name=qty]').val(), 10);
+            var priceTxt = parseFloat($("#spanPrice").text().replace(/,/g, "").replace(" 원", ""));
+
+            var price = parseFloat($('input[name=inputPrice]').val()) || 0;
+            var salePrice = parseFloat($('input[name=inputSalePrice]').val()) || 0;
+
+            if (isNaN(priceTxt)) {
+                priceTxt = 0; // 기본값 설정
+            }
+
+            // 수량이 1일 때, 가격을 원래 가격으로 설정
+            if (qty === 1) {
+                var newPrice = salePrice || price;
+                $("#spanPrice").text(comma(newPrice) + " 원");
+                return false;
+            }
+
+            // 할인 가격이 설정된 경우
+            if (salePrice) {
+                $("#spanPrice").text(comma(priceTxt - salePrice) + " 원");
+            } else {
+                $("#spanPrice").text(comma(priceTxt - price) + " 원");
+            }
+        });
+
+        $(".close").click(function () {
+            $(".layerSize").hide();
+            $(".spanLayerSize").hide();
+            $(".qty").hide();
+            $(".close").hide();
+            $('.count').val(1);
+            $("#selectBox").val("0").prop("selected", true);
+            $("#spanPrice").text(0 + " 원");
+        })
+
+        $(document).ready(function () {
+            $("#selectBox").change(function () {
+                var selectedValue = $(this).val();
+                console.log("선택된 값:", selectedValue);
+                // 추가 로직 작성
+                if (selectedValue == '0') {
+                    $(".layerSize").hide();
+                    $(".qty").hide();
+                    $(".close").hide();
+                    $('.count').val(1);
+                    $("#spanPrice").text(0 + " 원");
+                } else{
+                    $(".layerSize").show();
+                    $(".layerSize").text(selectedValue);
+                    $(".qty").show();
+                    $(".close").show();
+
+                    var price = $('input[name=inputPrice]').val();
+                    var salePrice = $('input[name=inputSalePrice]').val();
+
+                    var displayPrice = salePrice ? salePrice : price;
+                    $("#spanPrice").text(comma(displayPrice) + " 원");
+                }
+            });
+        });
+
+        $('.count').prop('disabled', true);
+        $(document).on('click', '.plus', function () {
+            $('.count').val(parseInt($('.count').val()) + 1);
+        });
+        $(document).on('click', '.minus', function () {
+            $('.count').val(parseInt($('.count').val()) - 1);
+            if ($('.count').val() == 0) {
+                $('.count').val(1);
+            }
+        });
+
+
+        function comma(str) {
+            // 입력이 숫자인지 확인 후 문자열로 변환
+            var num = parseFloat(str);
+            if (isNaN(num)) {
+                return str; // 숫자가 아닐 경우 원래 문자열 반환
+            }
+            // 숫자로 변환한 후 천 단위로 구분
+            return num.toString().replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+        }
+
+        $('#likeButton').on('click', function () {
+            if ($('#likeButton').hasClass('active')) {
+                $(this).removeClass('active');
+            } else {
+                $(this).addClass('active');
+            }
+        })
+
+        $('#cartButton').on('click', function () {
+
+            var user = $('input[name=anonymous]').val();
+            var amount = $('#qty').val()
+            var selectVal = $("#selectBox option:selected").val();
+            var priceTxt = parseFloat($("#spanPrice").text().replace(/,/g, "").replace(" 원", ""));
+
+            if (isNaN(priceTxt)) {
+                priceTxt = 0; // 기본값 설정
+            }
+
+            if (user == 'anonymous') {
+                if (confirm("로그인 후 이용가능합니다. 이동하시겠습니까?")) {
+                    location.href = "/user/login"
+                    return false;
+                } else {
+                    return false;
+                }
+            } else {
+                if (selectVal == 0) {
+                    alert("옵션을 선택해 주세요");
+                    return false;
+                }
+
+                alert("장바구니에 추가 되었습니다.");
+
+                $cartForm = $('form[name=cartForm]');
+                $cartForm.find('input[name=amount]').val(amount);
+                $cartForm.find('input[name=price]').val(priceTxt);
+                $cartForm.submit();
+            }
+        })
+
+        $("#buyBtn").on('click', function () {
+            var productId = $('input[name=productId]').val();
+            var amount = $('#qty').val()
+            var user = $('input[name=anonymous]').val();
+            var selectVal = $("#selectBox option:selected").val();
+            var priceTxt = parseFloat($("#spanPrice").text().replace(/,/g, "").replace(" 원", ""));
+
+            if (isNaN(priceTxt)) {
+                priceTxt = 0; // 기본값 설정
+            }
+
+            if (user == 'anonymous') {
+                if (confirm("로그인 후 이용가능합니다. 이동하시겠습니까?")) {
+                    location.href = "/members/login"
+                    return false;
+                } else {
+                    return false;
+                }
+            } else {
+                if (selectVal == 0) {
+                    alert("옵션을 선택해 주세요");
+                    return false;
+                }
+                location.href = "/product/detail/order?productId=" + productId + "&amount=" + amount + "&price=" + priceTxt;
+            }
+        });
+
+    });
+</script>
+<style>
+
+    .layerSize {
+        display: none;
+    }
+
+    .qty .count {
+        color: #000;
+        display: inline-block;
+        vertical-align: top;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 17px;
+        padding: 0 2px;
+        min-width: 35px;
+        text-align: center;
+    }
+
+    .qty .plus {
+        cursor: pointer;
+        display: inline-block;
+        vertical-align: top;
+        color: white;
+        width: 15px;
+        height: 15px;
+        font: 15px/1 Arial, sans-serif;
+        text-align: center;
+        border-radius: 50%;
+    }
+
+    .qty .minus {
+        cursor: pointer;
+        display: inline-block;
+        vertical-align: top;
+        color: white;
+        width: 15px;
+        height: 15px;
+        font: 15px/1 Arial, sans-serif;
+        text-align: center;
+        border-radius: 50%;
+        background-clip: padding-box;
+    }
+
+    .qty {
+        display: none;
+        position: absolute;
+        margin-top: -25px;
+        margin-left: 455px;
+    }
+
+    .minus:hover {
+        background-color: #717fe0 !important;
+    }
+
+    .plus:hover {
+        background-color: #717fe0 !important;
+    }
+
+    /*Prevent text selection*/
+    span {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
+
+    input {
+        border: 0;
+        width: 2%;
+    }
+
+    nput::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input:disabled {
+        background-color: white;
+    }
+
+    .close {
+        display: none;
+        border: 0;
+        outline: none;
+        background: none;
+        position: absolute;
+        margin-top: -37px;
+        margin-left: 555px;
+    }
+
+    .close:after {
+        display: inline-block;
+        content: "\00d7";
+        font-size: 15pt;
+    }
+
+    html,
+    body {
+        height: 100%;
+        display: flex;
+        flex-flow: column;
+        margin: 0;
+    }
+
+    .wrapper {
+        flex: 1;
+    }
+
+    .starR {
+        background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
+        background-size: auto 100%;
+        width: 15px;
+        height: 15px;
+        display: inline-block;
+        text-indent: -9999px;
+    }
+
+    .starR.on {
+        background-position: 0 0;
+
+    }
+
+    .review-list ul li .left span {
+        width: 32px;
+        height: 32px;
+        display: inline-block;
+    }
+
+    .review-list ul li .left {
+        flex: none;
+        max-width: none;
+        margin: 0 10px 0 0;
+    }
+
+    .review-list ul li .left span img {
+        border-radius: 50%;
+    }
+
+    .review-list ul li .right h4 {
+        font-size: 16px;
+        margin: 0;
+        display: flex;
+    }
+
+    .review-list ul li .right h4 .gig-rating {
+        display: flex;
+        align-items: center;
+        margin-left: 10px;
+        color: #ffbf00;
+    }
+
+    .review-list ul li .right h4 .gig-rating svg {
+        margin: 0 4px 0 0px;
+    }
+
+    .country .country-flag {
+        width: 16px;
+        height: 16px;
+        vertical-align: text-bottom;
+        margin: 0 7px 0 0px;
+        border: 1px solid #fff;
+        border-radius: 50px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .country .country-name {
+        color: #95979d;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .review-list ul li {
+        border-bottom: 1px solid #dadbdd;
+        padding: 0 0 30px;
+        margin: 0 0 30px;
+    }
+
+    .review-list ul li .right {
+        flex: auto;
+    }
+
+    .review-list ul li .review-description {
+        margin: 20px 0 0;
+    }
+
+    .review-list ul li .review-description p {
+        font-size: 14px;
+        margin: 0;
+    }
+
+    .review-list ul li .publish {
+        font-size: 13px;
+        color: #95979d;
+    }
+
+    .review-section h4 {
+        font-size: 20px;
+        color: #222325;
+        font-weight: 700;
+    }
+
+    .review-section .stars-counters tr .stars-filter.fit-button {
+        padding: 6px;
+        border: none;
+        color: #4a73e8;
+        text-align: left;
+    }
+
+    .review-section .fit-progressbar-bar .fit-progressbar-background {
+        position: relative;
+        height: 8px;
+        background: #efeff0;
+        -webkit-box-flex: 1;
+        -ms-flex-positive: 1;
+        flex-grow: 1;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        background-color: #ffffff;;
+        border-radius: 999px;
+    }
+
+    .review-section .stars-counters tr .star-progress-bar .progress-fill {
+        background-color: #ffb33e;
+    }
+
+    .review-section .fit-progressbar-bar .progress-fill {
+        background: #2cdd9b;
+        background-color: rgb(29, 191, 115);
+        height: 100%;
+        position: absolute;
+        left: 0;
+        z-index: 1;
+        border-radius: 999px;
+    }
+
+    .review-section .fit-progressbar-bar {
+        display: flex;
+        align-items: center;
+    }
+
+    .review-section .stars-counters td {
+        white-space: nowrap;
+    }
+
+    .review-section .stars-counters tr .progress-bar-container {
+        width: 100%;
+        padding: 0 10px 0 6px;
+        margin: auto;
+    }
+
+    .review-section .stars-counters td.star-num {
+        color: #4a73e8;
+    }
+
+    .review-section {
+        border-bottom: 1px solid #dadbdd;
+        padding-bottom: 24px;
+        margin-bottom: 34px;
+        padding-top: 64px;
+    }
+
+    .review-section select, .review-section .select2-container {
+        width: 188px !important;
+        border-radius: 3px;
+    }
+
+    ul, ul li {
+        list-style: none;
+        margin: 0px;
+    }
+
+    .helpful-thumbs, .helpful-thumb {
+        display: flex;
+        align-items: center;
+        font-weight: 700;
+    }
+
+</style>
+<body>
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="/">Start Bootstrap</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">내 정보</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/user/info">회원 정보</a></li>
+                        <li>
+                            <hr class="dropdown-divider"/>
+                        </li>
+                        <li><a class="dropdown-item" href="/user/order/orderList">주문내역</a></li>
+                        <li><a class="dropdown-item" href="/user/product/inquiry">문의하기</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <a href="/member/product/cart" class="btn btn-outline-dark" role="button">
+                    <i class="bi-cart-fill me-1"></i>
+                    Cart
+                    <span class="badge bg-dark text-white ms-1 rounded-pill" th:text="${cartCount}">0</span>
+                </a>
+            </form>
+            <a sec:authorize="!isAuthenticated()" href="/member/login" class="btn btn-outline-dark" role="button">
+                <i class="bi-person-fill me-1"></i>
+                login
+            </a>
+            <a sec:authorize="isAuthenticated()" href="/member/logout" class="btn btn-outline-dark" role="button">
+                <i class="bi-person-fill me-1"></i>
+                logout
+            </a>
+        </div>
+    </div>
+</nav>
+<!-- Product section-->
+<div class="wrapper">
+    <input type="hidden" sec:authorize="!isAuthenticated()" name="anonymous" value="anonymous"/>
+    <section class="py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="row gx-4 gx-lg-5 align-items-center">
+                <div class="col-md-6"><img style="height: 500px;" class="card-img-top mb-5 mb-md-0"
+                                           th:src="${detail.urlFilename}" alt="..."/></div>
+                <div class="col-md-6">
+                    <!--                        <div class="small mb-1">SKU: BST-498</div>-->
+                    <h1 class="display-5 fw-bolder" th:text="${detail.productName}">Shop item template</h1>
+                    <div class="starRev">
+                        <span class="starR on"></span>
+                        <span class="starR on"></span>
+                        <span class="starR on"></span>
+                        <span class="starR on"></span>
+                        <span class="starR on"></span>
+<!--                        <span class="starR"-->
+<!--                              th:classappend="${detail.reviewCnt != 0 && detail.reviewScore/detail.reviewCnt >= 2} ? 'on'"></span>-->
+<!--                        <span class="starR"-->
+<!--                              th:classappend="${detail.reviewCnt != 0 && detail.reviewScore/detail.reviewCnt >= 3} ? 'on'"></span>-->
+<!--                        <span class="starR"-->
+<!--                              th:classappend="${detail.reviewCnt != 0 && detail.reviewScore/detail.reviewCnt >= 4} ? 'on'"></span>-->
+<!--                        <span class="starR"-->
+<!--                              th:classappend="${detail.reviewCnt != 0 && detail.reviewScore/detail.reviewCnt == 5} ? 'on'"></span>-->
+                    </div>
+                    <div class="fs-5 mb-2">
+                        <span th:if="${detail.isSaleYn()}" th:text="${#numbers.formatInteger(detail.price, 0, 'COMMA')}"
+                              class="text-decoration-line-through">$45.00</span>
+                        <span th:if="${detail.isSaleYn()}"
+                              th:text="${#numbers.formatInteger(detail.price - (detail.price * detail.discountRate), 0, 'COMMA')}">$40.00</span>
+                        <span th:if="${!detail.isSaleYn()}"
+                              th:text="${#numbers.formatInteger(detail.price, 0, 'COMMA')}">$40.00</span>
+                    </div>
+                    <p class="lead" th:text="${detail.description}"></p>
+                    누적판매: <span th:text="${detail.salesCnt}"></span><br>
+                    <!--                        구매후기: <span ></span><br>-->
+                    <span th:if="${detail.isSaleYn()}">할인종료: </span><span th:if="${detail.isSaleYn()}"
+                                                                          th:text="${detail.discountEndDate}"></span>
+                    <select class="form-select mt-2" aria-label="Default select example" id="selectBox">
+                        <option value="0">옵션</option>
+                        <option th:if="${detail.quantity != null && detail.quantity != 0}" th:value="${detail.productName}" th:text="${detail.productName}">상품이름</option>
+                        <option th:if="${detail.quantity == 0}" value="Zero" disabled>품절</option>
+                    </select>
+
+                    <div class="layerSize form-control">옵션</div>
+                    <div class="qty">
+                        <span class="minus bg-dark">-</span>
+                        <input type="number" class="count" id="qty" name="qty" value="1">
+                        <span class="plus bg-dark">+</span>
+                    </div>
+                    <button class="close close1"></button>
+                    <div class="layerPrice form-control">총결제금액:
+                        <input name="inputSalePrice" type="hidden" th:if="${detail.isSaleYn()}"
+                               th:value="${detail.price - (detail.price * detail.discountRate)}"/>
+                        <input name="inputPrice" type="hidden" th:if="${!detail.isSaleYn()}"
+                               th:value="${detail.price}"/>
+                        <span id="spanPrice" style="right: 250px; position: absolute;">0 원</span>
+                        <!--                            th:text="${#numbers.formatInteger(detail.price, 0, 'COMMA') + ' 원'}"-->
+                    </div>
+
+                    <div class="d-flex mt-2">
+                        <button class="btn btn-outline-dark flex-shrink-0" type="button" id="buyBtn">
+                            바로 구매
+                        </button>
+                        <form name="cartForm" method="post" th:action="@{/member/product/addCart}">
+                            <input type="hidden" name="productId" th:value="${detail.productId}"/>
+                            <input type="hidden" name="productName" th:value="${detail.productName}"/>
+                            <input type="hidden" name="urlFilename" th:value="${detail.urlFilename}"/>
+                            <input type="hidden" name="quantity" th:value="${detail.quantity}"/>
+                            <input type="hidden" name="amount"/>
+                            <input type="hidden" name="price"/>
+                            <button id="cartButton" class="btn btn-outline-dark flex-shrink-0 mx-1" type="submit">
+                                <i class="bi-cart-fill me-1"></i>
+                                장바구니 추가
+                            </button>
+                        </form>
+                        <form method="post" th:action="@{/member/product/like}">
+                            <input type="hidden" name="productId" th:value="${detail.productId}"/>
+                            <button id="likeButton" th:classappend="${result} ? 'active'"
+                                    class="btn btn-outline-dark flex-shrink-0" type="submit">
+                                <i class="bi-heart me-1"></i>
+                                좋아요
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
+</footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="/js/scripts.js"></script>
+</body>
+</html>

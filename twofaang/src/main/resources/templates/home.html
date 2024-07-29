@@ -38,7 +38,7 @@
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="/">Start Bootstrap</a>
+        <a class="navbar-brand" href="/">Twofaang</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
                 class="navbar-toggler-icon"></span></button>
@@ -101,8 +101,8 @@
             <div class="col mb-5" th:each="x : ${list}">
                 <div class="card h-100">
                     <!-- Sale badge-->
-<!--                    <div th:if="${x.isSaleYn()}" class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale-->
-<!--                    </div>-->
+                    <div th:if="${x.isSaleYn()}" class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale
+                    </div>
                     <!-- Product image-->
                     <img class="card-img-top" th:src="@{${x.getUrlFilename()}}" alt="..."/>
                     <!-- Product details-->
@@ -126,7 +126,7 @@
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" th:href="@{/templates/member/product/detail(id=${x.productId})}">View options</a></div>
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto" th:href="@{/product/detail(id=${x.productId})}">View options</a></div>
                     </div>
                 </div>
             </div>
