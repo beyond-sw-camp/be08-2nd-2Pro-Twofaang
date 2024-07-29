@@ -23,6 +23,9 @@ public class Product {
     @Column(name = "category_id")
     private long categoryId; // 카테고리번호
 
+    @Column(name = "keyword")
+    private String keyword;
+
     @Column(name = "product_name")
     private String productName; // 상품이름
 

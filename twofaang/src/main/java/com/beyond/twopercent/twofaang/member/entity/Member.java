@@ -2,6 +2,8 @@ package com.beyond.twopercent.twofaang.member.entity;
 
 import com.beyond.twopercent.twofaang.member.entity.enums.Role;
 import com.beyond.twopercent.twofaang.member.entity.enums.Status;
+
+import com.beyond.twopercent.twofaang.order.entity.Order;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +13,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
+import java.util.List;
+
 
 @Entity
 @Data
@@ -67,5 +71,9 @@ public class Member {
     private Status status = Status.Y;
 
     @Column(name = "point", nullable = false)
-    private int point = 0;
+    private int point = 0; // 포인트
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> orders; // 주문 목록
 }
+

@@ -1,62 +1,77 @@
 package com.beyond.twopercent.twofaang.product.controller;
 
-import com.beyond.twopercent.twofaang.product.dto.CategoryDto;
-import com.beyond.twopercent.twofaang.product.dto.ProductAddDTO;
-import com.beyond.twopercent.twofaang.product.entity.Category;
-import com.beyond.twopercent.twofaang.product.repository.CategoryRepository;
+import com.beyond.twopercent.twofaang.member.dto.MemberResponseDto;
+import com.beyond.twopercent.twofaang.member.entity.Member;
+import com.beyond.twopercent.twofaang.member.repository.MemberRepository;
+import com.beyond.twopercent.twofaang.member.service.MemberService;
+import com.beyond.twopercent.twofaang.product.dto.ProductDto;
+import com.beyond.twopercent.twofaang.product.entity.Product;
+import com.beyond.twopercent.twofaang.product.repository.ProductRepository;
 import com.beyond.twopercent.twofaang.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.UUID;
+import java.security.Principal;
+import java.util.Optional;
+
+import static java.lang.Long.parseLong;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/product")
 public class ProductController {
 
     private final ProductService productService;
-    private final CategoryRepository categoryRepository;
+    private final MemberService memberService;
+    private final ProductRepository productRepository;
+    private final MemberRepository memberRepository;
 
-    @GetMapping("/admin/product/add.do")
-    public String addProductPage(Model model){
+    @GetMapping("/detail")
+    public String detatilProdcct(Model model, @RequestParam("id") long id
+            , @PageableDefault(size = 5, sort = "regDt", direction = Sort.Direction.DESC) Pageable pageable
+            , Principal principal){
 
-        List<Category> categories = categoryRepository.findAll();
+        ProductDto detail = productService.detail(id);
+        model.addAttribute("detail", detail);
 
-        List<CategoryDto> categoryList = CategoryDto.of(categories);
-
-        model.addAttribute("categoryList", categoryList);
-        return "admin/product/add";
+        return "/member/product/detail";
     }
 
-    @PostMapping("/admin/product/add.do")
-    public String addProduct(ProductAddDTO parameter, MultipartFile file) throws IOException {
+    @GetMapping("/detail/order")
+    public String detailOrder(@RequestParam("productId") String productId,
+                              @RequestParam("amount") String amount,
+                              @RequestParam("price") String price,
+                              Model model){
 
-        // 파일 저장 로직
-        String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files/";
+        Product product = productRepository.findById(parseLong(productId))
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 상품"));
 
-        UUID uuid = UUID.randomUUID();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName(); // 사용자 Email 가져옴
 
-        String fileName = uuid + "_" + file.getOriginalFilename();
+        Optional<Member> optionalMember = memberRepository.findByEmail(userId);
 
-        File saveFile = new File(projectPath, fileName);
+        if(optionalMember.isPresent()){
+            Member member = optionalMember.get();
+        }
 
-        file.transferTo(saveFile);
 
-        parameter.setFilename(fileName);
-        parameter.setUrlFilename("/files/" + fileName);
 
-        boolean result = productService.add(parameter);
+        model.addAttribute("product", product);
+        model.addAttribute("amount", amount);
+        model.addAttribute("price", price);
 
-        return "redirect:/admin/main.do";
+        return "member/product/order";
     }
-
 
 
 }

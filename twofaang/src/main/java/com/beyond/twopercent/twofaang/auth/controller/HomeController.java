@@ -26,7 +26,7 @@ public class HomeController {
                        @PageableDefault(size = 8, sort = "productId", direction = Sort.Direction.DESC) Pageable pageable,
                        Principal principal) {
 
-        Page<Product> list = productRepository.findByProductNameContainingOrDescriptionContaining(searchText, searchText, pageable);
+        Page<Product> list = productRepository.findByProductNameContainingOrDescriptionContainingOrKeywordContaining(searchText, searchText, searchText, pageable);
 
         int startPage = 1;
         int endPage = list.getTotalPages();
