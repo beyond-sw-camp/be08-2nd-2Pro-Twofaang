@@ -7,6 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Data
@@ -27,6 +30,10 @@ public class Coupon {
     @Column(name = "coupon_name")
     private String couponName;
 
+    @Column(name = "coupon_deadline")
+    private LocalDate couponDeadline;
+
     @Column(name = "discount_rate", precision = 5, scale = 2)
     private int discountRate;
+
 }

@@ -6,7 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.Date;
+
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -20,9 +21,6 @@ public class CouponBox {
     @Column(name = "couponbox_id")
     private Long couponBoxId;
 
-    @Column(name = "coupon_id")
-    private long couponId;
-
     @Column(name = "member_id")
     private long memberId;
 
@@ -30,5 +28,10 @@ public class CouponBox {
     private boolean isUsed;
 
     @Column(name = "expired_date")
-    private Date expiredDate;
+    private LocalDate expiredDate;
+
+    @ManyToOne
+    @JoinColumn(name = "coupon_id")
+    private Coupon coupon;
+
 }

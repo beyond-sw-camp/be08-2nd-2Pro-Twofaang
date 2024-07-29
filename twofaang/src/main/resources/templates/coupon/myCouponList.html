@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coupon List</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .action-button {
+            padding: 8px 12px;
+            margin: 4px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+            text-align: center;
+            text-decoration: none;
+        }
+        .action-button:hover {
+            background-color: #0056b3;
+        }
+        .delete-button {
+            background-color: #dc3545;
+        }
+        .delete-button:hover {
+            background-color: #c82333;
+        }
+        .error-message {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<h1>My Coupons</h1>
+<div th:if="${param.error}" class="error-message">
+    <p th:text="${param.error}"></p>
+</div>
+<table>
+    <thead>
+    <tr>
+        <th>Code</th>
+        <th>Name</th>
+        <th>Deadline</th>
+        <th>Discount Rate</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="coupon : ${coupons}">
+        <td th:text="${coupon.coupon.couponCode}"></td>
+        <td th:text="${coupon.coupon.couponName}"></td>
+        <td th:text="${coupon.coupon.couponDeadline}"></td>
+        <td th:text="${coupon.coupon.discountRate} + '%'"></td>
+        <td>
+            <form th:action="@{/couponbox/delete}" method="post" style="display:inline;">
+                <input type="hidden" name="_method" value="delete" />
+                <input type="hidden" name="couponBoxId" th:value="${coupon.couponBoxId}" />
+                <button type="submit" class="action-button delete-button">Delete Coupon</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
