@@ -2,50 +2,64 @@ package com.beyond.twopercent.twofaang.member.controller;
 
 import com.beyond.twopercent.twofaang.member.dto.CouponRequestDto;
 import com.beyond.twopercent.twofaang.member.entity.Coupon;
-import com.beyond.twopercent.twofaang.member.repository.CouponRepository;
 import com.beyond.twopercent.twofaang.member.service.CouponService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
-@RestController
+//@RestController
+@Controller
 @RequiredArgsConstructor
-@RequestMapping("/admin/coupons")
 public class CouponController {
 
     private final CouponService couponService;
-    private final CouponRepository couponRepository;
 
     // 모든 쿠폰 리스트 조회
-    @GetMapping("/list")
+    @GetMapping("/admin/coupons/list")
     public List<Coupon> getAllCoupons() {
         return couponService.getAllCoupons();
     }
 
+
     // 쿠폰 아이디로 특정 쿠폰 조회
-    @GetMapping("/{couponId}")
-    public Optional<Coupon> getCoupon(@PathVariable Long couponId) {
-        return couponRepository.findById(couponId);
+    @GetMapping("/admin/coupons/{couponCode}")
+    public ResponseEntity<Coupon> getCouponById(@PathVariable String couponCode) {
+        Coupon coupon = couponService.getCouponByCode(couponCode);
+
+        return coupon != null ? ResponseEntity.ok(coupon) : ResponseEntity.notFound().build();
     }
 
-    // couponId로 특정 쿠폰 조회
-    @PutMapping("/update/{couponId}")
-    public Coupon updateCoupon(@PathVariable Long couponId, @RequestBody CouponRequestDto request) {
-        return couponService.updateCoupon(couponId, request);
+    // couponId로 특정 쿠폰 수정
+    @PutMapping("/admin/coupons/update/{couponCode}")
+    public ResponseEntity<Coupon> updateCoupon(@PathVariable String couponCode, @RequestBody CouponRequestDto request, String category){
+        Coupon coupon = couponService.updateCoupon(couponCode, request, category);
+
+        return coupon != null ? ResponseEntity.ok(coupon) : ResponseEntity.notFound().build();
     }
 
     // 쿠폰 추가
-    @PostMapping("/add")
-    public Coupon addCoupon(@RequestBody CouponRequestDto request) {
-        return couponService.addCoupon(request);
+    @PostMapping("/admin/coupons/add")
+    public Coupon addCoupon(@RequestBody CouponRequestDto request, String category) {
+        return couponService.addCoupon(request, category);
     }
 
     // couponId로 특정 쿠폰을 삭제
-    @DeleteMapping("/delete/{couponId}")
+    @DeleteMapping("/admin/coupons/delete/{couponId}")
     public void deleteCoupon(@PathVariable Long couponId) {
         couponService.deleteCoupon(couponId);
+    }
+
+    // 마감일 지난 쿠폰을 제거하고 출력
+    @GetMapping("/coupon/list")
+    public String getCoupons(Model model) {
+        List<Coupon> coupons = couponService.getAllEnableCoupons();
+        model.addAttribute("coupons", coupons);
+
+        return "coupon/couponList";
     }
 
 
