@@ -11,7 +11,7 @@ public interface MemberService {
 
     List<MemberResponseDto> getAllMembers();
 
-    MemberResponseDto updateMember(String email, ModifyMemberRequestDto memberRequestDto);
+    void updateMember(MemberResponseDto memberDto);
 
     MemberResponseDto updateMemberPoint(String email, int point);
 
@@ -19,5 +19,5 @@ public interface MemberService {
 
     MemberResponseDto getMemberByEmail(String email);
 
-    void SetTempPassword(String to, String authNum);
+    String SetTempPassword(String email, String tempPW);
 }

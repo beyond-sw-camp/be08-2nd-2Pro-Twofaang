@@ -6,6 +6,7 @@ import com.beyond.twopercent.twofaang.member.entity.Member;
 import com.beyond.twopercent.twofaang.member.entity.enums.Status;
 import com.beyond.twopercent.twofaang.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,12 +18,13 @@ import java.util.stream.Collectors;
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
     public MemberResponseDto getCurrentMemberInfo(String email) {
-            Member member = memberRepository.findByEmail(email)
-                    .orElseThrow(() -> new RuntimeException("존재하지 않는 회원"));
-            return convertToDto(member);
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 회원"));
+        return convertToDto(member);
     }
 
     @Override
@@ -34,18 +36,14 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberResponseDto updateMember(String email, ModifyMemberRequestDto requestDto) {
-        // 이메일로 회원 조회
-        Member member = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 회권"));
-
-        // 회원 정보 업데이트
-        member.setName(requestDto.getName());
-        member.setMobile(requestDto.getMobile());
-
-        // 저장 및 반환
-        Member updatedMember = memberRepository.save(member);
-        return convertToDto(updatedMember);
+    public void updateMember(MemberResponseDto memberDto) {
+        Member member = memberRepository.findByEmail(memberDto.getEmail()).orElseThrow(() -> new RuntimeException("Member not found"));
+        member.setName(memberDto.getName());
+        member.setMobile(memberDto.getMobile());
+        member.setAddr(memberDto.getAddr());
+        member.setAddrDetail(memberDto.getAddrDetail());
+        member.setZipcode(memberDto.getZipcode());
+        memberRepository.save(member);  // 변경된 내용 저장
     }
 
 
@@ -85,9 +83,20 @@ public class MemberServiceImpl implements MemberService {
         return convertToDto(member);
     }
 
+    // 임시 비밀번호로 비밀번호 변경
     @Override
-    public void SetTempPassword(String to, String authNum) {
+    public String SetTempPassword(String email, String tempPW) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 회원"));
 
+        try {
+            member.setPassword(bCryptPasswordEncoder.encode(tempPW));
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("상태 값 이상함");
+        }
+
+        member = memberRepository.save(member);
+        return member.getName().toString() + "님의 임시 비밀번호가 발급되었습니다.\n" + "가입하신 이메일을 확인해주세요";
     }
 
     // DTO로 변환 후 반환
@@ -101,6 +110,10 @@ public class MemberServiceImpl implements MemberService {
                 .role(member.getRole())
                 .status(member.getStatus())
                 .point(member.getPoint())
+                .zipcode(member.getZipcode()) // 우편번호 추가
+                .addr(member.getAddr()) // 주소 추가
+                .addrDetail(member.getAddrDetail()) // 상세 주소 추가
                 .build();
     }
+
 }

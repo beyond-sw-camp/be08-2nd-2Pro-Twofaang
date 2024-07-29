@@ -20,6 +20,7 @@ import java.util.Arrays;
 public class CustomLogoutFilter extends GenericFilterBean {
     private final JWTUtil jwtUtil;
     private final RefreshRepository refreshRepository;
+
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         doFilter((HttpServletRequest) request, (HttpServletResponse) response, chain);
@@ -49,14 +50,14 @@ public class CustomLogoutFilter extends GenericFilterBean {
         System.out.println("refresh = " + refresh);
 
         // refresh token null
-        if(refresh == null){
+        if (refresh == null) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
         String category = jwtUtil.getCategory(refresh);
 
         // not refresh token
-        if(!category.equals("refresh")){
+        if (!category.equals("refresh")) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
@@ -64,7 +65,7 @@ public class CustomLogoutFilter extends GenericFilterBean {
         Boolean isExist = refreshRepository.existsByRefresh(refresh);
 
         // not exist in DB
-        if(!isExist){
+        if (!isExist) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
@@ -72,8 +73,12 @@ public class CustomLogoutFilter extends GenericFilterBean {
         // logout
         refreshRepository.deleteByRefresh(refresh);
 
-        Cookie cookie = CookieUtil.createCookie("refresh", null, 0);
-        response.addCookie(cookie);
+        Cookie refreshCookie = CookieUtil.createCookie("refresh", null, 0);
+        response.addCookie(refreshCookie);
+        Cookie accessCookie = CookieUtil.createCookie("access", null, 0);
+        response.addCookie(accessCookie);
         response.setStatus(HttpServletResponse.SC_OK);
+
+        response.sendRedirect("http://localhost:8080/");
     }
 }
