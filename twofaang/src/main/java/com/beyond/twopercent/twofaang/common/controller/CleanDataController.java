@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,9 +26,23 @@ public class CleanDataController {
 
     private final CleanDataService cleanDataService;
 
-    @GetMapping("/refresh")
-    @Scheduled(cron = "0 0/10 * * * *")
+    @DeleteMapping("/refresh")
+    @Scheduled(cron = "0 0/30 * * * *")
     public void CleanRefreshToken() {
-        cleanDataService.CleanRefreshToken();
+        try {
+            cleanDataService.cleanRefreshToken();
+        } catch (Exception e) {
+            log.error("Unexpected error occurred in scheduled task", e);
+        }
+    }
+
+    @DeleteMapping("/auth-code")
+    @Scheduled(cron = "0 0/30 * * * *")
+    public void CleanAuthCode() {
+        try {
+            cleanDataService.cleanAuthCode();
+        } catch (Exception e) {
+            log.error("Unexpected error occurred in scheduled task", e);
+        }
     }
 }

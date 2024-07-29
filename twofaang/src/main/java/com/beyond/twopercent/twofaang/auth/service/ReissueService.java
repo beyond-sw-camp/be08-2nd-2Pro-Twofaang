@@ -59,7 +59,7 @@ public class ReissueService {
 
         // new tokens
         String newAccess = jwtUtil.createJwt("access", username, role, 60 * 10 * 1000L);
-        Integer expiredS = 60 * 60 * 24;
+        Integer expiredS = 60 * 30; // 30분
         String newRefresh = jwtUtil.createJwt("refresh", username, role, expiredS * 1000L);
 
         // 기존 refresh DB 삭제, 새로운 refresh 저장

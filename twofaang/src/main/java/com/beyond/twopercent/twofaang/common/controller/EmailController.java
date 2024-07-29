@@ -27,7 +27,7 @@ public class EmailController {
                 .subject("[Twofanng]임시 비밀번호 발급")
                 .build();
 
-        emailService.sendMail(emailMessage, "password");
+        emailService.sendMail(emailMessage, "/common/password");
 
         return ResponseEntity.ok().build();
     }
@@ -40,7 +40,7 @@ public class EmailController {
                 .subject("[Twofanng]이메일 인증을 위한 인증 코드 발송")
                 .build();
 
-        String code = emailService.sendMail(emailMessage, "email");
+        String code = emailService.sendMail(emailMessage, "/common/email");
 
         EmailResponseDto emailResponseDto = new EmailResponseDto();
         emailResponseDto.setCode(code);

@@ -34,17 +34,23 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
         String email = customOAuth2Member.getEmail(); // DB 저장용 식별자
         String role = authentication.getAuthorities().iterator().next().getAuthority();
 
-        Integer expireS = 24 * 60 * 60;
-        String access = jwtUtil.createJwt("access", email, role, 60 * 10 * 1000L);
+        // refresh
+        Integer expireA = 60 * 10;  // 10분
+        // access
+        String access = jwtUtil.createJwt("access", email, role, expireA * 1000L);
+        response.addCookie(CookieUtil.createCookie("access", access, 60 * 10));
+
+        // refresh
+        Integer expireS = 60 * 30;  // 30분
+//        expireS = 10;
         String refresh = jwtUtil.createJwt("refresh", email, role, expireS * 1000L);
+        response.addCookie(CookieUtil.createCookie("refresh", refresh, expireS));
 
         // refresh 토큰 DB 저장
         refreshTokenService.saveRefresh(email, expireS, refresh);
 
-        response.addCookie(CookieUtil.createCookie("access", access, 60 * 10));
-        response.addCookie(CookieUtil.createCookie("refresh", refresh, expireS));
-
-        if (role.equals("ADMIN")) {
+        // equals
+        if (role.contains("ADMIN")) {
             response.sendRedirect("http://localhost:8080/admin/main.do");
         } else {
             response.sendRedirect("http://localhost:8080/");

@@ -14,4 +14,5 @@ public class JoinDTO {
     private String password;
     private String name;
     private String mobile;
+    private String authCode;
 }

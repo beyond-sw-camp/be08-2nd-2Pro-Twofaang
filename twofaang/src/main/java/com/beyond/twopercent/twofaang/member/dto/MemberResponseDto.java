@@ -3,6 +3,7 @@ package com.beyond.twopercent.twofaang.member.dto;
 import com.beyond.twopercent.twofaang.member.entity.enums.GradeName;
 import com.beyond.twopercent.twofaang.member.entity.enums.Role;
 import com.beyond.twopercent.twofaang.member.entity.enums.Status;
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,4 +25,7 @@ public class MemberResponseDto {
     private Role role;
     private Status status;
     private int point = 0; // 포인트
+    private String zipcode;
+    private String addr;
+    private String addrDetail;
 }

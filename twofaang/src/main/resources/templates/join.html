@@ -32,6 +32,52 @@
             alert(username + "님 환영합니다");
             window.location.href = "/login";
         }
+
+        function sendAuthCode(event) {
+            event.preventDefault();
+
+            var email = $('#email').val();
+
+            if(!email) {
+                alert("이메일을 입력해주세요.");
+                return;
+            }
+
+            $.ajax({
+                url: '/mails/email',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ email: email }),
+                success: function(data) {
+                    if (data.code) {
+                        alert("인증 코드가 이메일로 전송되었습니다.");
+                        // 인증 코드 입력 필드를 보여주는 로직 추가
+                    } else {
+                        alert("인증 코드 전송에 실패했습니다. 다시 시도해주세요.");
+                    }
+                },
+                error: function() {
+                    alert("서버 요청에 실패했습니다. 다시 시도해주세요.");
+                }
+            });
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+
+            var form = event.target;
+            var formData = $(form).serialize();
+
+            $.post('/join', formData, function(data) {
+                if(data.success) {
+                    showAlertAndRedirect(data.username);
+                } else {
+                    alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+                }
+            }).fail(function() {
+                alert("서버 요청에 실패했습니다. 다시 시도해주세요.");
+            });
+        }
     </script>
 </head>
 <body>
@@ -49,7 +95,17 @@
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                                    <input type="email" class="form-control" name="email" id="email" placeholder="Enter your Email" />
+                                    <input type="email" class="form-control" name="email" id="email" placeholder="Enter your Email" required />
+                                    <button type="button" class="btn btn-secondary ml-2" onclick="sendAuthCode(event)">인증 코드 발송</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="authCode" class="cols-sm-2 control-label">인증 코드 입력</label>
+                            <div class="cols-sm-10">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-key fa-lg" aria-hidden="true"></i></span>
+                                    <input type="text" class="form-control" name="authCode" id="authCode" placeholder="Enter the Authentication Code" required />
                                 </div>
                             </div>
                         </div>
@@ -58,7 +114,7 @@
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
-                                    <input type="text" class="form-control" name="name" id="name" placeholder="Enter your Username" />
+                                    <input type="text" class="form-control" name="name" id="name" placeholder="Enter your Username" required />
                                 </div>
                             </div>
                         </div>
@@ -67,7 +123,7 @@
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                    <input type="password" class="form-control" name="password" id="password" placeholder="Enter your Password" />
+                                    <input type="password" class="form-control" name="password" id="password" placeholder="Enter your Password" required />
                                 </div>
                             </div>
                         </div>
@@ -76,7 +132,7 @@
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                    <input type="password" class="form-control" name="confirm" id="confirm" placeholder="Confirm your Password" />
+                                    <input type="password" class="form-control" name="confirm" id="confirm" placeholder="Confirm your Password" required />
                                 </div>
                             </div>
                         </div>
@@ -84,8 +140,8 @@
                             <label for="mobile" class="cols-sm-2 control-label">전화번호 입력</label>
                             <div class="cols-sm-10">
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                    <input type="tel" class="form-control" name="mobile" id="mobile" placeholder="Enter your Phone" />
+                                    <span class="input-group-addon"><i class="fa fa-phone fa-lg" aria-hidden="true"></i></span>
+                                    <input type="tel" class="form-control" name="mobile" id="mobile" placeholder="Enter your Phone" required />
                                 </div>
                             </div>
                         </div>
@@ -104,23 +160,6 @@
         </div>
     </div>
 </div>
-
-<script>
-    function handleFormSubmit(event) {
-        event.preventDefault();
-
-        var form = event.target;
-        var formData = $(form).serialize();
-
-        $.post('/join', formData, function(data) {
-            if(data.success) {
-                showAlertAndRedirect(data.username);
-            } else {
-                alert("회원가입에 실패했습니다. 다시 시도해주세요.");
-            }
-        });
-    }
-</script>
 
 </body>
 </html>
