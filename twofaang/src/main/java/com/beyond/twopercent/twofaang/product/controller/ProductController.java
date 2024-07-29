@@ -1,6 +1,5 @@
 package com.beyond.twopercent.twofaang.product.controller;
 
-import com.beyond.twopercent.twofaang.member.dto.MemberResponseDto;
 import com.beyond.twopercent.twofaang.member.entity.Member;
 import com.beyond.twopercent.twofaang.member.repository.MemberRepository;
 import com.beyond.twopercent.twofaang.member.service.MemberService;
@@ -62,6 +61,17 @@ public class ProductController {
 
         if(optionalMember.isPresent()){
             Member member = optionalMember.get();
+            String[] email = member.getEmail().split("@");
+            String middleNum = member.getMobile().substring(3, 7);
+            String lastNum = member.getMobile().substring(7, 11);
+
+            String strEmail = email[0];
+            String emailDomain = email[1];
+            model.addAttribute("member", member);
+            model.addAttribute("middleNum", middleNum);
+            model.addAttribute("lastNum", lastNum);
+            model.addAttribute("strEmail", strEmail);
+            model.addAttribute("emailDomain", emailDomain);
         }
 
 
