@@ -1,18 +1,24 @@
 package com.beyond.twopercent.twofaang.inquiry.service;
 
+import com.beyond.twopercent.twofaang.inquiry.dto.CreateInquiryDto;
+import com.beyond.twopercent.twofaang.inquiry.dto.UpdateInquiryDto;
 import com.beyond.twopercent.twofaang.inquiry.entity.Inquiry;
-import com.beyond.twopercent.twofaang.inquiry.entity.InquiryEntity;
 
 import java.util.List;
 
 public interface InquiryService {
-    List<InquiryEntity> getAllInquiries();
 
-    InquiryEntity getInquiryById(long inquiryId);
+    List<Inquiry> getAllInquiries();
 
-    int addInquiry(InquiryEntity inquiry);
+    Inquiry getInquiryById(long inquiryId);
 
-    int updateInquiry(InquiryEntity inquiry);
+    void addInquiry(CreateInquiryDto createInquiryDto);
 
-    int deleteInquiry(long inquiryId);
+    void updateInquiry(long inquiryId, UpdateInquiryDto updateInquiryDto, long memberId);
+
+    void deleteInquiry(long inquiryId, long memberId, String password);
+
+    boolean isOwner(long inquiryId, long memberId);
+
+    boolean verifyPassword(long inquiryId, String password);
 }
