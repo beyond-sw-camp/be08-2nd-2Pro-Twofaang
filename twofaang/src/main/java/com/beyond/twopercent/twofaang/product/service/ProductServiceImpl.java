@@ -43,6 +43,9 @@ public class ProductServiceImpl implements ProductService{
             return false;
         }
 
+        System.out.println("================PRODUCT ADD=======================");
+        System.out.println("parameter = " + parameter);
+
         Category category = optionalCategory.get();
 
         Product product = Product.builder()
@@ -54,7 +57,7 @@ public class ProductServiceImpl implements ProductService{
                 .description(parameter.getDescription())
                 .quantity(parameter.getQuantity())
                 .price(parameter.getPrice())
-                .saleYn(parameter.isSaleYn())
+                .saleYn(parameter.getSaleYn())
                 .discountRate(parameter.getDiscountRate())
                 .discountEndDate(discountEndDate)
                 .filename(parameter.getFilename())
@@ -91,8 +94,6 @@ public class ProductServiceImpl implements ProductService{
             return false;
         }
 
-        System.out.println("@@@@@@@@@@@@parameter = " + parameter);
-
         Product product = optionalProduct.get();
         product.setCategoryId(parameter.getCategoryId());
         product.setKeyword(parameter.getCategoryName());
@@ -101,7 +102,7 @@ public class ProductServiceImpl implements ProductService{
         product.setDescription(parameter.getDescription());
         product.setQuantity(parameter.getQuantity());
         product.setPrice(parameter.getPrice());
-        product.setSaleYn(parameter.isSaleYn());
+        product.setSaleYn(parameter.getSaleYn());
         product.setDiscountRate(parameter.getDiscountRate());
         product.setDiscountEndDate(discountEndDate);
 
