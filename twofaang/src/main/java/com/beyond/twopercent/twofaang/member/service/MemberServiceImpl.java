@@ -22,9 +22,9 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberResponseDto getCurrentMemberInfo(String email) {
-            Member member = memberRepository.findByEmail(email)
-                    .orElseThrow(() -> new RuntimeException("존재하지 않는 회원"));
-            return convertToDto(member);
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 회원"));
+        return convertToDto(member);
     }
 
     @Override
@@ -36,22 +36,15 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberResponseDto updateMember(String email, ModifyMemberRequestDto requestDto) {
-        // 이메일로 회원 조회
-        Member member = memberRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("존재하지 않는 회원"));
-
-        // 회원 정보 업데이트
-        member.setName(requestDto.getName());
-        member.setMobile(requestDto.getMobile());
-
-        // 업데이트된 회원 정보 저장
-        Member updatedMember = memberRepository.save(member);
-
-        return convertToDto(updatedMember);
+    public void updateMember(MemberResponseDto memberDto) {
+        Member member = memberRepository.findByEmail(memberDto.getEmail()).orElseThrow(() -> new RuntimeException("Member not found"));
+        member.setName(memberDto.getName());
+        member.setMobile(memberDto.getMobile());
+        member.setAddr(memberDto.getAddr());
+        member.setAddrDetail(memberDto.getAddrDetail());
+        member.setZipcode(memberDto.getZipcode());
+        memberRepository.save(member);  // 변경된 내용 저장
     }
-
-
 
 
     @Override
@@ -117,6 +110,10 @@ public class MemberServiceImpl implements MemberService {
                 .role(member.getRole())
                 .status(member.getStatus())
                 .point(member.getPoint())
+                .zipcode(member.getZipcode()) // 우편번호 추가
+                .addr(member.getAddr()) // 주소 추가
+                .addrDetail(member.getAddrDetail()) // 상세 주소 추가
                 .build();
     }
+
 }

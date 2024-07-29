@@ -11,7 +11,7 @@ public interface MemberService {
 
     List<MemberResponseDto> getAllMembers();
 
-    MemberResponseDto updateMember(String email, ModifyMemberRequestDto memberRequestDto);
+    void updateMember(MemberResponseDto memberDto);
 
     MemberResponseDto updateMemberPoint(String email, int point);
 

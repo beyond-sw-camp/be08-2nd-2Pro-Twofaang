@@ -17,6 +17,9 @@
             <p><strong>등급:</strong> <span th:text="${member.gradeName}"></span></p>
             <p><strong>가입일:</strong> <span th:text="${#dates.format(member.joinDate, 'yyyy-MM-dd')}"></span></p>
             <p><strong>포인트:</strong> <span th:text="${member.point}"></span></p>
+            <p><strong>우편번호:</strong> <span th:text="${member.zipcode}"></span></p>
+            <p><strong>주소:</strong> <span th:text="${member.addr}"></span></p>
+            <p><strong>상세 주소:</strong> <span th:text="${member.addrDetail}"></span></p>
         </div>
     </div>
     <div class="mt-3">

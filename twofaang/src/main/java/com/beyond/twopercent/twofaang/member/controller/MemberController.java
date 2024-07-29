@@ -5,6 +5,7 @@ import com.beyond.twopercent.twofaang.auth.service.JoinService;
 import com.beyond.twopercent.twofaang.auth.service.ReissueService;
 import com.beyond.twopercent.twofaang.member.dto.ModifyMemberRequestDto;
 import com.beyond.twopercent.twofaang.member.dto.MemberResponseDto;
+import com.beyond.twopercent.twofaang.member.entity.Member;
 import com.beyond.twopercent.twofaang.member.entity.enums.Status;
 import com.beyond.twopercent.twofaang.member.service.MemberService;
 import com.beyond.twopercent.twofaang.auth.dto.form.CustomMemberDetails;
@@ -30,6 +31,7 @@ public class MemberController {
     private final MemberService memberService;
 
     private final ReissueService reissueService;
+
     @PostMapping("/reissue")
     @ResponseBody
     public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) {
@@ -39,30 +41,32 @@ public class MemberController {
     @GetMapping("/myinfo")
     public String myInfoPage(Model model, @AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
         String email = customMemberDetails.getEmail();
+        MemberResponseDto member = memberService.getMemberByEmail(email);
         MemberResponseDto memberResponseDto = memberService.getCurrentMemberInfo(email);
         model.addAttribute("member", memberResponseDto);
         return "/members/myinfo";  // 회원 정보 확인 페이지로 이동
     }
 
+
     @GetMapping("/edit")
-    public String editPage(Model model, @AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
+    public String editMemberInfo(@AuthenticationPrincipal CustomMemberDetails customMemberDetails, Model model) {
+        // 사용자 이메일을 가져와서 서비스 메서드 호출
         String email = customMemberDetails.getEmail();
-        MemberResponseDto memberResponseDto = memberService.getCurrentMemberInfo(email);
-        model.addAttribute("member", memberResponseDto);
-        return "/members/edit";  // 회원 정보 수정 페이지로 이동
+        MemberResponseDto member = memberService.getMemberByEmail(email);
+        if (member == null) {
+            // 오류 처리 로직 추가
+            throw new RuntimeException("Member not found");
+        }
+        model.addAttribute("detail", member);  // "detail"이라는 이름으로 모델에 추가
+        return "members/edit";  // 뷰의 이름
     }
 
+    // 회원 정보 수정 처리
     @PostMapping("/update")
-    @ResponseBody
-    public ResponseEntity<MemberResponseDto> updateMember(
-            @AuthenticationPrincipal CustomMemberDetails customMemberDetails,
-            @Valid @RequestBody ModifyMemberRequestDto requestDto
-    ) {
-        String email = customMemberDetails.getEmail();
-        MemberResponseDto updatedMember = memberService.updateMember(email, requestDto);
-        return ResponseEntity.ok(updatedMember);
+    public String updateMemberInfo(@ModelAttribute("detail") MemberResponseDto member) {
+        memberService.updateMember(member);
+        return "redirect:/members/myinfo";  // 정보 페이지로 리다이렉트
     }
-
 
 
     // 모든 회원 정보를 반환
@@ -77,7 +81,7 @@ public class MemberController {
     @GetMapping("{email}")
     @ResponseBody
     public ResponseEntity<MemberResponseDto> getMemberByEmail(
-        @PathVariable String email
+            @PathVariable String email
     ) {
         MemberResponseDto members = memberService.getMemberByEmail(email);
         return ResponseEntity.ok(members);
@@ -95,7 +99,7 @@ public class MemberController {
     }
 
     // 회원 탈퇴
-    @PutMapping("/leave")
+    @PutMapping("/withdraw")
     @ResponseBody
     public ResponseEntity<MemberResponseDto> updateMemberStatus(
             @AuthenticationPrincipal CustomMemberDetails customMemberDetails
