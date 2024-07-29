@@ -2,11 +2,14 @@ package com.beyond.twopercent.twofaang.order.service;
 
 import com.beyond.twopercent.twofaang.member.entity.Member;
 import com.beyond.twopercent.twofaang.member.repository.MemberRepository;
+import com.beyond.twopercent.twofaang.order.dto.OrderItemRequestDto;
+import com.beyond.twopercent.twofaang.order.dto.OrderItemResponseDto;
 import com.beyond.twopercent.twofaang.order.dto.OrderRequestDto;
 import com.beyond.twopercent.twofaang.order.dto.OrderResponseDto;
 import com.beyond.twopercent.twofaang.order.entity.Order;
 
 
+import com.beyond.twopercent.twofaang.order.entity.OrderItem;
 import com.beyond.twopercent.twofaang.order.entity.OrderState;
 import com.beyond.twopercent.twofaang.order.exception.InsufficientStockException;
 import com.beyond.twopercent.twofaang.order.exception.MemberNotFoundException;
@@ -34,21 +37,16 @@ public class OrderServiceImpl implements OrderService {
     // 모든 주문 조회
     @Override
     public List<OrderResponseDto> findAllOrderDtos() {
-        // Repository를 사용하여 모든 주문을 조회
         List<Order> orders = orderRepository.findAll();
-
-        // 조회한 주문 목록을 OrderResponseDto로 변환하여 리스트로 반환
         return orders.stream()
-                .map(this::convertToResponseDto) // 각 주문을 OrderResponseDto로 변환
-                .collect(Collectors.toList());  // 변환된 OrderResponseDto들을 리스트로 수집
+                .map(this::convertToResponseDto)
+                .collect(Collectors.toList());
     }
 
     // 특정 주문 조회
     @Override
     public OrderResponseDto findOrderById(Long orderId) {
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new OrderNotFoundException(orderId));
-
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException(orderId));
         return convertToResponseDto(order);
     }
 
@@ -56,7 +54,6 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderResponseDto> findOrdersByMemberId(Long memberId) {
         List<Order> orders = orderRepository.findByMember_MemberId(memberId);
-
         return orders.stream()
                 .map(this::convertToResponseDto)
                 .collect(Collectors.toList());
@@ -68,7 +65,6 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException(orderId));
         updateOrderFromDto(order, orderResponseDto);
         orderRepository.save(order);
-
         return convertToResponseDto(order);
     }
 
@@ -89,28 +85,37 @@ public class OrderServiceImpl implements OrderService {
                 .paymentMethod(orderRequestDto.getPaymentMethod())
                 .gradeDiscount(orderRequestDto.getGradeDiscount())
                 .couponDiscount(orderRequestDto.getCouponDiscount())
-                .realAmount(orderRequestDto.getRealAmount())
                 .orderState(OrderState.ORDERED)
                 .build();
 
         // 상품 목록을 조회하고 주문에 추가 및 총액 계산
         int totalPayment = 0;
-        for (Long productId : orderRequestDto.getProductIds()) {
-            Product product = productRepository.findById(productId)
-                    .orElseThrow(() -> new ProductNotFoundException(productId));
+        for (OrderItemRequestDto itemRequest : orderRequestDto.getOrderItems()) {
+            Product product = productRepository.findById(itemRequest.getProductId())
+                    .orElseThrow(() -> new ProductNotFoundException(itemRequest.getProductId()));
 
             // 재고 감소
-            if (product.getQuantity() < 1) {
+            if (product.getQuantity() < itemRequest.getQuantity()) {
                 throw new InsufficientStockException("상품 재고가 부족합니다.");
             }
-            product.setQuantity(product.getQuantity() - 1);
+            product.setQuantity(product.getQuantity() - itemRequest.getQuantity());
             productRepository.save(product);
 
-            totalPayment += product.getPrice(); // 상품 가격 합산
-            order.setProduct(product); // 주문에 상품 추가
+            int itemTotalPrice = product.getPrice() * itemRequest.getQuantity();
+            totalPayment += itemTotalPrice;
+
+            OrderItem orderItem = OrderItem.builder()
+                    .order(order)
+                    .product(product)
+                    .quantity(itemRequest.getQuantity())
+                    .price(itemTotalPrice)
+                    .build();
+            order.getOrderItems().add(orderItem);
         }
 
-        order.setTotalPayment(totalPayment); // 총 주문 금액 설정
+        order.setTotalPayment(totalPayment);
+        int realPayment = totalPayment - orderRequestDto.getGradeDiscount() - orderRequestDto.getCouponDiscount();
+        order.setRealPayment(realPayment); // 등급, 쿠폰 할인율 반영된 가격
 
         // 주문 저장
         orderRepository.save(order);
@@ -122,17 +127,23 @@ public class OrderServiceImpl implements OrderService {
     // 주문 상태 변경 메서드 추가
     @Override
     public void updateOrderState(Long orderId, OrderState orderState) {
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new OrderNotFoundException(orderId));
+        Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFoundException(orderId));
         order.setOrderState(orderState);
         orderRepository.save(order);
     }
 
     // DTO로 변환 후 반환
     private OrderResponseDto convertToResponseDto(Order order) {
+        List<OrderItemResponseDto> orderItems = order.getOrderItems().stream()
+                .map(orderItem -> OrderItemResponseDto.builder()
+                        .productId(orderItem.getProduct().getProductId())
+                        .quantity(orderItem.getQuantity())
+                        .price(orderItem.getPrice())
+                        .build())
+                .collect(Collectors.toList());
+
         return OrderResponseDto.builder()
                 .memberId(order.getMember().getMemberId())
-                .productId(order.getProduct().getProductId())
                 .deliveryId(order.getDelAddId())
                 .requestMsg(order.getRequestMsg())
                 .orderDate(order.getOrderDate())
@@ -140,17 +151,14 @@ public class OrderServiceImpl implements OrderService {
                 .paymentMethod(order.getPaymentMethod())
                 .gradeDiscount(order.getGradeDiscount())
                 .couponDiscount(order.getCouponDiscount())
-                .realAmount(order.getRealAmount())
+                .realPayment(order.getRealPayment())
                 .orderState(order.getOrderState())
-                .count(1) // 주문 수량은 여기서 1로 설정
+                .orderItems(orderItems) // 주문 항목 목록 설정
                 .build();
     }
 
-    // OrderResponseDto를 사용하여 Order 객체를 업데이트
+    // OrderResponseDto를 사용하여 Order 객체를 업데이트하는 메서드
     private void updateOrderFromDto(Order order, OrderResponseDto orderResponseDto) {
-        Product product = productRepository.findById(orderResponseDto.getProductId())
-                .orElseThrow(() -> new ProductNotFoundException(orderResponseDto.getProductId()));
-        order.setProduct(product);
         order.setDelAddId(orderResponseDto.getDeliveryId());
         order.setRequestMsg(orderResponseDto.getRequestMsg());
         order.setOrderDate(orderResponseDto.getOrderDate());
@@ -158,7 +166,23 @@ public class OrderServiceImpl implements OrderService {
         order.setPaymentMethod(orderResponseDto.getPaymentMethod());
         order.setGradeDiscount(orderResponseDto.getGradeDiscount());
         order.setCouponDiscount(orderResponseDto.getCouponDiscount());
-        order.setRealAmount(orderResponseDto.getRealAmount());
+        order.setRealPayment(orderResponseDto.getRealPayment());
         order.setOrderState(orderResponseDto.getOrderState());
+
+        // 주문 항목 업데이트
+        List<OrderItem> updatedOrderItems = orderResponseDto.getOrderItems().stream()
+                .map(orderItemDto -> {
+                    Product product = productRepository.findById(orderItemDto.getProductId())
+                            .orElseThrow(() -> new ProductNotFoundException(orderItemDto.getProductId()));
+
+                    return OrderItem.builder()
+                            .order(order)
+                            .product(product)
+                            .quantity(orderItemDto.getQuantity())
+                            .price(orderItemDto.getPrice())
+                            .build();
+                })
+                .collect(Collectors.toList());
+        order.setOrderItems(updatedOrderItems);
     }
 }

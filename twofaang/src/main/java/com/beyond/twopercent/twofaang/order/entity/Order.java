@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -28,9 +30,8 @@ public class Order {
     @JoinColumn(name = "member_id")
     private Member member; // 회원 번호
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
-    private Product product; // 상품 번호
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> orderItems = new ArrayList<>(); // 주문 항목 목록
 
     @Column(name = "del_add_id")
     private Long delAddId; // 배송지 번호
@@ -55,7 +56,7 @@ public class Order {
     private int couponDiscount; // 쿠폰 할인액
 
     @Column(name = "real_amount")
-    private int realAmount; // 실 결제가격
+    private int realPayment; // 실 결제가격
 
     @Column(name = "order_state")
     @Enumerated(EnumType.STRING)

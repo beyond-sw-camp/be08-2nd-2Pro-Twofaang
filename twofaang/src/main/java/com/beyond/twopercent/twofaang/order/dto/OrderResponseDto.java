@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @Builder
@@ -17,8 +18,6 @@ import java.time.LocalDateTime;
 public class OrderResponseDto {
 
     private Long memberId; // 회원 번호
-
-    private Long productId; // 상품 번호
 
     private Long deliveryId; // 배송지 번호
 
@@ -34,9 +33,9 @@ public class OrderResponseDto {
 
     private int couponDiscount; // 쿠폰 할인액
 
-    private int realAmount; // 실 결제가격
+    private int realPayment; // 실 결제가격
 
     private OrderState orderState; // 주문 상태
 
-    private int count; // 주문 수량
+    private List<OrderItemResponseDto> orderItems; // 주문 항목 목록
 }
