@@ -34,6 +34,14 @@ public class SignController {
         return "join";
     }
 
+    @GetMapping("/reset-password")
+    public String resetPasswordPage(@AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
+        if (customMemberDetails != null) {
+            return "redirect:/";  // 이미 로그인된 경우 메인 페이지로 리다이렉트
+        }
+        return "resetPassword";
+    }
+
     @PostMapping("/join")
     @ResponseBody
     public ResponseEntity<?> join(@ModelAttribute JoinDTO joinDto) {

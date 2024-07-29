@@ -20,4 +20,7 @@ public interface MemberService {
     MemberResponseDto getMemberByEmail(String email);
 
     String SetTempPassword(String email, String tempPW);
+
+    // 임시 비밀번호로 비밀번호 변경
+    String updatePassword(String email, String tempPW);
 }

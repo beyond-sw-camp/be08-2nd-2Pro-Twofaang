@@ -6,6 +6,7 @@ import com.beyond.twopercent.twofaang.common.repository.AuthCodeRepository;
 import com.beyond.twopercent.twofaang.member.entity.Member;
 import com.beyond.twopercent.twofaang.member.entity.enums.GradeName;
 import com.beyond.twopercent.twofaang.member.entity.enums.Role;
+import com.beyond.twopercent.twofaang.member.entity.enums.Status;
 import com.beyond.twopercent.twofaang.member.repository.GradeRepository;
 import com.beyond.twopercent.twofaang.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,8 +27,13 @@ public class JoinService {
         String authCode = joinDTO.getAuthCode();
 
         // Check if the email already exists
+
         if (userRepository.existsByEmail(email)) {
-            throw new Exception("존재하는 회원입니다.");
+            if(!userRepository.findByEmail(email).get().getStatus().equals(Status.N)){
+                throw new Exception("존재하는 회원입니다.");
+            }else{
+                userRepository.deleteById(userRepository.findByEmail(email).get().getMemberId());
+            }
         }
 
         // Check if the auth code is correct
@@ -44,6 +50,7 @@ public class JoinService {
         member.setPassword(bCryptPasswordEncoder.encode(joinDTO.getPassword()));
         member.setName(joinDTO.getName());
         member.setGrade(gradeRepository.findByGradeName(GradeName.BRONZE));
+        member.setStatus(Status.Y);
         member.setMobile(joinDTO.getMobile());
         member.setRole(Role.ROLE_USER);
 

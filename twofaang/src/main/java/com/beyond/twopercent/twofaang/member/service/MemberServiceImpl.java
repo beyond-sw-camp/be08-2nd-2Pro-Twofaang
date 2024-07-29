@@ -1,6 +1,5 @@
 package com.beyond.twopercent.twofaang.member.service;
 
-import com.beyond.twopercent.twofaang.member.dto.ModifyMemberRequestDto;
 import com.beyond.twopercent.twofaang.member.dto.MemberResponseDto;
 import com.beyond.twopercent.twofaang.member.entity.Member;
 import com.beyond.twopercent.twofaang.member.entity.enums.Status;
@@ -10,7 +9,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -97,6 +95,22 @@ public class MemberServiceImpl implements MemberService {
 
         member = memberRepository.save(member);
         return member.getName().toString() + "님의 임시 비밀번호가 발급되었습니다.\n" + "가입하신 이메일을 확인해주세요";
+    }
+
+    // 비밀번호 변경
+    @Override
+    public String updatePassword(String email, String tempPW) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 회원"));
+
+        try {
+            member.setPassword(bCryptPasswordEncoder.encode(tempPW));
+        } catch (IllegalArgumentException e) {
+            throw new RuntimeException("상태 값 이상함");
+        }
+
+        member = memberRepository.save(member);
+        return member.getName().toString() + "님의 비밀번호가 변경되었습니다.\n" + "다시 로그인을 해주세요";
     }
 
     // DTO로 변환 후 반환
