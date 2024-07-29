@@ -397,60 +397,60 @@
         <input type="hidden" name="productAmountList" value=""/>
         <input type="hidden" name="productUrlFileList" value=""/>
         <input type="hidden" name="productNameList" value=""/>
-<!--        <div class="orderInfo">-->
-<!--            <ul class="list-group" id="orderInfoGroup1">-->
-<!--                <li>-->
-<!--                    <label>주문하시는 분<span style="color: red; margin-left: 3px;">*</span></label>-->
-<!--                    <input type="text" name="orderName1" id="orderName1" th:value="${user.userName}"-->
-<!--                           style="text-align: left; padding-left: 15px; margin-left: 30px; border: 1px solid #d4d5d8; border-top-left-radius: 5px;border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <label>주소<span style="color: red; margin-left: 5px;">*</span></label>-->
-<!--                    <input type="text" id="postNo1" name="postNo1" th:value="${user.zipcode}"-->
-<!--                           style="text-align: left; padding-left: 15px; margin-left: 87px; border: 1px solid #d4d5d8; border-top-left-radius: 5px;border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">-->
-<!--                    <input type="button" id="searchPost" onclick="execDaumPostcode()" value="우편번호 찾기"-->
-<!--                           style="margin-left: 30px; border: 1px solid #d4d5d8; border-top-left-radius: 5px;border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">-->
-<!--                    <div style="margin-top: 10px;">-->
-<!--                        <input type="text" id="address1" name="address1" th:value="${user.addr}"-->
-<!--                               style="text-align: left; padding-left: 15px; width: 400px; margin-left: 130px; border: 1px solid #d4d5d8; border-top-left-radius: 5px;border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;"><label-->
-<!--                            style="margin-left: 10px">기본주소</label><br>-->
-<!--                        <input type="text" id="address2" name="address2" th:value="${user.addrDetail}"-->
-<!--                               style="text-align: left; padding-left: 15px; margin-top: 10px; width: 400px; margin-left: 130px; border: 1px solid #d4d5d8; border-top-left-radius: 5px;border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;"><label-->
-<!--                            style="margin-left: 10px">상세주소</label>-->
-<!--                    </div>-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <label>휴대전화<span style="color: red; margin-left: 5px;">*</span></label>-->
-<!--                    <input type="text" value="010" readonly="readonly"-->
-<!--                           style="text-align: center; width: 80px; margin-left: 60px; border: 1px solid #d4d5d8; border-top-left-radius: 5px;border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">-->
-<!--                    <label>ㅡ</label>-->
-<!--                    <input type="text" id="middleCellPhoneNum1" name="middleCellPhoneNum1" th:value="${middleNum}"-->
-<!--                           style="text-align: center; width: 80px; border: 1px solid #d4d5d8; border-top-left-radius: 5px;border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">-->
-<!--                    <label>ㅡ</label>-->
-<!--                    <input type="text" id="lastCellPhoneNum1" name="lastCellPhoneNum1" th:value="${lastNum}"-->
-<!--                           style="text-align: center; width: 80px; border: 1px solid #d4d5d8; border-top-left-radius: 5px;border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">-->
-<!--                </li>-->
-<!--                <li>-->
-<!--                    <label>이메일 <span style="color: red; margin-left: 5px;">*</span></label>-->
-<!--                    <input type="text" id="email1" name="email1" th:value="${strEmail}"-->
-<!--                           style="text-align: left; padding-left: 15px; margin-left: 70px; border: 1px solid #d4d5d8; border-top-left-radius: 5px;border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">-->
-<!--                    <label>@</label>-->
-<!--                    &lt;!&ndash; 		        <input type="text" id="email_domain" name="email_domain" value="" style="text-align: left; padding-left: 15px; height: 24px; width: 172px; border: 1px solid #d4d5d8; border-top-left-radius: 5px;border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;"> &ndash;&gt;-->
-<!--                    <select id="selectEmail1" name="selectEmail"-->
-<!--                            style="height: 24px; width: 172px; border: 1px solid #d4d5d8; border-top-left-radius: 5px;border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">-->
-<!--                        &lt;!&ndash;                        submit 했을 때 value가 name으로 넘어감&ndash;&gt;-->
-<!--                        <option value="naver.com" th:if="${emailDomain == 'naver.com' ? 'selected' : '' }">naver.com-->
-<!--                        </option>-->
-<!--                        <option value="daum.net" th:if="${emailDomain == 'daum.net' ? 'selected' : '' }">daum.net-->
-<!--                        </option>-->
-<!--                        <option value="gmail.com" th:if="${emailDomain == 'gmail.com' ? 'selected' : '' }">gmail.com-->
-<!--                        </option>-->
-<!--                        <option value="nate.com" th:if="${emailDomain == 'nate.com' ? 'selected' : '' }">nate.com-->
-<!--                        </option>-->
-<!--                    </select>-->
-<!--                </li>-->
-<!--            </ul>-->
-<!--        </div>-->
+        <div class="orderInfo">
+            <ul class="list-group" id="orderInfoGroup1">
+                <li>
+                    <label>주문하시는 분<span style="color: red; margin-left: 3px;">*</span></label>
+                    <input type="text" name="orderName1" id="orderName1" th:value="${member.name}"
+                           style="text-align: left; padding-left: 15px; margin-left: 30px; border: 1px solid #d4d5d8; border-top-left-radius: 5px;border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
+                </li>
+                <li>
+                    <label>주소<span style="color: red; margin-left: 5px;">*</span></label>
+                    <input type="text" id="postNo1" name="postNo1" th:value="${member.zipcode}"
+                           style="text-align: left; padding-left: 15px; margin-left: 87px; border: 1px solid #d4d5d8; border-top-left-radius: 5px;border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
+                    <input type="button" id="searchPost" onclick="execDaumPostcode()" value="우편번호 찾기"
+                           style="margin-left: 30px; border: 1px solid #d4d5d8; border-top-left-radius: 5px;border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
+                    <div style="margin-top: 10px;">
+                        <input type="text" id="address1" name="address1" th:value="${member.addr}"
+                               style="text-align: left; padding-left: 15px; width: 400px; margin-left: 130px; border: 1px solid #d4d5d8; border-top-left-radius: 5px;border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;"><label
+                            style="margin-left: 10px">기본주소</label><br>
+                        <input type="text" id="address2" name="address2" th:value="${member.addrDetail}"
+                               style="text-align: left; padding-left: 15px; margin-top: 10px; width: 400px; margin-left: 130px; border: 1px solid #d4d5d8; border-top-left-radius: 5px;border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;"><label
+                            style="margin-left: 10px">상세주소</label>
+                    </div>
+                </li>
+                <li>
+                    <label>휴대전화<span style="color: red; margin-left: 5px;">*</span></label>
+                    <input type="text" value="010" readonly="readonly"
+                           style="text-align: center; width: 80px; margin-left: 60px; border: 1px solid #d4d5d8; border-top-left-radius: 5px;border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
+                    <label>ㅡ</label>
+                    <input type="text" id="middleCellPhoneNum1" name="middleCellPhoneNum1" th:value="${middleNum}"
+                           style="text-align: center; width: 80px; border: 1px solid #d4d5d8; border-top-left-radius: 5px;border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
+                    <label>ㅡ</label>
+                    <input type="text" id="lastCellPhoneNum1" name="lastCellPhoneNum1" th:value="${lastNum}"
+                           style="text-align: center; width: 80px; border: 1px solid #d4d5d8; border-top-left-radius: 5px;border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
+                </li>
+                <li>
+                    <label>이메일 <span style="color: red; margin-left: 5px;">*</span></label>
+                    <input type="text" id="email1" name="email1" th:value="${strEmail}"
+                           style="text-align: left; padding-left: 15px; margin-left: 70px; border: 1px solid #d4d5d8; border-top-left-radius: 5px;border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
+                    <label>@</label>
+                    <!-- 		        <input type="text" id="email_domain" name="email_domain" value="" style="text-align: left; padding-left: 15px; height: 24px; width: 172px; border: 1px solid #d4d5d8; border-top-left-radius: 5px;border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;"> -->
+                    <select id="selectEmail1" name="selectEmail"
+                            style="height: 24px; width: 172px; border: 1px solid #d4d5d8; border-top-left-radius: 5px;border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
+                        <!--                        submit 했을 때 value가 name으로 넘어감-->
+                        <option value="naver.com" th:if="${emailDomain == 'naver.com' ? 'selected' : '' }">naver.com
+                        </option>
+                        <option value="daum.net" th:if="${emailDomain == 'daum.net' ? 'selected' : '' }">daum.net
+                        </option>
+                        <option value="gmail.com" th:if="${emailDomain == 'gmail.com' ? 'selected' : '' }">gmail.com
+                        </option>
+                        <option value="nate.com" th:if="${emailDomain == 'nate.com' ? 'selected' : '' }">nate.com
+                        </option>
+                    </select>
+                </li>
+            </ul>
+        </div>
 
         <div style="text-align: left; margin-top: 30px; border-bottom: 1px solid #d4d5d8"><h3><strong>배송 정보</strong>
         </h3></div>

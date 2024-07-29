@@ -14,6 +14,23 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/css/styles.css" rel="stylesheet"/>
 </head>
+<style>
+
+    .starR {
+        background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
+        background-size: auto 100%;
+        width: 15px;
+        height: 15px;
+        display: inline-block;
+        text-indent: -9999px;
+    }
+
+    .starR.on {
+        background-position: 0 0;
+
+    }
+
+</style>
 <body>
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -107,6 +124,18 @@
                         <div class="text-center">
                             <!-- Product name-->
                             <h5 class="fw-bolder" th:text="${x.productName}">Fancy Product</h5>
+                            <!-- Product reviews-->
+                            <div class="starRev">
+                                <span class="starR on"></span>
+                                <span class="starR on"></span>
+                                <span class="starR on"></span>
+                                <span class="starR on"></span>
+                                <span class="starR on"></span>
+<!--                                <span class="starR" th:classappend="${x.reviewCnt != 0 && sum/x.reviewCnt >= 2} ? 'on'"></span>-->
+<!--                                <span class="starR" th:classappend="${x.reviewCnt != 0 && sum/x.reviewCnt >= 3} ? 'on'"></span>-->
+<!--                                <span class="starR" th:classappend="${x.reviewCnt != 0 && sum/x.reviewCnt >= 4} ? 'on'"></span>-->
+<!--                                <span class="starR" th:classappend="${x.reviewCnt != 0 && sum/x.reviewCnt == 5} ? 'on'"></span>-->
+                            </div>
                             <!-- Product price-->
                             <p th:if="${!x.isSaleYn()}" th:text="${#numbers.formatInteger(x.price, 0, 'COMMA')}"></p>
                             <p th:if="${x.isSaleYn()}" style="text-decoration: line-through"

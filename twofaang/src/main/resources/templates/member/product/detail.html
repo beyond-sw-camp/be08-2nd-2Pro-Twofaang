@@ -487,7 +487,7 @@
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">내 정보</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/user/info">회원 정보</a></li>
+                        <li><a class="dropdown-item" href="/members/myinfo">회원 정보</a></li>
                         <li>
                             <hr class="dropdown-divider"/>
                         </li>
@@ -532,13 +532,13 @@
                         <span class="starR on"></span>
                         <span class="starR on"></span>
 <!--                        <span class="starR"-->
-<!--                              th:classappend="${detail.reviewCnt != 0 && detail.reviewScore/detail.reviewCnt >= 2} ? 'on'"></span>-->
+<!--                              th:classappend="${detail.reviewCnt != 0 && sum/detail.reviewCnt >= 2} ? 'on'"></span>-->
 <!--                        <span class="starR"-->
-<!--                              th:classappend="${detail.reviewCnt != 0 && detail.reviewScore/detail.reviewCnt >= 3} ? 'on'"></span>-->
+<!--                              th:classappend="${detail.reviewCnt != 0 && sum/detail.reviewCnt >= 3} ? 'on'"></span>-->
 <!--                        <span class="starR"-->
-<!--                              th:classappend="${detail.reviewCnt != 0 && detail.reviewScore/detail.reviewCnt >= 4} ? 'on'"></span>-->
+<!--                              th:classappend="${detail.reviewCnt != 0 && sum/detail.reviewCnt >= 4} ? 'on'"></span>-->
 <!--                        <span class="starR"-->
-<!--                              th:classappend="${detail.reviewCnt != 0 && detail.reviewScore/detail.reviewCnt == 5} ? 'on'"></span>-->
+<!--                              th:classappend="${detail.reviewCnt != 0 && sum/detail.reviewCnt == 5} ? 'on'"></span>-->
                     </div>
                     <div class="fs-5 mb-2">
                         <span th:if="${detail.isSaleYn()}" th:text="${#numbers.formatInteger(detail.price, 0, 'COMMA')}"
