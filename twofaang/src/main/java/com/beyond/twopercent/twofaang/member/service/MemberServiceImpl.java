@@ -110,7 +110,7 @@ public class MemberServiceImpl implements MemberService {
         }
 
         member = memberRepository.save(member);
-        return member.getName().toString() + "님의 비밀번호가 변경되었습니다.\n" + "다시 로그인을 해주세요";
+        return member.getName() + "님의 비밀번호가 변경되었습니다.\n다시 로그인을 해주세요";
     }
 
     // DTO로 변환 후 반환
