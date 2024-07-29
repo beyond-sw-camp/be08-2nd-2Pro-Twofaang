@@ -1,41 +1,46 @@
-package com.beyond.twopercent.twofaang.product.entity;
+package com.beyond.twopercent.twofaang.review.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Entity
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
-@Table(name = "tb_review")
 @Builder
-public class Review {
+@Table(name = "tb_review")
+public class ReviewEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "review_id")
-    private long reviewId;
+    private Long reviewId;
 
     @Column(name = "member_id")
-    private long memberId;    //회원번호
+    private Long memberId;
 
     @Column(name = "product_id")
-    private long productId; // 상품번호
+    private Long productId;
 
     @Column(name = "rating")
-    private int rating;     // 평점
+    private int rating;
 
     @Column(name = "review_text")
-    private String reviewText;     // 리뷰 내용
+    private String reviewText;
 
+    @CreationTimestamp
     @Column(name = "review_date")
-    private LocalDateTime reviewDate;   // 작성일
+    private Date reviewDate;
 
+    @UpdateTimestamp
     @Column(name = "update_date")
-    private LocalDateTime updateDate;  // 수정일
+    private Date updateDate;
 }
