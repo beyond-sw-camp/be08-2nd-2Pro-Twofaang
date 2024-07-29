@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿠폰 목록</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .action-button {
+            padding: 8px 12px;
+            margin: 4px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 4px;
+            text-align: center;
+            text-decoration: none;
+        }
+        .action-button:hover {
+            background-color: #0056b3;
+        }
+        .error-message {
+            color: red;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>사용 가능한 쿠폰</h1>
+
+<div th:if="${error}" class="error-message">
+    <p th:text="${error}"></p>
+</div>
+
+<table>
+    <thead>
+    <tr>
+        <th>코드</th>
+        <th>이름</th>
+        <th>기한</th>
+        <th>할인율</th>
+        <th>액션</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="coupon : ${coupons}">
+        <td th:text="${coupon.couponCode}"></td>
+        <td th:text="${coupon.couponName}"></td>
+        <td th:text="${coupon.couponDeadline}"></td>
+        <td th:text="${coupon.discountRate} + '%'"></td>
+        <td>
+            <form th:action="@{/couponbox/add}" method="post">
+                <input type="hidden" name="couponCode" th:value="${coupon.couponCode}" />
+                <button type="submit" class="action-button">쿠폰 추가</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

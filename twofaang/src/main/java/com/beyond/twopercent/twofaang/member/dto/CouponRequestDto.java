@@ -5,12 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class CouponRequestDto {
-    private String couponCode;
     private String couponName;
     private int discountRate;
+    private LocalDate couponDeadline;
 }

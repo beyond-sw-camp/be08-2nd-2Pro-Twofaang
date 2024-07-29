@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+</head>
+<body>
+<script th:inline="javascript">
+    // 알림메세지를 띄움
+    alert([[${ msg }]]);
+
+    // 페이지 이동
+    location.replace([[${ location }]]);
+</script>
+</body>
+</html>
