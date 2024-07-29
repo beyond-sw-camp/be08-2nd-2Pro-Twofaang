@@ -1,17 +1,20 @@
 package com.beyond.twopercent.twofaang.product.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 
 @Data
-public class ProductAddDTO {
+@Builder
+public class ProductAddDto {
 
     private Long productId;
 
     private Long categoryId;
+
+    private String categoryName;
 
     private String productName; // 상품 이름
 
@@ -33,4 +36,5 @@ public class ProductAddDTO {
 
     private String filename;
     private String urlFilename;
+
 }

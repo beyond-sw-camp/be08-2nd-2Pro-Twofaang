@@ -22,18 +22,19 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/admin")
 public class AdminMainController {
 
     private final ProductRepository productRepository;
     private final CategoryService categoryService;
 
-    @RequestMapping("/admin/main.do")
+    @RequestMapping("/main.do")
     public String main(Model model
             , @RequestParam(required = false, defaultValue = "") String searchText
             , @PageableDefault(size = 8, sort = "productId", direction = Sort.Direction.DESC) Pageable pageable){
 
         Page<Product> products =
-                productRepository.findByProductNameContainingOrDescriptionContaining(searchText, searchText, pageable);
+                productRepository.findByProductNameContainingOrDescriptionContainingOrKeywordContaining(searchText, searchText, searchText, pageable);
 
         int startPage = 1;
         int endPage = products.getTotalPages();
@@ -45,7 +46,7 @@ public class AdminMainController {
         return "admin/main";
     }
 
-    @GetMapping("/admin/category/list.do")
+    @GetMapping("/category/list.do")
     public String categoryList(Model model){
 
         List<CategoryDto> list = categoryService.list();
@@ -54,7 +55,7 @@ public class AdminMainController {
         return "admin/category/list";
     }
 
-    @PostMapping("/admin/category/add.do")
+    @PostMapping("/category/add.do")
     public String categoryAdd(CategoryInputDto parameter, Model model){
 
         ServiceResult result = categoryService.add(parameter);
@@ -66,7 +67,7 @@ public class AdminMainController {
         return "redirect:/admin/category/list.do";
     }
 
-    @PostMapping("/admin/category/delete.do")
+    @PostMapping("/category/delete.do")
     public String categoryDel(CategoryInputDto parameter){
 
         boolean result = categoryService.delete(parameter);

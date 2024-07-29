@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>상품등록 페이지</title>
+    <title>상품수정 페이지</title>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -12,14 +12,14 @@
         $(function(){
 
             $("#addButton").on("click", function(){
-                alert("상품이 등록 되었습니다.");
+                alert("상품이 수정 되었습니다.");
 
             })
 
             $("#categorySelect").on("change", function(){
                 var selectText = $("#categorySelect option:selected").text();
 
-                $("input[name='categoryId']").val(selectText);
+                $("input[name='categoryName']").val(selectText);
 
             })
 
@@ -49,11 +49,11 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">상품 등록</div>
+                <div class="card-header">상품 수정</div>
                 <div class="card-body">
 
                     <form class="form-horizontal" method="post" enctype="multipart/form-data">
-
+                        <input type="hidden" name="productId" th:value="${detail.productId}"/>
                         <div class="form-group">
                             <select id="categorySelect" name="categoryId" required>
                                 <option value="">카테고리 선택</option>
@@ -61,7 +61,7 @@
                             </select>
                             <div class="cols-sm-10 mt-1">
                                 <div class="input-group">
-                                    <input type="text" class="form-control" name="categoryId" id="categoryId" readonly required placeholder="카테고리"/>
+                                    <input type="text" class="form-control" th:value="${categoryName}" name="categoryName" id="categoryName" readonly required placeholder="카테고리"/>
                                 </div>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                                    <input type="text" class="form-control" name="productName" id="productName" required placeholder="상품 이름"/>
+                                    <input type="text" class="form-control" th:value="${detail.productName}" name="productName" id="productName" required placeholder="상품 이름"/>
                                 </div>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                    <input type="text" class="form-control" name="description" id="description" required placeholder="상품 상세"/>
+                                    <input type="text" class="form-control" th:value="${detail.description}" name="description" id="description" required placeholder="상품 상세"/>
                                 </div>
                             </div>
                         </div>
@@ -88,7 +88,7 @@
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                    <input type="text" class="form-control" name="price" id="price" required placeholder="0원"/>
+                                    <input type="text" class="form-control" th:value="${detail.price}" name="price" id="price" required placeholder="0원"/>
                                 </div>
                             </div>
                         </div>
@@ -97,7 +97,7 @@
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                    <input type="text" class="form-control" name="quantity" id="quantity" required placeholder="0"/>
+                                    <input type="text" class="form-control" th:value="${detail.quantity}" name="quantity" id="quantity" required placeholder="0"/>
                                 </div>
                             </div>
                         </div>
@@ -105,7 +105,7 @@
                             <label class="cols-sm-2 control-label">할인 여부</label>
                             <div class="cols-sm-10">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="saleYn" id="discountCheck">
+                                    <input class="form-check-input" th:checked="${detail.isSaleYn()} ? 'checked'" type="checkbox" name="saleYn" id="discountCheck">
                                     <label class="form-check-label" for="discountCheck">
                                         할인 시 체크 해주세요
                                     </label>
@@ -117,7 +117,7 @@
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                    <input type="text" class="form-control" name="discountRate" id="discountRate" value="0" placeholder="0.1"/>
+                                    <input type="text" class="form-control" th:value="${detail.discountRate}" name="discountRate" id="discountRate" value="0" placeholder="0.1"/>
                                 </div>
                             </div>
                         </div>
@@ -126,7 +126,7 @@
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                    <input type="text" class="form-control" name="discountEndDateText" id="discountEndDateText" value="0" placeholder="0000-00-00일"/>
+                                    <input type="text" class="form-control" th:value="${detail.discountEndDate}" name="discountEndDateText" id="discountEndDateText" value="0" placeholder="0000-00-00일"/>
                                 </div>
                             </div>
                         </div>
@@ -140,7 +140,7 @@
                             </div>
                         </div>
                         <div class="form-group ">
-                            <button type="submit" id="addButton" class="btn btn-primary btn-lg btn-block login-button">상품 등록</button>
+                            <button type="submit" id="udtButton" class="btn btn-primary btn-lg btn-block login-button">상품 수정</button>
                         </div>
 
                     </form>
