@@ -125,6 +125,18 @@
         }
 
         $('#likeButton').on('click', function () {
+
+            var user = $('input[name=anonymous]').val();
+
+            if (user == 'anonymous') {
+                if (confirm("로그인 후 이용가능합니다. 이동하시겠습니까?")) {
+                    location.href = "/user/login"
+                    return false;
+                } else {
+                    return false;
+                }
+            }
+
             if ($('#likeButton').hasClass('active')) {
                 $(this).removeClass('active');
             } else {
@@ -611,7 +623,7 @@
                                 장바구니 추가
                             </button>
                         </form>
-                        <form method="post" th:action="@{/member/product/like}">
+                        <form method="post" th:action="@{/product/like}">
                             <input type="hidden" name="productId" th:value="${detail.productId}"/>
                             <button id="likeButton" th:classappend="${result} ? 'active'"
                                     class="btn btn-outline-dark flex-shrink-0" type="submit">

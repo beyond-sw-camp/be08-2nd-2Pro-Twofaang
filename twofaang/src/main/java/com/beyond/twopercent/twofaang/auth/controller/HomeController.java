@@ -31,19 +31,10 @@ public class HomeController {
         int startPage = 1;
         int endPage = list.getTotalPages();
 
-        int cartCount;
-
-        if (principal == null) {
-            cartCount = 0;
-        } else {
-            // member 가 있을 경우
-            cartCount = 1;
-        }
 
         model.addAttribute("list", list);
         model.addAttribute("endPage", endPage);
         model.addAttribute("startPage", startPage);
-        model.addAttribute("cartCount", cartCount);
 
         return "home";
     }

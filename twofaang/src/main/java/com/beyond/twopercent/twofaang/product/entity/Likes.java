@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,10 +17,15 @@ import lombok.NoArgsConstructor;
 public class Likes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private int userId; // 회원번호
+    private long likesId;
+
+    @Column(name = "member_id")
+    private long memberId; // 회원번호
 
     @Column(name = "product_id")
-    private int productId; // 상품번호
+    private long productId; // 상품번호
+
+    @Column(name = "register_date")
+    private LocalDateTime regDt; // 좋아요 누른 날짜
 }
  
