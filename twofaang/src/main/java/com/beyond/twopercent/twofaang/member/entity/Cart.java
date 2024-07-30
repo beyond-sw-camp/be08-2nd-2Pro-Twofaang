@@ -18,11 +18,12 @@ public class Cart {
     @Column(name = "cart_id")
     private Long cartId;                 // 카트 식별 번호
 
+    //long > Long으로 변경
     @Column(name = "member_id")
-    private int memberId;               // 멤버 식별 번호
+    private Long memberId;               // 멤버 식별 번호
 
     @Column(name = "product_id")
-    private int productId;              // 상품 식별 번호
+    private Long productId;              // 상품 식별 번호
 
     @Column(name = "quantity")
     private int quantity;               // 상품의 개수
