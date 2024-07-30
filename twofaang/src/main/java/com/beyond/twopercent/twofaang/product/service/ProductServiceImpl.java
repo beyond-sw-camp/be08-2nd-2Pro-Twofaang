@@ -46,8 +46,6 @@ public class ProductServiceImpl implements ProductService{
             return false;
         }
 
-        System.out.println("================PRODUCT ADD=======================");
-        System.out.println("parameter = " + parameter);
 
         Category category = optionalCategory.get();
 
