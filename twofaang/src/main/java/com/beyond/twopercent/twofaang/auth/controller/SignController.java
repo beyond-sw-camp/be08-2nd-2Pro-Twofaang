@@ -3,6 +3,11 @@ package com.beyond.twopercent.twofaang.auth.controller;
 import com.beyond.twopercent.twofaang.auth.dto.form.CustomMemberDetails;
 import com.beyond.twopercent.twofaang.auth.dto.form.JoinDTO;
 import com.beyond.twopercent.twofaang.auth.service.JoinService;
+import com.beyond.twopercent.twofaang.auth.service.ReissueService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,11 +19,14 @@ import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
+@Tag(name = "회원 인증 서비스 APIs", description = "로그인, 회원가입, 갱신같은 API 리스트")
 public class SignController {
 
     private final JoinService joinService;
+    private final ReissueService reissueService;
 
     @GetMapping("/login")
+    @Operation(summary = "로그인 페이지", description = "로그인 페이지로 이동한다.")
     public String loginPage(@AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
         if (customMemberDetails != null) {
             return "redirect:/";  // 이미 로그인된 경우 메인 페이지로 리다이렉트
@@ -27,6 +35,7 @@ public class SignController {
     }
 
     @GetMapping("/join")
+    @Operation(summary = "회원 가입 페이지", description = "회원 가입 페이지로 이동한다.")
     public String joinPage(@AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
         if (customMemberDetails != null) {
             return "redirect:/";  // 이미 로그인된 경우 메인 페이지로 리다이렉트
@@ -35,6 +44,7 @@ public class SignController {
     }
 
     @GetMapping("/reset-password")
+    @Operation(summary = "비밀번호 찾기 페이지", description = "비밀번호 찾기 페이지로 이동한다.")
     public String resetPasswordPage(@AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
         if (customMemberDetails != null) {
             return "redirect:/";  // 이미 로그인된 경우 메인 페이지로 리다이렉트
@@ -42,8 +52,15 @@ public class SignController {
         return "resetPassword";
     }
 
+    @GetMapping("/change-password")
+    @Operation(summary = "비밀번호 변경 페이지", description = "비밀번호 변경 페이지로 이동한다.")
+    public String showChangePasswordPage() {
+        return "change-password"; // Thymeleaf 템플릿 파일 이름
+    }
+
     @PostMapping("/join")
     @ResponseBody
+    @Operation(summary = "회원 가입", description = "회원 가입 기능")
     public ResponseEntity<?> join(@ModelAttribute JoinDTO joinDto) {
         Map<String, Object> response = new HashMap<>();
         try {
@@ -58,9 +75,10 @@ public class SignController {
         }
     }
 
-    @GetMapping("/change-password")
-    public String showChangePasswordPage() {
-        return "change-password"; // Thymeleaf 템플릿 파일 이름
+    @PostMapping("/reissue")
+    @ResponseBody
+    @Operation(summary = "인증 갱신", description = "refresh 토큰을 재발급한다.")
+    public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) {
+        return reissueService.reissue(request, response);
     }
-
 }
