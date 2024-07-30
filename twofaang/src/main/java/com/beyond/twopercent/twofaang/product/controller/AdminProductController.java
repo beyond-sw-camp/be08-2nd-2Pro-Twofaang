@@ -42,13 +42,9 @@ public class AdminProductController {
     @PostMapping("/add.do")
     public String addProduct(ProductAddDto parameter, MultipartFile file) throws IOException {
 
-        System.out.println("AdminProductController.addProduct");
-        System.out.println("parameter = " + parameter);
-
         if (parameter.getSaleYn() == null) {
             parameter.setSaleYn(false);
         }
-
 
         // 파일 저장 로직
         String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files/";
@@ -63,9 +59,6 @@ public class AdminProductController {
 
         parameter.setFilename(fileName);
         parameter.setUrlFilename("/files/" + fileName);
-
-        System.out.println("=======================================");
-        System.out.println("parameter = " + parameter);
 
         boolean result = productService.add(parameter);
 

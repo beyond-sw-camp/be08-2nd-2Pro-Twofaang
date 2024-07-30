@@ -2,11 +2,18 @@ package com.beyond.twopercent.twofaang.product.controller;
 
 import com.beyond.twopercent.twofaang.member.entity.Coupon;
 import com.beyond.twopercent.twofaang.member.entity.Member;
+
+import com.beyond.twopercent.twofaang.member.repository.CartRepository;
+
 import com.beyond.twopercent.twofaang.member.repository.CouponRepository;
+
 import com.beyond.twopercent.twofaang.member.repository.MemberRepository;
 import com.beyond.twopercent.twofaang.member.service.MemberService;
+import com.beyond.twopercent.twofaang.product.dto.LikesDto;
 import com.beyond.twopercent.twofaang.product.dto.ProductDto;
+import com.beyond.twopercent.twofaang.product.entity.Likes;
 import com.beyond.twopercent.twofaang.product.entity.Product;
+import com.beyond.twopercent.twofaang.product.repository.LikesRepository;
 import com.beyond.twopercent.twofaang.product.repository.ProductRepository;
 import com.beyond.twopercent.twofaang.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +25,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -36,15 +44,47 @@ public class ProductController {
     private final MemberService memberService;
     private final ProductRepository productRepository;
     private final MemberRepository memberRepository;
+
+    private final LikesRepository likesRepository;
+    private final CartRepository cartRepository;
+
     private final CouponRepository couponRepository;
+
 
     @GetMapping("/detail")
     public String detatilProdcct(Model model, @RequestParam("id") long id
-            , @PageableDefault(size = 5, sort = "regDt", direction = Sort.Direction.DESC) Pageable pageable
-            , Principal principal){
+            , @PageableDefault(size = 5, sort = "regDt", direction = Sort.Direction.DESC) Pageable pageable){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         ProductDto detail = productService.detail(id);
-        model.addAttribute("detail", detail);
+        boolean result;
+        int cartCount;
+        if (authentication == null) {
+            cartCount = 0;
+            model.addAttribute("cartCount", cartCount);
+            model.addAttribute("detail", detail);
+        }else{
+            String userId = authentication.getName(); // 사용자 Email 가져옴
+            System.out.println("authentication = " + authentication);
+            Member member = memberRepository.findByEmail(userId)
+                    .orElseThrow(() -> new RuntimeException("존재하지 않는 회원"));
+
+            Optional<Likes> optionalProductLike
+                    = likesRepository.findByMemberIdAndProductId(member.getMemberId(), id);
+
+            cartCount = cartRepository.countByMemberId(member.getMemberId());
+            if(optionalProductLike.isEmpty()){
+                result = false;
+            } else {
+                result = true;
+            }
+
+            System.out.println("result = " + result);
+            model.addAttribute("cartCount", cartCount);
+            model.addAttribute("result", result);
+            model.addAttribute("detail", detail);
+        }
 
         return "/member/product/detail";
     }
@@ -89,5 +129,20 @@ public class ProductController {
         return "member/product/order";
     }
 
+    @PostMapping("/like")
+    public String productLike(LikesDto parameter){
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userId = authentication.getName(); // 사용자 Email 가져옴
+
+        Member member = memberRepository.findByEmail(userId)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 회원"));
+
+        parameter.setMemberId(member.getMemberId());
+
+        boolean result = productService.addLike(parameter);
+
+        return "redirect:/product/detail?id=" + parameter.getProductId();
+    }
 
 }

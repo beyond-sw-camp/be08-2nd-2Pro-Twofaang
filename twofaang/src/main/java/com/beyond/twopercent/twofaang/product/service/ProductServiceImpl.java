@@ -1,10 +1,13 @@
 package com.beyond.twopercent.twofaang.product.service;
 
+import com.beyond.twopercent.twofaang.product.dto.LikesDto;
 import com.beyond.twopercent.twofaang.product.dto.ProductAddDto;
 import com.beyond.twopercent.twofaang.product.dto.ProductDto;
 import com.beyond.twopercent.twofaang.product.entity.Category;
+import com.beyond.twopercent.twofaang.product.entity.Likes;
 import com.beyond.twopercent.twofaang.product.entity.Product;
 import com.beyond.twopercent.twofaang.product.repository.CategoryRepository;
+import com.beyond.twopercent.twofaang.product.repository.LikesRepository;
 import com.beyond.twopercent.twofaang.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,8 +22,8 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService{
 
     private final ProductRepository productRepository;
-
     private final CategoryRepository categoryRepository;
+    private final LikesRepository likesRepository;
 
     private LocalDate getLocalDate(String value) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -131,6 +134,27 @@ public class ProductServiceImpl implements ProductService{
         Product product = optionalProduct.get();
 
         return ProductDto.of(product);
+    }
+
+    @Override
+    public boolean addLike(LikesDto parameter) {
+
+        Optional<Likes> optionalLikes = likesRepository.findByMemberIdAndProductId(parameter.getMemberId(), parameter.getProductId());
+
+        if (optionalLikes.isPresent()) {
+            likesRepository.deleteByMemberIdAndProductId(parameter.getMemberId(), parameter.getProductId());
+            return true;
+        }
+
+        Likes likes = Likes.builder()
+                .memberId(parameter.getMemberId())
+                .productId(parameter.getProductId())
+                .regDt(LocalDateTime.now())
+                .build();
+
+        likesRepository.save(likes);
+
+        return true;
     }
 
 

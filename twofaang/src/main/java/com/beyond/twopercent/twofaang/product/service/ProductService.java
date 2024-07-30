@@ -1,5 +1,6 @@
 package com.beyond.twopercent.twofaang.product.service;
 
+import com.beyond.twopercent.twofaang.product.dto.LikesDto;
 import com.beyond.twopercent.twofaang.product.dto.ProductAddDto;
 import com.beyond.twopercent.twofaang.product.dto.ProductDto;
 
@@ -28,4 +29,9 @@ public interface ProductService {
         상품 상세
      */
     ProductDto detail(long id);
+
+    /*
+        상품 좋아요
+     */
+    boolean addLike(LikesDto parameter);
 }
