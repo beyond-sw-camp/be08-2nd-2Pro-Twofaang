@@ -92,6 +92,10 @@ public class AdminProductController {
     @Operation(summary = "관리자 상품 수정", description = "관리자가 상품을 수정한다.")
     public String updateProduct(Model model, ProductAddDto parameter, MultipartFile file) throws IOException {
 
+        if (parameter.getSaleYn() == null) {
+            parameter.setSaleYn(false);
+        }
+
         // 파일 저장 로직
         String projectPath = System.getProperty("user.dir") + "/src/main/resources/static/files/";
 
