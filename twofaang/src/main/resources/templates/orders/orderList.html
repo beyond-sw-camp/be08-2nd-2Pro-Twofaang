@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <!-- 합쳐지고 최소화된 최신 CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <!-- 부가적인 테마 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <title>주문완료</title>
+</head>
+<script>
+    $(function(){
+
+        $("#tabmenu1").click();
+
+        function comma(str) {
+            str = String(str);
+            return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+        }
+
+        var size = $('input[name="size"]').val();
+        var sumPrice = 0;
+        for (i = 0; i < size; i++) {
+            var price = parseInt($($("td[name='price']")[i]).text().replace(",", ""));
+            sumPrice += price;
+        }
+        $("#totalPrice").text(comma(sumPrice) + " 원");
+        $("#finalPrice").text(comma(sumPrice) + " 원");
+    });
+</script>
+<style>
+
+    #wrap{ width:80%;border:1px solid #fff; margin:0 auto;}
+
+    .orderForm{
+
+        margin-top: 70px;
+        text-align: center;
+    }
+
+    .explanation{
+        text-align: right;
+        padding-right: 10px;
+        border-top: 1px solid #d4d5d8;
+    }
+
+    .explanation1{
+
+        margin-top: 0px;
+        text-align: center;
+
+    }
+
+    #division{
+        margin-top: 30px;
+    }
+
+    #division ul{
+        border-bottom: 1px solid #d4d5d8;
+    }
+
+    #division ul li{
+        border-bottom: 1px solid #d4d5d8;
+
+
+    }
+    #division ul li a{
+        /*background: none;*/
+        color: #444;
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    #division ul li a:hover{
+        background: #f8b390;
+        color: black;
+    }
+
+
+    /* .active1{  */
+    /*  	background-color: #f8b390;  */
+    /*  	color: white;  */
+    /*  }  */
+
+    #menulist div{
+        border-bottom: 1px solid #d4d5d8;
+    }
+
+
+
+    #orderlistdetail{
+        padding: 10px;
+        border-top: 1px solid #d4d5d8;
+        border-bottom: 1px solid #d4d5d8;
+    }
+
+    #ordertable{
+        text-align: center;
+        margin: 0 auto;
+    }
+    #ordertable tr td{
+        vertical-align: middle;
+        border-bottom: 1px solid #d4d5d8;
+    }
+
+    #ordertable th{
+        text-align: center;
+    }
+
+
+</style>
+<body>
+<div id="wrap">
+    <!-- 	<h2><strong>ORDER LIST</strong></h2> -->
+    <div class="orderForm" style="margin-bottom: 100px;"><h2><strong>주문 내역</strong></h2></div>
+
+    <div id="division">
+        <ul class="nav nav-tabs" id="tabmenu">
+            <li><a data-toggle="tab" href="#menu1" id="tabmenu1" style="background: #f8b390">구매상품정보</a></li>
+        </ul>
+        <div class="tab-content" id="menulist">
+            <div id="menu1" class="tab-pane fade">
+                <table class="table table-hover" id="ordertable">
+                    <thead>
+                    <tr>
+                        <th scope="col">Date</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Cost</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="x : ${orders}">
+                        <td th:text="${#temporals.format(x.orderDate, 'yyyy-MM-dd')}">날짜</td>
+                        <td><img style="width: auto; height: auto; max-width: 150px; max-height: 150px;"
+                                 th:src="${x.product.urlFilename}" class="img-thumbnail" alt="상품 이미지"></td>
+                        <td th:text="${x.product.productName}">상품이름</td>
+                        <td th:text="${x.amount}">상품수량</td>
+                        <td name="price" th:text="${#numbers.formatInteger(x.price, 0, 'COMMA') + ' 원'}">가격</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>
