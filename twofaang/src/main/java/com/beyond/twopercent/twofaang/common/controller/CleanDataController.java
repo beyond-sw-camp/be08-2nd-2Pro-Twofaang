@@ -24,7 +24,7 @@ import java.util.List;
 @EnableScheduling
 @RequestMapping("/clean")
 @RequiredArgsConstructor
-@Tag(name = "DB 데이터 최적화 APIs", description = "필요 없는 데이터를 삭제하는 API 리스트")
+@Tag(name = "DB 최적화 APIs", description = "DB 최적화 API 리스트")
 public class CleanDataController {
 
     private final CleanDataService cleanDataService;
