@@ -48,16 +48,27 @@
 <br>
 
 ## 🔧 기술 스택
-
 <p align="center">
-  <img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white&color=black">
-  <img src="https://img.shields.io/badge/Git-F05032?style=flat&logo=Git&logoColor=white&color=ffa500">
-  <img src="https://img.shields.io/badge/MariaDB-003545?style=flat&logo=MariaDB&logoColor=white">
-  <img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=Notion&logoColor=white">
-  <img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat&logo=SpringBoot&logoColor=white">
   <img src="https://img.shields.io/badge/Java-007396?style=flat&logo=Java&logoColor=white">
+  <img src="https://img.shields.io/badge/Thymeleaf-%23005C0F?style=flat&logo=Thymeleaf&logoColor=white">
+  <img src="https://img.shields.io/badge/MariaDB-003545?style=flat&logo=MariaDB&logoColor=white">
+  <br>
+  <img src="https://img.shields.io/badge/spring-%236DB33F.svg?style=flat&logo=spring&logoColor=white">
+  <img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat&logo=SpringBoot&logoColor=white">
+  <img src="https://img.shields.io/badge/Spring Data JPA-6DB33F?style=flat&logo=SpringBoot&logoColor=white">
+  <br>
+  <img src="https://img.shields.io/badge/OAuth2-6DB33F?style=flat&logo=SpringBoot&logoColor=white">
+  <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=flat&logo=Spring Security&logoColor=white">
+  <img src="https://img.shields.io/badge/JWT-black?style=flat&logo=JSON%20web%20tokens">
+  <br>
 </p>
 
+## 🛠 사용 tools</h1> 
+<p align="center">
+  <img src="https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=flat&logo=intellij-idea&logoColor=white">
+  <img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=Notion&logoColor=white">
+  <img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white&color=black">
+</p>
 <br>
 
 ## 🗓️ 프로젝트 계획 (WBS)
