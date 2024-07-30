@@ -16,9 +16,10 @@ import java.time.LocalDateTime;
 @Builder
 @Table(name = "tb_product")
 public class Product {
+    //long > Long으로 변경
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long productId; // 상품번호
+    private Long productId; // 상품번호
 
     @Column(name = "category_id")
     private long categoryId; // 카테고리번호

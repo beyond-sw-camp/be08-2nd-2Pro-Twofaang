@@ -1,8 +1,8 @@
 package com.beyond.twopercent.twofaang.member.dto;
 
-import lombok.Getter;
+import lombok.Data;
 
-@Getter
+@Data
 public class ChangePasswordDto {
 
     private String oldPassword;

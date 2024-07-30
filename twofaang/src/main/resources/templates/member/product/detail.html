@@ -611,13 +611,13 @@
                         <button class="btn btn-outline-dark flex-shrink-0" type="button" id="buyBtn">
                             바로 구매
                         </button>
-                        <form name="cartForm" method="post" th:action="@{/member/product/addCart}">
+                        <form name="cartForm" method="post" th:action="@{/cart/add}">
                             <input type="hidden" name="productId" th:value="${detail.productId}"/>
                             <input type="hidden" name="productName" th:value="${detail.productName}"/>
                             <input type="hidden" name="urlFilename" th:value="${detail.urlFilename}"/>
                             <input type="hidden" name="quantity" th:value="${detail.quantity}"/>
-                            <input type="hidden" name="amount"/>
-                            <input type="hidden" name="price"/>
+                            <input type="hidden" name="amount" id="cartAmount"/>
+                            <input type="hidden" name="price" id="cartPrice"/>
                             <button id="cartButton" class="btn btn-outline-dark flex-shrink-0 mx-1" type="submit">
                                 <i class="bi-cart-fill me-1"></i>
                                 장바구니 추가

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>장바구니</title>
+    <link href="/css/styles.css" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .actions span {
+            margin-right: auto;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .actions button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .actions button:hover {
+            background-color: #218838;
+        }
+    </style>
+    <script>
+        function updateTotal() {
+            let checkboxes = document.querySelectorAll('input[name="selectedItems"]:checked');
+            let total = 0;
+            checkboxes.forEach(checkbox => {
+                let row = checkbox.closest('tr');
+                let price = parseFloat(row.querySelector('.price').innerText.replace(/[^0-9.-]+/g, ""));
+                total += price;
+            });
+            document.getElementById('totalAmount').innerText = '총 금액: ' + total.toLocaleString('ko-KR') + '원';
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <h2>장바구니</h2>
+    <form id="cartForm" action="/carts/checkout" method="post">
+        <table>
+            <thead>
+            <tr>
+                <th>선택</th>
+                <th>상품ID</th>
+                <th>상품명</th>
+                <th>수량</th>
+                <th>총 가격</th>
+                <th>삭제</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cartItem : ${cartItems}">
+                <td><input type="checkbox" name="selectedItems" th:value="${cartItem.cartId}" onchange="updateTotal()"/></td>
+                <td th:text="${cartItem.productId}"></td>
+                <td th:text="${cartItem.productName}"></td>
+                <td th:text="${cartItem.quantity}"></td>
+                <td class="price" th:text="${cartItem.price}"></td>
+                <td>
+                    <form th:action="@{/carts/delete}" method="post" style="display: inline;">
+                        <input type="hidden" name="cartId" th:value="${cartItem.cartId}"/>
+                        <button type="submit">삭제</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="actions">
+            <span id="totalAmount">총 금액: 0원</span>
+            <button type="submit">결제하기</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
