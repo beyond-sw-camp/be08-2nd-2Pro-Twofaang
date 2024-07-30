@@ -109,7 +109,7 @@
                         </td>
                         <td th:each="item : ${order.orderItems}" th:text="${item.productName}">상품이름</td>
                         <td th:each="item : ${order.orderItems}" th:text="${item.quantity}">상품수량</td>
-                        <td name="price" th:each="item : ${order.orderItems}" th:text="${#numbers.formatInteger(item.price * item.quantity, 0, 'COMMA') + ' 원'}">가격</td>
+                        <td name="price" th:each="item : ${order.orderItems}" th:text="${#numbers.formatInteger(order.realPayment, 0, 'COMMA') + ' 원'}">가격</td>
                     </tr>
                     </tbody>
                 </table>

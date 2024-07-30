@@ -45,13 +45,6 @@ public class OrderController {
 //        return ResponseEntity.ok(orderDto);
 //    }
 
-//    // 회원의 모든 주문 조회
-//    @GetMapping("/members/{member_id}/orders")
-//    public ResponseEntity<List<OrderResponseDto>> getMemberOrders(@PathVariable Long member_id) {
-//        List<OrderResponseDto> orderDtos = orderService.findOrdersByMemberId(member_id);
-//        return ResponseEntity.ok(orderDtos);
-//    }
-
     // 회원의 모든 주문 조회
     @GetMapping("/orders/list")
     public String getMemberOrders(Model model, @AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
@@ -63,15 +56,6 @@ public class OrderController {
         model.addAttribute("orders", orderDtos);
         return "orders/orderList";
     }
-
-//    // 회원의 주문 수정
-//    @PutMapping("/members/{member_id}/orders/{order_id}")
-//    public ResponseEntity<OrderResponseDto> updateOrder(@PathVariable Long member_id,
-//                                                        @PathVariable Long order_id,
-//                                                        @RequestBody OrderResponseDto orderResponseDto) {
-//        OrderResponseDto orderDto = orderService.updateOrder(order_id, orderResponseDto);
-//        return ResponseEntity.ok(orderDto);
-//    }
 
     // 새로운 주문 추가
     @PostMapping("/user/order/result")
@@ -98,6 +82,22 @@ public class OrderController {
 
         return "orders/result"; // 주문 확인 페이지
     }
+
+//    // 회원의 모든 주문 조회
+//    @GetMapping("/members/{member_id}/orders")
+//    public ResponseEntity<List<OrderResponseDto>> getMemberOrders(@PathVariable Long member_id) {
+//        List<OrderResponseDto> orderDtos = orderService.findOrdersByMemberId(member_id);
+//        return ResponseEntity.ok(orderDtos);
+//    }
+
+//    // 회원의 주문 수정
+//    @PutMapping("/members/{member_id}/orders/{order_id}")
+//    public ResponseEntity<OrderResponseDto> updateOrder(@PathVariable Long member_id,
+//                                                        @PathVariable Long order_id,
+//                                                        @RequestBody OrderResponseDto orderResponseDto) {
+//        OrderResponseDto orderDto = orderService.updateOrder(order_id, orderResponseDto);
+//        return ResponseEntity.ok(orderDto);
+//    }
 
 //    @GetMapping("/result")
 //    public String showOrderResult(Model model, @RequestParam("orderId") Long orderId) {

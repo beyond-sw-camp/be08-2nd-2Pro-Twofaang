@@ -129,8 +129,8 @@ public class OrderServiceImpl implements OrderService {
                     .build();
 
             orderItems.add(orderItem);
-            totalPayment += price * amount;
-            finalPayment += finalPrice * amount;
+            totalPayment += price;
+            finalPayment += finalPrice;
         }
 
         // 주문 생성
@@ -156,6 +156,8 @@ public class OrderServiceImpl implements OrderService {
         List<OrderItemResponseDto> orderItems = order.getOrderItems().stream()
                 .map(orderItem -> OrderItemResponseDto.builder()
                         .productId(orderItem.getProduct().getProductId())
+                        .productName(orderItem.getProduct().getProductName()) // 상품 이름 추가
+                        .urlFilename(orderItem.getProduct().getUrlFilename()) // 상품 이미지 URL 추가
                         .quantity(orderItem.getQuantity())
                         .price(orderItem.getPrice())
                         .build())
