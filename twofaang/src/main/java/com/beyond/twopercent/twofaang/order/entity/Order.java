@@ -33,9 +33,6 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItems = new ArrayList<>(); // 주문 항목 목록
 
-    @Column(name = "del_add_id")
-    private Long delAddId; // 배송지 번호
-
     @Column(name = "order_date")
     private LocalDateTime orderDate; // 주문일
 
@@ -58,7 +55,7 @@ public class Order {
     @Column(name = "real_amount")
     private int realPayment; // 실 결제가격
 
-    @Column(name = "order_state")
-    @Enumerated(EnumType.STRING)
-    private OrderState orderState = OrderState.ORDERED; // 주문 상태
+//    @Column(name = "order_state")
+//    @Enumerated(EnumType.STRING)
+//    private OrderState orderState = OrderState.ORDERED; // 주문 상태
 }
