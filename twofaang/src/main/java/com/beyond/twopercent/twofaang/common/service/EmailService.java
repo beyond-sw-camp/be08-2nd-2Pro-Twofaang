@@ -52,7 +52,7 @@ public class EmailService {
             AuthCodePostDto authCodePostDto = AuthCodePostDto.builder()
                     .email(emailMessage.getTo())
                     .authCode(authCode)
-                    .expiration(new Date(System.currentTimeMillis() + 10 * 1000L).toString())
+                    .expiration(new Date(System.currentTimeMillis() + 10 * 60 * 1000L).toString())
                     .build();
             code.setEmail(authCodePostDto.getEmail());
             code.setAuthCode(authCodePostDto.getAuthCode());
