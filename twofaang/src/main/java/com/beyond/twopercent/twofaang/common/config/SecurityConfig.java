@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -34,7 +33,7 @@ import java.io.IOException;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class    SecurityConfig {
+public class SecurityConfig {
 
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JWTUtil jwtUtil;
@@ -60,7 +59,7 @@ public class    SecurityConfig {
     }
 
     @Bean
-    public AuthenticationFailureHandler authenticationFailureHandler(){
+    public AuthenticationFailureHandler authenticationFailureHandler() {
         return new AuthenticationFailureHandler() {
             @Override
             public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
@@ -126,7 +125,6 @@ public class    SecurityConfig {
                         .successHandler(new CustomOAuth2SuccessHandler(jwtUtil, refreshTokenService))
                         .failureHandler(authenticationFailureHandler())
                         .permitAll());
-
         // logout
         http
                 .logout((auth) -> auth
@@ -142,7 +140,7 @@ public class    SecurityConfig {
                 .addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
         http
                 .addFilterBefore(new CustomLogoutFilter(jwtUtil, refreshRepository), LogoutFilter.class);
-        //세션 설정
+        // 세션 비활성화
         http
                 .sessionManagement((session) -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));

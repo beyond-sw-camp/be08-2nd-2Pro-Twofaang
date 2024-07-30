@@ -24,9 +24,7 @@ public class RefreshTokenService {
         String refresh = null;
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
-
             if (cookie.getName().equals("refresh")) {
-
                 refresh = cookie.getValue();
             }
         }
@@ -64,7 +62,6 @@ public class RefreshTokenService {
                 .refresh(refresh)
                 .expiration(new Date(System.currentTimeMillis() + expireS * 1000L).toString())
                 .build();
-
         refreshRepository.save(refreshEntity);
     }
 

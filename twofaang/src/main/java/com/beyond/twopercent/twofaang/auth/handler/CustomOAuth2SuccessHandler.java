@@ -13,13 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
 import java.io.IOException;
-import java.net.URLEncoder;
 
-/**
- * OAuth2 로그인 성공 후 JWT 발급
- * access, refresh -> httpOnly 쿠키
- * 리다이렉트 되기 때문에 헤더로 전달 불가능
- */
 @RequiredArgsConstructor
 public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     private final JWTUtil jwtUtil;
@@ -34,15 +28,13 @@ public class CustomOAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHa
         String email = customOAuth2Member.getEmail(); // DB 저장용 식별자
         String role = authentication.getAuthorities().iterator().next().getAuthority();
 
-        // refresh
-        Integer expireA = 60 * 10;  // 10분
         // access
+        Integer expireA = 60 * 10;  // 10분
         String access = jwtUtil.createJwt("access", email, role, expireA * 1000L);
         response.addCookie(CookieUtil.createCookie("access", access, 60 * 10));
 
         // refresh
         Integer expireS = 60 * 30;  // 30분
-//        expireS = 10;
         String refresh = jwtUtil.createJwt("refresh", email, role, expireS * 1000L);
         response.addCookie(CookieUtil.createCookie("refresh", refresh, expireS));
 

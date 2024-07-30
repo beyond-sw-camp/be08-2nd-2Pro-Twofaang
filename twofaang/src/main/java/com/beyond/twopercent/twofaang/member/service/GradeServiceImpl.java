@@ -5,11 +5,9 @@ import com.beyond.twopercent.twofaang.member.entity.Grade;
 import com.beyond.twopercent.twofaang.member.entity.enums.GradeName;
 import com.beyond.twopercent.twofaang.member.repository.GradeRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

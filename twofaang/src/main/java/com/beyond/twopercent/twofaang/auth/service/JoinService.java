@@ -27,11 +27,10 @@ public class JoinService {
         String authCode = joinDTO.getAuthCode();
 
         // Check if the email already exists
-
         if (userRepository.existsByEmail(email)) {
-            if(!userRepository.findByEmail(email).get().getStatus().equals(Status.N)){
+            if (!userRepository.findByEmail(email).get().getStatus().equals(Status.N)) {
                 throw new Exception("존재하는 회원입니다.");
-            }else{
+            } else {
                 userRepository.deleteById(userRepository.findByEmail(email).get().getMemberId());
             }
         }

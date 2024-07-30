@@ -35,13 +35,13 @@ public class ReissueService {
 
         try {
             jwtUtil.isExpired(refresh);
-        } catch(ExpiredJwtException e){
+        } catch (ExpiredJwtException e) {
             return new ResponseEntity<>("refresh token expired", HttpStatus.BAD_REQUEST);
         }
 
         // refresh 토큰이 아님
         String category = jwtUtil.getCategory(refresh);
-        if(!category.equals("refresh")) {
+        if (!category.equals("refresh")) {
             return new ResponseEntity<>("invalid refresh token", HttpStatus.BAD_REQUEST);
         }
 
@@ -52,7 +52,7 @@ public class ReissueService {
         Boolean isExist = refreshRepository.existsByRefresh(refresh);
 
         // DB 에 없는 리프레시 토큰 (혹은 블랙리스트 처리된 리프레시 토큰)
-        if(!isExist) {
+        if (!isExist) {
             return new ResponseEntity<>("invalid refresh token", HttpStatus.BAD_REQUEST);
         }
 
@@ -65,7 +65,7 @@ public class ReissueService {
         refreshRepository.deleteByRefresh(refresh);
         refreshTokenService.saveRefresh(username, expiredS, newRefresh);
 
-        response.addCookie(CookieUtil.createCookie("access", newAccess,60 * 10));
+        response.addCookie(CookieUtil.createCookie("access", newAccess, 60 * 10));
         response.addCookie(CookieUtil.createCookie("refresh", newRefresh, expiredS));
 
         return new ResponseEntity<>(HttpStatus.OK);

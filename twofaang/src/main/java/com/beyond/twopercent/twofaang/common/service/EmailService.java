@@ -28,13 +28,11 @@ public class EmailService {
     private final JavaMailSender javaMailSender;
     private final SpringTemplateEngine templateEngine;
     private final AuthCodeRepository authCodeRepository;
-
     private final MemberService memberService;
 
     public List<AuthCode> getAllAuthCode() {
         return authCodeRepository.findAll();
     }
-
 
     // 임시 코드
     @Transactional
@@ -68,11 +66,8 @@ public class EmailService {
             mimeMessageHelper.setSubject(emailMessage.getSubject()); // 메일 제목
             mimeMessageHelper.setText(setContext(authCode, type), true); // 메일 본문 내용, HTML 여부
             javaMailSender.send(mimeMessage);
-
             log.info("Success");
-
             return authCode;
-
         } catch (MessagingException e) {
             log.info("fail");
             throw new RuntimeException(e);
@@ -88,9 +83,14 @@ public class EmailService {
             int index = random.nextInt(4);
 
             switch (index) {
-                case 0: key.append((char) ((int) random.nextInt(26) + 97)); break;
-                case 1: key.append((char) ((int) random.nextInt(26) + 65)); break;
-                default: key.append(random.nextInt(9));
+                case 0:
+                    key.append((char) ((int) random.nextInt(26) + 97));
+                    break;
+                case 1:
+                    key.append((char) ((int) random.nextInt(26) + 65));
+                    break;
+                default:
+                    key.append(random.nextInt(9));
             }
         }
         return key.toString();

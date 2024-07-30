@@ -15,7 +15,7 @@ public class CustomMemberDetails implements UserDetails {
         this.member = member;
     }
 
-    public String getEmail(){
+    public String getEmail() {
         return member.getEmail();
     }
 
@@ -33,38 +33,31 @@ public class CustomMemberDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-
         return member.getPassword();
     }
 
     @Override
     public String getUsername() {
-
         return member.getEmail();
     }
 
-
     @Override
     public boolean isAccountNonExpired() {
-
         return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-
         return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-
         return true;
     }
 
     @Override
     public boolean isEnabled() {
-
         return true;
     }
 }
