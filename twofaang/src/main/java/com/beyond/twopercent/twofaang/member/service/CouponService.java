@@ -10,9 +10,9 @@ public interface CouponService {
     // 모든 쿠폰
     List<Coupon> getAllCoupons();
     // 쿠폰 추가
-    Coupon addCoupon(CouponRequestDto request, String category);
+    Coupon addCoupon(CouponRequestDto request);
     // 쿠폰 수정
-    Coupon updateCoupon(String couponCode, CouponRequestDto request, String category);
+    Coupon updateCoupon(String couponCode, CouponRequestDto request);
     // 쿠폰 삭제
     void deleteCoupon(Long couponId);
     // 사용 가능 쿠폰

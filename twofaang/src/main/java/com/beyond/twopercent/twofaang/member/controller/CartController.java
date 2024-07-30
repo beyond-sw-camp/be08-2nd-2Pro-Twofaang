@@ -6,21 +6,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/carts")
 public class CartController {
 
     private final CartService cartService;
 
     // 회원의 장바구니에 상품 추가
-    @PostMapping("/cart/add")
+    @PostMapping("/add")
     public String addToCart(@RequestParam("productId") Long productId,
                             @RequestParam("amount") int amount,
                             @RequestParam("price") int price,
@@ -33,7 +31,7 @@ public class CartController {
     }
 
     // 장바구니의 상품들을 모두 출력
-    @GetMapping("/carts")
+    @GetMapping
     public String getCart(Authentication authentication, Model model) {
         String email = authentication.getName();
 
@@ -44,10 +42,9 @@ public class CartController {
     }
 
     // 장바구니에서 상품 삭제
-    @PostMapping("carts/delete")
+    @PostMapping("/delete")
     public String deleteFromCart(@RequestParam("cartId") long cartId) {
         cartService.removeCartItem(cartId);
         return "redirect:/carts";
     }
 }
-

@@ -34,29 +34,19 @@ public class CouponServiceImpl implements CouponService {
 
     // 쿠폰 추가
     @Override
-    public Coupon addCoupon(CouponRequestDto request, String category) {
-        String prefix = "";
+    public Coupon addCoupon(CouponRequestDto request) {
 
-        switch(category){
-            case "의류 및 패션" :
-                prefix = "CF";
-                break;
-            case "전자제품" :
-                prefix = "EL";
-                break;
-            case "가전제품" :
-                prefix = "HA";
-                break;
-        }
+        List<Coupon> coupons = couponRepository.findAll();
 
-        int count = couponRepository.countByCouponCodePrefix(prefix);
+        String couponNumber = String.format("%03d", coupons.size() + 1);
 
-        String code = prefix + String.format("%03d", count + 1);
+        String code = "COUPON_" + couponNumber;
 
         Coupon coupon = Coupon.builder()
                 .couponCode(code)
                 .couponName(request.getCouponName())
                 .discountRate(request.getDiscountRate())
+                .couponDeadline(request.getCouponDeadline())
                 .build();
 
         return couponRepository.save(coupon);
@@ -65,36 +55,19 @@ public class CouponServiceImpl implements CouponService {
 
     // 특정 쿠폰 수정
     @Override
-    public Coupon updateCoupon(String couponCode, CouponRequestDto request, String category){
-        String prefix = "";
-
-        switch(category){
-            case "의류 및 패션" :
-                prefix = "CF";
-                break;
-            case "전자제품" :
-                prefix = "EL";
-                break;
-            case "가전제품" :
-                prefix = "HA";
-                break;
-        }
-
-        int count = couponRepository.countByCouponCodePrefix(prefix);
-
-        String code = prefix + String.format("%03d", count + 1);
+    public Coupon updateCoupon(String couponCode, CouponRequestDto request){
 
         if(couponRepository.existsByCouponCode(couponCode)){
             Coupon existingCoupon = couponRepository.findByCouponCode(couponCode);
 
-            if (code != ""){
-                existingCoupon.setCouponCode(code);
-            }
             if (request.getCouponName() != null){
                 existingCoupon.setCouponName(request.getCouponName());
             }
             if (request.getDiscountRate() != 0){
                 existingCoupon.setDiscountRate(request.getDiscountRate());
+            }
+            if(request.getCouponDeadline() != null){
+                existingCoupon.setCouponDeadline(request.getCouponDeadline());
             }
 
             return couponRepository.save(existingCoupon);
