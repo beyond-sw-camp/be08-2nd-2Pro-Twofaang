@@ -19,6 +19,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -79,13 +81,22 @@ public class OrderController {
             @RequestParam("productAmountList") String productAmountList,
             @RequestParam("productUrlFileList") String productUrlFileList,
             @RequestParam("productNameList") String productNameList,
+            @RequestParam("finalPrice") int finalPrice,
             @AuthenticationPrincipal CustomMemberDetails customMemberDetails,
             Model model) {
 
         String email = customMemberDetails.getEmail();
-        OrderResponseDto order = orderService.createOrder(email, productIndexList, productPriceList, productAmountList, productUrlFileList, productNameList);
+        OrderResponseDto order = orderService.createOrder(email, productIndexList, productPriceList, productAmountList, productUrlFileList, productNameList, finalPrice);
+
+        // 각 주문 항목에 주문 날짜 추가
+        LocalDateTime orderDate = order.getOrderDate();
+        order.getOrderItems().forEach(item -> item.setOrderDate(orderDate));
+
         model.addAttribute("order", order);
-        return "orders/orderList"; // 주문 확인 페이지
+        model.addAttribute("orderItems", order.getOrderItems()); // 주문 항목을 모델에 추가
+        model.addAttribute("finalPrice", finalPrice);
+
+        return "orders/result"; // 주문 확인 페이지
     }
 
 //    @GetMapping("/result")

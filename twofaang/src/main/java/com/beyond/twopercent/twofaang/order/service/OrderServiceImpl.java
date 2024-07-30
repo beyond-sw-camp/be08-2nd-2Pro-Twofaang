@@ -65,7 +65,9 @@ public class OrderServiceImpl implements OrderService {
     // 회원의 주문 조회
     @Override
     public List<OrderResponseDto> findOrdersByMemberId(Long memberId) {
+
         List<Order> orders = orderRepository.findByMember_MemberId(memberId);
+
         return orders.stream()
                 .map(this::convertToResponseDto)
                 .collect(Collectors.toList());
@@ -94,7 +96,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderResponseDto createOrder(String email, String productIndexList, String productPriceList, String productAmountList, String productUrlFileList, String productNameList) {
+    public OrderResponseDto createOrder(String email, String productIndexList, String productPriceList, String productAmountList, String productUrlFileList, String productNameList, int finalPrice) {
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new MemberNotFoundException(email));
 
@@ -107,6 +109,7 @@ public class OrderServiceImpl implements OrderService {
 
         List<OrderItem> orderItems = new ArrayList<>();
         int totalPayment = 0;
+        int finalPayment = 0;
 
         for (int i = 0; i < productIndexes.length; i++) {
             final String productIndex = productIndexes[i];
@@ -127,6 +130,7 @@ public class OrderServiceImpl implements OrderService {
 
             orderItems.add(orderItem);
             totalPayment += price * amount;
+            finalPayment += finalPrice * amount;
         }
 
         // 주문 생성
@@ -134,7 +138,7 @@ public class OrderServiceImpl implements OrderService {
                 .member(member)
                 .orderDate(LocalDateTime.now())
                 .totalPayment(totalPayment)
-                .realPayment(totalPayment)
+                .realPayment(finalPayment)
                 .orderItems(orderItems)
                 .build();
 
@@ -165,7 +169,7 @@ public class OrderServiceImpl implements OrderService {
                 .paymentMethod(order.getPaymentMethod())
                 .gradeDiscount(order.getGradeDiscount())
                 .couponDiscount(order.getCouponDiscount())
-                .realPayment((int) order.getRealPayment())
+                .realPayment(order.getRealPayment())
 //                .orderState(order.getOrderState())
                 .orderItems(orderItems) // 주문 항목 목록 설정
                 .build();
