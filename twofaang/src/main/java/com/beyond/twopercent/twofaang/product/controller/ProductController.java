@@ -1,7 +1,12 @@
 package com.beyond.twopercent.twofaang.product.controller;
 
+import com.beyond.twopercent.twofaang.member.entity.Coupon;
 import com.beyond.twopercent.twofaang.member.entity.Member;
+
 import com.beyond.twopercent.twofaang.member.repository.CartRepository;
+
+import com.beyond.twopercent.twofaang.member.repository.CouponRepository;
+
 import com.beyond.twopercent.twofaang.member.repository.MemberRepository;
 import com.beyond.twopercent.twofaang.member.service.MemberService;
 import com.beyond.twopercent.twofaang.product.dto.LikesDto;
@@ -25,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 import static java.lang.Long.parseLong;
@@ -38,8 +44,12 @@ public class ProductController {
     private final MemberService memberService;
     private final ProductRepository productRepository;
     private final MemberRepository memberRepository;
+
     private final LikesRepository likesRepository;
     private final CartRepository cartRepository;
+
+    private final CouponRepository couponRepository;
+
 
     @GetMapping("/detail")
     public String detatilProdcct(Model model, @RequestParam("id") long id
@@ -108,7 +118,9 @@ public class ProductController {
             model.addAttribute("emailDomain", emailDomain);
         }
 
-
+        // 모든 쿠폰 정보 가져오기
+        List<Coupon> coupons = couponRepository.findAll();
+        model.addAttribute("coupons", coupons);
 
         model.addAttribute("product", product);
         model.addAttribute("amount", amount);

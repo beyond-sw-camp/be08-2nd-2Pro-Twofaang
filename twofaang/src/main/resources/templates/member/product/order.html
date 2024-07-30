@@ -111,7 +111,42 @@
 
         });
 
+        // 쿠폰 정보 불러오기
+        $(document).ready(function() {
+            $('#coupon').change(function() {
+                var discountRate = $(this).val();
+                var originalPrice = parseFloat($('#totalPrice').text().replace(/[^0-9.-]+/g,""));
+                var discountedPrice = originalPrice - (originalPrice * (discountRate / 100));
+                $('#finalPrice').text(discountedPrice.toFixed(2) + " 원");
+            });
+        });
 
+        // 할인율 계산
+        $(document).ready(function () {
+            function calculatePrices() {
+                var totalOrderPrice = parseInt($('#lastPrice').text().replace(/,/g, '')) || 0;
+                var discountRate = parseInt($('#coupon').val()) || 0;
+                var discountAmount = totalOrderPrice * (discountRate / 100);
+                var finalPrice = totalOrderPrice - discountAmount;
+
+                $('#salePrice').text(discountAmount.toLocaleString());
+                $('#expectedPrice').text(finalPrice.toLocaleString());
+                $('#finalPrice').text(finalPrice.toLocaleString() + " 원");
+                $('input[name="realPayment"]').val(finalPrice); // 히든 필드에 최종 결제 금액 설정
+            }
+
+            $('#coupon').change(function () {
+                calculatePrices();
+            });
+
+            // 초기 가격 계산
+            calculatePrices();
+
+            // 폼 제출 전에 최종 결제 금액을 히든 필드에 설정
+            $('#myOrderForm').submit(function () {
+                calculatePrices();
+            });
+        });
 
 
         $("input[name=buy]").on("click", function(){
@@ -397,6 +432,8 @@
         <input type="hidden" name="productAmountList" value=""/>
         <input type="hidden" name="productUrlFileList" value=""/>
         <input type="hidden" name="productNameList" value=""/>
+        <input type="hidden" name="realPayment" value=""/>
+
         <div class="orderInfo">
             <ul class="list-group" id="orderInfoGroup1">
                 <li>
@@ -526,6 +563,21 @@
             </ul>
         </div>
 
+        <div style="text-align: left; margin-top: 30px; border-bottom: 1px solid #d4d5d8">
+            <h3><strong>쿠폰 등록</strong></h3>
+        </div>
+
+        <div>
+            <ul>
+                <label>쿠폰 선택</label>
+                <select id="coupon" name="coupon"
+                        style="padding-left: 15px; height: 24px; width: 400px; margin-left: 56px; border: 1px solid #d4d5d8; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
+                    <option selected="selected" value="">쿠폰 선택</option>
+                    <option th:each="coupon : ${coupons}" th:value="${coupon.discountRate}" th:text="${coupon.couponName}"></option>
+                </select>
+            </ul>
+        </div>
+
         <div style="text-align: left; margin-top: 30px; border-bottom: 1px solid #d4d5d8"><h3><strong>결제수단</strong></h3>
         </div>
 
@@ -545,8 +597,9 @@
             </div>
         </div>
 
-        <div style="text-align: left; margin-top: 30px; border-bottom: 1px solid #d4d5d8"><h3><strong>결제 예정 금액</strong>
-        </h3></div>
+        <div style="text-align: left; margin-top: 30px; border-bottom: 1px solid #d4d5d8">
+            <h3><strong>결제 예정 금액</strong></h3>
+        </div>
 
         <table class="table table-hover" id="buytable">
             <colgroup>
@@ -570,11 +623,10 @@
                 <td style="color: #f8b390"><h4 id="expectedPrice"></h4></td>
             </tr>
             </tbody>
-
-
         </table>
 
-        <div style="text-align: right; margin-top: 30px;"><h3><strong>최종 결제 금액</strong></h3></div>
+        <div style="text-align: right; margin-top: 30px;">
+            <h3><strong>최종 결제 금액</strong></h3></div>
         <div style="text-align: right; margin-top: 15px;">
 
             <h3 style="color: #f8b390">

@@ -10,9 +10,7 @@ import java.util.List;
 @Builder
 public class OrderRequestDto {
 
-    private Long memberId; // 회원 번호
-
-    private Long deliveryId; // 배송지 번호
+    private String email; // 회원 이메일
 
     private String requestMsg; // 배송 요청사항
 
