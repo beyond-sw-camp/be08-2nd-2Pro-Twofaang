@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -79,6 +80,13 @@ public class MemberServiceImpl implements MemberService {
                 .orElseThrow(() -> new RuntimeException("존재하지 않는 회원"));
 
         return convertToDto(member);
+    }
+
+    @Override
+    public String getPassword(String email) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 회원"));
+        return member.getPassword();
     }
 
     // 임시 비밀번호로 비밀번호 변경

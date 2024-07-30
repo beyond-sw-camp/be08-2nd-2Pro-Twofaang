@@ -19,8 +19,12 @@ public interface MemberService {
 
     MemberResponseDto getMemberByEmail(String email);
 
+    String getPassword(String email);
+
     // 임시 비밀번호로 비밀번호 변경
     String SetTempPassword(String email, String tempPW);
 
     String updatePassword(String email, String tempPW);
+
+
 }
