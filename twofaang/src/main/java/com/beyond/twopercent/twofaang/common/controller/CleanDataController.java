@@ -6,6 +6,8 @@ import com.beyond.twopercent.twofaang.auth.jwt.JWTUtil;
 import com.beyond.twopercent.twofaang.auth.repository.RefreshRepository;
 import com.beyond.twopercent.twofaang.auth.service.RefreshTokenService;
 import com.beyond.twopercent.twofaang.common.service.CleanDataService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -22,12 +24,14 @@ import java.util.List;
 @EnableScheduling
 @RequestMapping("/clean")
 @RequiredArgsConstructor
+@Tag(name = "DB 데이터 최적화 APIs", description = "필요 없는 데이터를 삭제하는 API 리스트")
 public class CleanDataController {
 
     private final CleanDataService cleanDataService;
 
     @DeleteMapping("/refresh")
     @Scheduled(cron = "0 0/30 * * * *")
+    @Operation(summary = "Refresh 토큰 데이터 최적화", description = "만료된 Refresh 토큰 데이터들을 삭제한다.")
     public void CleanRefreshToken() {
         try {
             cleanDataService.cleanRefreshToken();
@@ -38,6 +42,7 @@ public class CleanDataController {
 
     @DeleteMapping("/auth-code")
     @Scheduled(cron = "0 0/30 * * * *")
+    @Operation(summary = "인증 코드 데이터 최적화", description = "만료된 인증 코드 데이터들을 삭제한다.")
     public void CleanAuthCode() {
         try {
             cleanDataService.cleanAuthCode();

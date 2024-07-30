@@ -5,6 +5,8 @@ import com.beyond.twopercent.twofaang.common.dto.EmailPostDto;
 import com.beyond.twopercent.twofaang.common.dto.EmailResponseDto;
 import com.beyond.twopercent.twofaang.common.service.EmailService;
 import com.beyond.twopercent.twofaang.member.service.MemberService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,14 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/mails")
 @RestController
 @RequiredArgsConstructor
+@Tag(name = "메일 서비스 APIs", description = "메일 서비스 Api 리스트")
 public class EmailController {
 
     private final EmailService emailService;
-    private final MemberService memberService;
-
 
 	// 임시 비밀번호 발급 
     @PostMapping("/password")
+    @Operation(summary = "임시 비밀번호 발급", description = "임시 비밀번호를 발급하여 메일로 전송한다.")
     public ResponseEntity sendPasswordMail(@RequestBody EmailPostDto emailPostDto) {
         EmailMessage emailMessage = EmailMessage.builder()
                 .to(emailPostDto.getEmail())
@@ -36,6 +38,7 @@ public class EmailController {
 
 	// 회원가입 이메일 인증 - 요청 시 body로 인증번호 반환하도록 작성하였음
     @PostMapping("/email")
+    @Operation(summary = "인증 코드 발급", description = "인증 코드를 발급하여 메일로 전송한다.")
     public ResponseEntity sendJoinMail(@RequestBody EmailPostDto emailPostDto) {
         EmailMessage emailMessage = EmailMessage.builder()
                 .to(emailPostDto.getEmail())

@@ -6,6 +6,8 @@ import com.beyond.twopercent.twofaang.member.dto.MemberResponseDto;
 import com.beyond.twopercent.twofaang.member.entity.enums.Status;
 import com.beyond.twopercent.twofaang.member.service.MemberService;
 import com.beyond.twopercent.twofaang.auth.dto.form.CustomMemberDetails;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,28 +27,23 @@ import java.util.Map;
 @Controller
 @RequestMapping("/members")
 @RequiredArgsConstructor
+@Tag(name = "회원 서비스 APIs", description = "회원 서비스 API 리스트")
 public class MemberController {
 
     private final MemberService memberService;
-    private final ReissueService reissueService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @PostMapping("/reissue")
-    @ResponseBody
-    public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) {
-        return reissueService.reissue(request, response);
-    }
-
     @GetMapping("/myinfo")
+    @Operation(summary = "내 정보 페이지", description = "내 정보 페이지로 이동한다.")
     public String myInfoPage(Model model, @AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
         String email = customMemberDetails.getEmail();
-        MemberResponseDto member = memberService.getMemberByEmail(email);
         MemberResponseDto memberResponseDto = memberService.getCurrentMemberInfo(email);
         model.addAttribute("member", memberResponseDto);
         return "/members/myinfo";  // 회원 정보 확인 페이지로 이동
     }
 
     @GetMapping("/change-password")
+    @Operation(summary = "비밀번호 변경 페이지", description = "비밀번호 변경 페이지로 이동한다.")
     public String changePasswordPage(@AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
         if(customMemberDetails != null)
             return "/changePassword";
@@ -55,6 +52,7 @@ public class MemberController {
 
 
     @GetMapping("/edit")
+    @Operation(summary = "회원 수정 페이지", description = "회원 수정 페이지로 이동한다.")
     public String editMemberInfo(@AuthenticationPrincipal CustomMemberDetails customMemberDetails, Model model) {
         // 사용자 이메일을 가져와서 서비스 메서드 호출
         String email = customMemberDetails.getEmail();
@@ -69,42 +67,14 @@ public class MemberController {
 
     // 회원 정보 수정 처리
     @PostMapping("/update")
+    @Operation(summary = "회원 수정 기능", description = "회원 정보를 수정한다.")
     public String updateMemberInfo(@ModelAttribute("detail") MemberResponseDto member) {
         memberService.updateMember(member);
         return "redirect:/members/myinfo";  // 정보 페이지로 리다이렉트
     }
 
-
-    // 모든 회원 정보를 반환
-    @GetMapping("/list")
-    @ResponseBody
-    public ResponseEntity<List<MemberResponseDto>> getAllMembers() {
-        List<MemberResponseDto> members = memberService.getAllMembers();
-        return ResponseEntity.ok(members);
-    }
-
-    // 이메일로 회원 정보 반환
-    @GetMapping("{email}")
-    @ResponseBody
-    public ResponseEntity<MemberResponseDto> getMemberByEmail(
-            @PathVariable String email
-    ) {
-        MemberResponseDto members = memberService.getMemberByEmail(email);
-        return ResponseEntity.ok(members);
-    }
-
-    // 회원 상태 변경
-    @PutMapping("/status/{email}")
-    @ResponseBody
-    public ResponseEntity<MemberResponseDto> updateMemberStatus(
-            @PathVariable String email,
-            @RequestParam String status
-    ) {
-        MemberResponseDto updatedMember = memberService.updateMemberStatus(email, status);
-        return ResponseEntity.ok(updatedMember);
-    }
-
     @PostMapping("/change-password")
+    @Operation(summary = "비밀번호 변경 기능", description = "비밀번호를 변경한다.")
     public ResponseEntity<?> changePassword(
             @AuthenticationPrincipal CustomMemberDetails customMemberDetails,
             HttpServletRequest request,
@@ -136,6 +106,7 @@ public class MemberController {
 
 
     @PostMapping("/withdraw")
+    @Operation(summary = "회원 탈퇴 기능", description = "회원 탈퇴를 한다.")
     public String withdrawMember(
             @AuthenticationPrincipal CustomMemberDetails customMemberDetails,
             HttpServletRequest request,
@@ -169,6 +140,4 @@ public class MemberController {
             }
         }
     }
-
-
 }

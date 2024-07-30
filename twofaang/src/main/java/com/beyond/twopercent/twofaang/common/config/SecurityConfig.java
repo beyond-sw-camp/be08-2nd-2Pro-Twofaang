@@ -124,7 +124,7 @@ public class    SecurityConfig {
         http
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/login", "/", "/join", "/reissue", "/reset-password").permitAll()
-//                        .requestMatchers("/admin/**").hasRole("ADMIN") // 관리자만 접근할 수 있도록 설정
+                        .requestMatchers("/admin/**").hasRole("ADMIN") // 관리자만 접근할 수 있도록 설정
                         .anyRequest().authenticated());
         http
                 .addFilterBefore(new JWTFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
