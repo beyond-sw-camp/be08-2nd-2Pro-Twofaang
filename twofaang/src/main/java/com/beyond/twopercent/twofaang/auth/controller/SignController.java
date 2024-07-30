@@ -77,7 +77,7 @@ public class SignController {
 
     @PostMapping("/reissue")
     @ResponseBody
-    @Operation(summary = "인증 갱신", description = "refresh 토큰을 재발급한다.")
+    @Operation(summary = "인증 갱신", description = "refresh 토큰과 access토큰을 재발급한다.")
     public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) {
         return reissueService.reissue(request, response);
     }

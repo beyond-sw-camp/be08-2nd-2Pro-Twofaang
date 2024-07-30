@@ -33,7 +33,6 @@ public class ReissueService {
             return new ResponseEntity<>("refresh token is null", HttpStatus.BAD_REQUEST);
         }
 
-        // 만료된 토큰은 payload 읽을 수 없음 -> ExpiredJwtException 발생
         try {
             jwtUtil.isExpired(refresh);
         } catch(ExpiredJwtException e){
@@ -66,7 +65,7 @@ public class ReissueService {
         refreshRepository.deleteByRefresh(refresh);
         refreshTokenService.saveRefresh(username, expiredS, newRefresh);
 
-        response.setHeader("access", newAccess);
+        response.addCookie(CookieUtil.createCookie("access", newAccess,60 * 10));
         response.addCookie(CookieUtil.createCookie("refresh", newRefresh, expiredS));
 
         return new ResponseEntity<>(HttpStatus.OK);

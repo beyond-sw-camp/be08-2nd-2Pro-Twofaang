@@ -21,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.util.List;
 import java.util.Map;
 
@@ -32,10 +33,17 @@ public class MemberController {
 
     private final MemberService memberService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ReissueService reissueService;
 
     @GetMapping("/myinfo")
     @Operation(summary = "내 정보 페이지", description = "내 정보 페이지로 이동한다.")
-    public String myInfoPage(Model model, @AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
+    public String myInfoPage(
+            Model model,
+            @AuthenticationPrincipal CustomMemberDetails customMemberDetails,
+            HttpServletRequest request,
+            HttpServletResponse response
+    ) {
+        reissueService.reissue(request, response);
         String email = customMemberDetails.getEmail();
         MemberResponseDto memberResponseDto = memberService.getCurrentMemberInfo(email);
         model.addAttribute("member", memberResponseDto);
@@ -45,7 +53,7 @@ public class MemberController {
     @GetMapping("/change-password")
     @Operation(summary = "비밀번호 변경 페이지", description = "비밀번호 변경 페이지로 이동한다.")
     public String changePasswordPage(@AuthenticationPrincipal CustomMemberDetails customMemberDetails) {
-        if(customMemberDetails != null)
+        if (customMemberDetails != null)
             return "/changePassword";
         return "/login";
     }
@@ -102,7 +110,6 @@ public class MemberController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("success", false, "message", "비밀번호 변경에 실패했습니다."));
         }
     }
-
 
 
     @PostMapping("/withdraw")

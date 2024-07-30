@@ -12,6 +12,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.servlet.ServletContextInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -45,6 +46,17 @@ public class    SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
 
         return configuration.getAuthenticationManager();
+    }
+
+    @Bean
+    public ServletContextInitializer initializer() {
+        return servletContext -> {
+            servletContext.getSessionCookieConfig().setSecure(true);
+            servletContext.getSessionCookieConfig().setHttpOnly(true);
+            servletContext.getSessionCookieConfig().setName("loginSession");
+            servletContext.getSessionCookieConfig().setMaxAge(20);
+            // 20초 유효기간
+        };
     }
 
     @Bean

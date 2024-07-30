@@ -20,7 +20,7 @@ public class GradeController {
     private final GradeService gradeService;
 
     // 모든 Grade 조회
-    @GetMapping
+    @GetMapping("/list")
     @Operation(summary = "모든 등급 조회", description = "모든 등급 정보를 조회한다.")
     public List<Grade> getAllGrades() {
         return gradeService.getAllGrades();

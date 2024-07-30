@@ -65,14 +65,20 @@
             <!--                    <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>-->
             <!--                </a>-->
             <!--            </form>-->
-            <a th:if="${#authentication == null}" href="/login" class="btn btn-outline-dark" role="button">
-                <i class="bi-person-fill me-1"></i>
-                login
-            </a>
-            <a sec:authorize="isAuthenticated()" href="/logout" class="btn btn-outline-dark" role="button">
-                <i class="bi-person-fill me-1"></i>
-                logout
-            </a>
+            <!-- 로그인 버튼 -->
+            <form th:action="@{/login}" method="get" th:if="${#authentication == null}">
+                <button type="submit" class="btn btn-outline-dark">
+                    <i class="bi-person-fill me-1"></i>
+                    login
+                </button>
+            </form>
+            <!-- 로그아웃 버튼 -->
+            <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+                <button type="submit" class="btn btn-outline-dark">
+                    <i class="bi-person-fill me-1"></i>
+                    logout
+                </button>
+            </form>
         </div>
     </div>
 </nav>
