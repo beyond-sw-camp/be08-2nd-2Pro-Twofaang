@@ -75,44 +75,43 @@
             });
             document.getElementById('totalAmount').innerText = '총 금액: ' + total.toLocaleString('ko-KR') + '원';
         }
+
     </script>
 </head>
 <body>
 <div class="container">
     <h2>장바구니</h2>
-    <form id="cartForm" action="/carts/checkout" method="post">
-        <table>
-            <thead>
-            <tr>
-                <th>선택</th>
-                <th>상품ID</th>
-                <th>상품명</th>
-                <th>수량</th>
-                <th>총 가격</th>
-                <th>삭제</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="cartItem : ${cartItems}">
-                <td><input type="checkbox" name="selectedItems" th:value="${cartItem.cartId}" onchange="updateTotal()"/></td>
-                <td th:text="${cartItem.productId}"></td>
-                <td th:text="${cartItem.productName}"></td>
-                <td th:text="${cartItem.quantity}"></td>
-                <td class="price" th:text="${cartItem.price}"></td>
-                <td>
-                    <form th:action="@{/carts/delete}" method="post" style="display: inline;">
-                        <input type="hidden" name="cartId" th:value="${cartItem.cartId}"/>
-                        <button type="submit">삭제</button>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <div class="actions">
-            <span id="totalAmount">총 금액: 0원</span>
-            <button type="submit">결제하기</button>
-        </div>
-    </form>
+    <table>
+        <thead>
+        <tr>
+            <th>선택</th>
+            <th>상품ID</th>
+            <th>상품명</th>
+            <th>수량</th>
+            <th>총 가격</th>
+            <th>삭제</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="cartItem : ${cartItems}">
+            <td><input type="checkbox" name="selectedItems" th:value="${cartItem.cartId}" onchange="updateTotal()"/></td>
+            <td th:text="${cartItem.productId}"></td>
+            <td th:text="${cartItem.productName}"></td>
+            <td th:text="${cartItem.quantity}"></td>
+            <td class="price" th:text="${cartItem.price}"></td>
+            <td>
+                <form th:action="@{/carts/delete}" method="post" style="display: inline;">
+                    <input type="hidden" name="cartId" th:value="${cartItem.cartId}"/>
+                    <button type="submit">삭제</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="actions">
+        <span id="totalAmount">총 금액: 0원</span>
+        <button type="button">결제하기</button>
+    </div>
 </div>
 </body>
 </html>
