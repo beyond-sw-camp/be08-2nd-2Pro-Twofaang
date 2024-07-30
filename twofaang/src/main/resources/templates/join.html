@@ -37,11 +37,13 @@
             event.preventDefault();
 
             var email = $('#email').val();
+            var authButton = $('#authButton');
 
             if(!email) {
                 alert("이메일을 입력해주세요.");
                 return;
             }
+            alert("인증 코드가 이메일로 발송되었습니다.");
 
             $.ajax({
                 url: '/mails/email',
@@ -51,7 +53,7 @@
                 success: function(data) {
                     if (data.code) {
                         alert("인증 코드가 이메일로 전송되었습니다.");
-                        // 인증 코드 입력 필드를 보여주는 로직 추가
+                        authButton.text("이메일 재발송");
                     } else {
                         alert("인증 코드 전송에 실패했습니다. 다시 시도해주세요.");
                     }
@@ -72,12 +74,16 @@
                 if(data.success) {
                     showAlertAndRedirect(data.username);
                 } else {
-                    alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+                    alert(data.message || "회원가입에 실패했습니다. 다시 시도해주세요.");
                 }
-            }).fail(function() {
-                alert("서버 요청에 실패했습니다. 다시 시도해주세요.");
+            }).fail(function(xhr) {
+                var errorMessage = xhr.responseJSON && xhr.responseJSON.message
+                    ? xhr.responseJSON.message
+                    : "서버 요청에 실패했습니다. 다시 시도해주세요.";
+                alert(errorMessage);
             });
         }
+
     </script>
 </head>
 <body>
@@ -96,7 +102,7 @@
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
                                     <input type="email" class="form-control" name="email" id="email" placeholder="Enter your Email" required />
-                                    <button type="button" class="btn btn-secondary ml-2" onclick="sendAuthCode(event)">인증 코드 발송</button>
+                                    <button type="button" class="btn btn-secondary ml-2" id="authButton" onclick="sendAuthCode(event)">인증 코드 발송</button>
                                 </div>
                             </div>
                         </div>

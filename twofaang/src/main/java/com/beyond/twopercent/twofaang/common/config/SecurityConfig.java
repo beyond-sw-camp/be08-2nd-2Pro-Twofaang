@@ -27,11 +27,8 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 
 import java.io.IOException;
-import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -55,8 +52,9 @@ public class    SecurityConfig {
         return new AuthenticationFailureHandler() {
             @Override
             public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-                System.out.println("exception = " + exception);
-                response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                String errorMessage = "로그인이 실패하였습니다.";
+                request.getSession().setAttribute("errorMessage", errorMessage);
+                response.sendRedirect("/login");
             }
         };
     }
@@ -85,13 +83,12 @@ public class    SecurityConfig {
                 "/images/**",
                 "/js/**",
                 "/product/**",
-                "/admin/**",
                 "/inquiries/**",
-                "/user/**",
                 "/grades/**",
                 "/mails/**"
         );
     }
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -126,7 +123,7 @@ public class    SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/login", "/", "/join", "/reissue").permitAll()
+                        .requestMatchers("/login", "/", "/join", "/reissue", "/reset-password").permitAll()
 //                        .requestMatchers("/admin/**").hasRole("ADMIN") // 관리자만 접근할 수 있도록 설정
                         .anyRequest().authenticated());
         http
