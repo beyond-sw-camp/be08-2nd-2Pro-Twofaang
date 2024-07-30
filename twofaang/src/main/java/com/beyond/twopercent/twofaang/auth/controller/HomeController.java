@@ -8,6 +8,8 @@ import com.beyond.twopercent.twofaang.product.entity.Product;
 import com.beyond.twopercent.twofaang.product.repository.ProductRepository;
 import com.beyond.twopercent.twofaang.review.entity.ReviewEntity;
 import com.beyond.twopercent.twofaang.review.repository.ReviewRepository;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +28,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
+@Tag(name = "회원 메인 페이지 API", description = "회원 메인 페이지 API")
 public class HomeController {
 
     private final ProductRepository productRepository;
@@ -34,6 +37,7 @@ public class HomeController {
     private final ReviewRepository reviewRepository;
 
     @GetMapping("/")
+    @Operation(summary = "회원 메인", description = "회원 메인 페이지로 이동한다.")
     public String home(Model model,
                        @RequestParam(required = false, defaultValue = "") String searchText,
                        @PageableDefault(size = 8, sort = "productId", direction = Sort.Direction.DESC) Pageable pageable
