@@ -102,14 +102,13 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="order : ${orders}">
-                        <td th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd')}">날짜</td>
-                        <td th:each="item : ${order.orderItems}">
-                            <img style="width: auto; height: auto; max-width: 150px; max-height: 150px;" th:src="${item.urlFilename}" class="img-thumbnail" alt="상품 이미지">
-                        </td>
-                        <td th:each="item : ${order.orderItems}" th:text="${item.productName}">상품이름</td>
-                        <td th:each="item : ${order.orderItems}" th:text="${item.quantity}">상품수량</td>
-                        <td name="price" th:each="item : ${order.orderItems}" th:text="${#numbers.formatInteger(item.price * item.quantity, 0, 'COMMA') + ' 원'}">가격</td>
+                    <tr th:each="x : ${orderItems}">
+                        <td th:text="${#temporals.format(x.orderDate, 'yyyy-MM-dd')}">날짜</td>
+                        <td><img style="width: auto; height: auto; max-width: 150px; max-height: 150px;"
+                                 th:src="${x.urlFilename}" class="img-thumbnail" alt="상품 이미지"></td>
+                        <td th:text="${x.productName}">상품이름</td>
+                        <td th:text="${x.quantity}">상품수량</td>
+                        <td name="price" th:text="${#numbers.formatInteger(finalPrice * x.quantity, 0, 'COMMA') + ' 원'}">가격</td>
                     </tr>
                     </tbody>
                 </table>

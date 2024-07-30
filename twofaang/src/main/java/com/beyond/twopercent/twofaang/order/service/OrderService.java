@@ -22,7 +22,7 @@ public interface OrderService {
 
     void updateOrderState(Long orderId, OrderState orderState); // 주문 상태 변경
 
-    OrderResponseDto createOrder(String email, String productIndexList, String productPriceList, String productAmountList, String productUrlFileList, String productNameList);
+    OrderResponseDto createOrder(String email, String productIndexList, String productPriceList, String productAmountList, String productUrlFileList, String productNameList, int finalPrice );
 
     void saveOrder(Order order);
 

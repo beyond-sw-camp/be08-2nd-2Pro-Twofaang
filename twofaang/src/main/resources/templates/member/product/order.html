@@ -144,7 +144,8 @@
 
             // 폼 제출 전에 최종 결제 금액을 히든 필드에 설정
             $('#myOrderForm').submit(function () {
-                calculatePrices();
+                var finalPrice = $('#finalPrice').text().replace(/[^0-9]/g, ''); // 최종 결제 금액에서 숫자만 추출
+                $('input[name="finalPrice"]').val(finalPrice); // 히든 필드에 최종 결제 금액 설정
             });
         });
 
@@ -433,6 +434,7 @@
         <input type="hidden" name="productUrlFileList" value=""/>
         <input type="hidden" name="productNameList" value=""/>
         <input type="hidden" name="realPayment" value=""/>
+        <input type="hidden" name="finalPrice" value=""/>
 
         <div class="orderInfo">
             <ul class="list-group" id="orderInfoGroup1">
