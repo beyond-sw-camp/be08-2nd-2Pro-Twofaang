@@ -27,19 +27,7 @@ public class AnswerServiceImpl implements AnswerService {
 
         return answerRepository.findAll();
 
-//                .stream()
-//                .map(this::convertToDto)
-//                .collect(Collectors.toList());
     }
-
-//    @Override
-//    @Transactional(readOnly = true)
-//    public List<AnswerDto> getAnswersByInquiryId(long inquiryId) {
-//        return answerRepository.findByInquiryId(inquiryId)
-//                .stream()
-//                .map(this::convertToDto)
-//                .collect(Collectors.toList());
-//    }
 
     @Override
     @Transactional
@@ -85,14 +73,4 @@ public class AnswerServiceImpl implements AnswerService {
         return member.getRole() == Role.ROLE_ADMIN;
     }
 
-//    private AnswerDto convertToDto(Answer answer) {
-//        return AnswerDto.builder()
-//                .answerId(answer.getAnswerId())
-//                .inquiryId(answer.getInquiryId())
-//                .memberId(answer.getMemberId())
-//                .comment(answer.getComment())
-//                .responseDate(answer.getResponseDate())
-//                .updateDate(answer.getUpdateDate())
-//                .build();
-//    }
 }
