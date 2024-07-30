@@ -1,22 +1,65 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>로그인 페이지</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+    <link href="/css/signin.css" rel="stylesheet">
 </head>
-<body>
-<h1>Login</h1>
-<form th:action="@{/login}" method="post">
-    <label for="username">Email:</label>
-    <input type="text" id="username" name="username" required>
-    <br>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-    <br>
-    <button type="submit">Login</button>
-</form>
-<p><a href="/oauth2/authorization/google">Login with Google</a></p>
-<p><a href="/oauth2/authorization/naver">Login with Naver</a></p>
+<body class="text-center">
+
+<main class="form-signin">
+    <form th:action="@{/login}" method="post">
+        <a href="/">
+            <img class="mb-4" src="/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+        </a>
+        <h1 class="h3 mb-3 fw-normal">로그인</h1>
+        <!-- Display error message if present -->
+        <div th:if="${session.errorMessage}" class="alert alert-danger" role="alert">
+            <p th:text="${session.errorMessage}"></p>
+        </div>
+        <div class="form-floating">
+            <input type="email" class="form-control" id="username" name="username" placeholder="name@example.com">
+            <label for="username">Email address</label>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+            <label for="password">Password</label>
+        </div>
+
+        <div class="mb-2">
+            <a href="/reset-password">비밀번호 찾기</a>
+            <a href="/join">회원가입</a>
+        </div>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
+        <a href="/oauth2/authorization/google" class="w-100 btn btn-lg btn-primary mt-2" role="button">구글 로그인</a>
+        <a href="/oauth2/authorization/naver" class="w-100 btn btn-lg btn-primary mt-2" role="button">네이버 로그인</a>
+        <p class="mt-5 mb-3 text-muted">&copy; 2024 TwoFanng</p>
+    </form>
+</main>
+
 </body>
 </html>

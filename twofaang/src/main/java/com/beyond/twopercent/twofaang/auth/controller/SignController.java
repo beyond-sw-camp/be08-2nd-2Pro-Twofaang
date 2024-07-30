@@ -19,7 +19,7 @@ import java.util.Map;
 
 @Controller
 @RequiredArgsConstructor
-@Tag(name = "회원 인증 서비스 APIs", description = "로그인, 회원가입, 갱신같은 API 리스트")
+@Tag(name = "회원 인증 서비스 APIs", description = "회원 인증 서비스 API 리스트")
 public class SignController {
 
     private final JoinService joinService;
