@@ -87,7 +87,7 @@
                     $(".close").hide();
                     $('.count').val(1);
                     $("#spanPrice").text(0 + " 원");
-                } else{
+                } else {
                     $(".layerSize").show();
                     $(".layerSize").text(selectedValue);
                     $(".qty").show();
@@ -475,7 +475,7 @@
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="/">Start Bootstrap</a>
+        <a class="navbar-brand" href="/">Twofaang</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
                 class="navbar-toggler-icon"></span></button>
@@ -487,12 +487,24 @@
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">내 정보</a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="/members/myinfo">회원 정보</a></li>
+                        <form th:action="@{/members/myinfo}" method="get">
+                            <button type="submit" class="dropdown-item">
+                                회원 정보
+                            </button>
+                        </form>
                         <li>
                             <hr class="dropdown-divider"/>
                         </li>
-                        <li><a class="dropdown-item" href="/user/order/orderList">주문내역</a></li>
-                        <li><a class="dropdown-item" href="/user/product/inquiry">문의하기</a></li>
+                        <form th:action="@{/orders/list}" method="get">
+                            <button type="submit" class="dropdown-item">
+                                주문 내역
+                            </button>
+                        </form>
+                        <form th:action="@{/inquirys}" method="get">
+                            <button type="submit" class="dropdown-item">
+                                문의 하기
+                            </button>
+                        </form>
                     </ul>
                 </li>
             </ul>
@@ -503,20 +515,26 @@
                     <span class="badge bg-dark text-white ms-1 rounded-pill" th:text="${cartCount}">0</span>
                 </a>
             </form>
-            <a sec:authorize="!isAuthenticated()" href="/member/login" class="btn btn-outline-dark" role="button">
-                <i class="bi-person-fill me-1"></i>
-                login
-            </a>
-            <a sec:authorize="isAuthenticated()" href="/member/logout" class="btn btn-outline-dark" role="button">
-                <i class="bi-person-fill me-1"></i>
-                logout
-            </a>
+            <!-- 로그인 버튼 -->
+            <form th:action="@{/login}" method="get" th:if="${#authentication == null}">
+                <button type="submit" class="btn btn-outline-dark">
+                    <i class="bi-person-fill me-1"></i>
+                    login
+                </button>
+            </form>
+            <!-- 로그아웃 버튼 -->
+            <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+                <button type="submit" class="btn btn-outline-dark">
+                    <i class="bi-person-fill me-1"></i>
+                    logout
+                </button>
+            </form>
         </div>
     </div>
 </nav>
 <!-- Product section-->
 <div class="wrapper">
-    <input type="hidden" sec:authorize="!isAuthenticated()" name="anonymous" value="anonymous"/>
+    <input type="hidden" th:if="${#authentication == null}" name="anonymous" value="anonymous"/>
     <section class="py-5">
         <div class="container px-4 px-lg-5 my-5">
             <div class="row gx-4 gx-lg-5 align-items-center">
@@ -531,14 +549,14 @@
                         <span class="starR on"></span>
                         <span class="starR on"></span>
                         <span class="starR on"></span>
-<!--                        <span class="starR"-->
-<!--                              th:classappend="${detail.reviewCnt != 0 && sum/detail.reviewCnt >= 2} ? 'on'"></span>-->
-<!--                        <span class="starR"-->
-<!--                              th:classappend="${detail.reviewCnt != 0 && sum/detail.reviewCnt >= 3} ? 'on'"></span>-->
-<!--                        <span class="starR"-->
-<!--                              th:classappend="${detail.reviewCnt != 0 && sum/detail.reviewCnt >= 4} ? 'on'"></span>-->
-<!--                        <span class="starR"-->
-<!--                              th:classappend="${detail.reviewCnt != 0 && sum/detail.reviewCnt == 5} ? 'on'"></span>-->
+                        <!--                        <span class="starR"-->
+                        <!--                              th:classappend="${detail.reviewCnt != 0 && sum/detail.reviewCnt >= 2} ? 'on'"></span>-->
+                        <!--                        <span class="starR"-->
+                        <!--                              th:classappend="${detail.reviewCnt != 0 && sum/detail.reviewCnt >= 3} ? 'on'"></span>-->
+                        <!--                        <span class="starR"-->
+                        <!--                              th:classappend="${detail.reviewCnt != 0 && sum/detail.reviewCnt >= 4} ? 'on'"></span>-->
+                        <!--                        <span class="starR"-->
+                        <!--                              th:classappend="${detail.reviewCnt != 0 && sum/detail.reviewCnt == 5} ? 'on'"></span>-->
                     </div>
                     <div class="fs-5 mb-2">
                         <span th:if="${detail.isSaleYn()}" th:text="${#numbers.formatInteger(detail.price, 0, 'COMMA')}"
@@ -555,7 +573,9 @@
                                                                           th:text="${detail.discountEndDate}"></span>
                     <select class="form-select mt-2" aria-label="Default select example" id="selectBox">
                         <option value="0">옵션</option>
-                        <option th:if="${detail.quantity != null && detail.quantity != 0}" th:value="${detail.productName}" th:text="${detail.productName}">상품이름</option>
+                        <option th:if="${detail.quantity != null && detail.quantity != 0}"
+                                th:value="${detail.productName}" th:text="${detail.productName}">상품이름
+                        </option>
                         <option th:if="${detail.quantity == 0}" value="Zero" disabled>품절</option>
                     </select>
 
@@ -605,13 +625,13 @@
         </div>
     </section>
 
-<!-- Footer-->
-<footer class="py-5 bg-dark">
-    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
-</footer>
-<!-- Bootstrap core JS-->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Core theme JS-->
-<script src="/js/scripts.js"></script>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="/js/scripts.js"></script>
 </body>
 </html>
