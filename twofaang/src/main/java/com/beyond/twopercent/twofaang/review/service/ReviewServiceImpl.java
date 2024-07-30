@@ -54,6 +54,7 @@ public class ReviewServiceImpl implements ReviewService {
         Optional<Product> optionalProduct = productRepository.findById(request.getProductId());
         Product product = optionalProduct.get();
         product.setReviewCnt(product.getReviewCnt() + 1);
+        product.setReviewScore(product.getReviewScore() + review.getRating());
         productRepository.save(product);
         return reviewRepository.save(review);
     }

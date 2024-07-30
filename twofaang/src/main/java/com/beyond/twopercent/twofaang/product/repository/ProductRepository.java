@@ -1,5 +1,6 @@
 package com.beyond.twopercent.twofaang.product.repository;
 
+import com.beyond.twopercent.twofaang.product.dto.ProductDto;
 import com.beyond.twopercent.twofaang.product.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

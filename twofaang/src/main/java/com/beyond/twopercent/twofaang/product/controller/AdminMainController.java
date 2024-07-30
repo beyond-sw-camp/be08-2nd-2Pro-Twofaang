@@ -2,6 +2,7 @@ package com.beyond.twopercent.twofaang.product.controller;
 
 import com.beyond.twopercent.twofaang.product.dto.CategoryDto;
 import com.beyond.twopercent.twofaang.product.dto.CategoryInputDto;
+import com.beyond.twopercent.twofaang.product.dto.ProductDto;
 import com.beyond.twopercent.twofaang.product.entity.Product;
 import com.beyond.twopercent.twofaang.product.model.ServiceResult;
 import com.beyond.twopercent.twofaang.product.repository.ProductRepository;

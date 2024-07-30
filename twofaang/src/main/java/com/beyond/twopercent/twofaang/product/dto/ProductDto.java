@@ -39,6 +39,8 @@ public class ProductDto {
 
     private int reviewCnt; // 리뷰수
 
+    private int reviewScore; //별점 총합
+
     private int salesCnt; // 판매량
 
     private int viewCnt; // 조회수
@@ -65,6 +67,7 @@ public class ProductDto {
                 .reviewCnt(product.getReviewCnt())
                 .salesCnt(product.getSalesCnt())
                 .viewCnt(product.getViewCnt())
+                .reviewScore(product.getReviewScore())
                 .filename(product.getFilename())
                 .urlFilename(product.getUrlFilename())
                 .build();

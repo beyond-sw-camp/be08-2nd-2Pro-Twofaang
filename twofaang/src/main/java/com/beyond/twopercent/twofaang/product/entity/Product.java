@@ -58,6 +58,9 @@ public class Product {
     @Column(name = "review_cnt")
     private int reviewCnt; // 리뷰수
 
+    @Column(name = "review_score", nullable = false)
+    private int reviewScore = 0;
+
     @Column(name = "sales_cnt")
     private int salesCnt; // 판매량
 

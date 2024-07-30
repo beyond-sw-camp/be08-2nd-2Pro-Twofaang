@@ -556,19 +556,11 @@
                     <!--                        <div class="small mb-1">SKU: BST-498</div>-->
                     <h1 class="display-5 fw-bolder" th:text="${detail.productName}">Shop item template</h1>
                     <div class="starRev">
-                        <span class="starR on"></span>
-                        <span class="starR on"></span>
-                        <span class="starR on"></span>
-                        <span class="starR on"></span>
-                        <span class="starR on"></span>
-                        <!--                        <span class="starR"-->
-                        <!--                              th:classappend="${detail.reviewCnt != 0 && sum/detail.reviewCnt >= 2} ? 'on'"></span>-->
-                        <!--                        <span class="starR"-->
-                        <!--                              th:classappend="${detail.reviewCnt != 0 && sum/detail.reviewCnt >= 3} ? 'on'"></span>-->
-                        <!--                        <span class="starR"-->
-                        <!--                              th:classappend="${detail.reviewCnt != 0 && sum/detail.reviewCnt >= 4} ? 'on'"></span>-->
-                        <!--                        <span class="starR"-->
-                        <!--                              th:classappend="${detail.reviewCnt != 0 && sum/detail.reviewCnt == 5} ? 'on'"></span>-->
+                        <span class="starR" th:classappend="${detail.reviewCnt != 0 && detail.reviewScore != 0 && detail.reviewScore/detail.reviewCnt >= 1} ? 'on'"></span>
+                        <span class="starR" th:classappend="${detail.reviewCnt != 0 && detail.reviewScore != 0 && detail.reviewScore/detail.reviewCnt >= 2} ? 'on'"></span>
+                        <span class="starR" th:classappend="${detail.reviewCnt != 0 && detail.reviewScore != 0 && detail.reviewScore/detail.reviewCnt >= 3} ? 'on'"></span>
+                        <span class="starR" th:classappend="${detail.reviewCnt != 0 && detail.reviewScore != 0 && detail.reviewScore/detail.reviewCnt >= 4} ? 'on'"></span>
+                        <span class="starR" th:classappend="${detail.reviewCnt != 0 && detail.reviewScore != 0 && detail.reviewScore/detail.reviewCnt >= 5} ? 'on'"></span>
                     </div>
                     <div class="fs-5 mb-2">
                         <span th:if="${detail.isSaleYn()}" th:text="${#numbers.formatInteger(detail.price, 0, 'COMMA')}"
