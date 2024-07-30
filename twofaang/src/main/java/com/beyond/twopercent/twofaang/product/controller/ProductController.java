@@ -1,6 +1,7 @@
 package com.beyond.twopercent.twofaang.product.controller;
 
 import com.beyond.twopercent.twofaang.member.entity.Member;
+import com.beyond.twopercent.twofaang.member.repository.CartRepository;
 import com.beyond.twopercent.twofaang.member.repository.MemberRepository;
 import com.beyond.twopercent.twofaang.member.service.MemberService;
 import com.beyond.twopercent.twofaang.product.dto.LikesDto;
@@ -38,6 +39,7 @@ public class ProductController {
     private final ProductRepository productRepository;
     private final MemberRepository memberRepository;
     private final LikesRepository likesRepository;
+    private final CartRepository cartRepository;
 
     @GetMapping("/detail")
     public String detatilProdcct(Model model, @RequestParam("id") long id
@@ -47,8 +49,10 @@ public class ProductController {
 
         ProductDto detail = productService.detail(id);
         boolean result;
-
+        int cartCount;
         if (authentication == null) {
+            cartCount = 0;
+            model.addAttribute("cartCount", cartCount);
             model.addAttribute("detail", detail);
         }else{
             String userId = authentication.getName(); // 사용자 Email 가져옴
@@ -59,6 +63,7 @@ public class ProductController {
             Optional<Likes> optionalProductLike
                     = likesRepository.findByMemberIdAndProductId(member.getMemberId(), id);
 
+            cartCount = cartRepository.countByMemberId(member.getMemberId());
             if(optionalProductLike.isEmpty()){
                 result = false;
             } else {
@@ -66,7 +71,7 @@ public class ProductController {
             }
 
             System.out.println("result = " + result);
-
+            model.addAttribute("cartCount", cartCount);
             model.addAttribute("result", result);
             model.addAttribute("detail", detail);
         }
