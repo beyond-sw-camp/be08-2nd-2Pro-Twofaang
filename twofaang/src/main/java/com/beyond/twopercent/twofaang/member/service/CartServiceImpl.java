@@ -26,14 +26,25 @@ public class CartServiceImpl implements CartService {
     public void addCart(String email, Long productId, int amount, int price) {
         Optional<Member> member = memberRepository.findByEmail(email);
 
-        Cart cart = Cart.builder()
-                .memberId(member.get().getMemberId())
-                .productId(productId)
-                .quantity(amount)
-                .totalPrice(price)
-                .build();
+        Cart existingcart = cartRepository.findCartByMemberIdAAndProductId(member.get().getMemberId(), productId);
 
-        cartRepository.save(cart);
+        if(existingcart == null) {
+            Cart cart = Cart.builder()
+                    .memberId(member.get().getMemberId())
+                    .productId(productId)
+                    .quantity(amount)
+                    .totalPrice(price)
+                    .build();
+
+            cartRepository.save(cart);
+        }else{
+            existingcart.setQuantity(existingcart.getQuantity() + amount);
+            existingcart.setTotalPrice(existingcart.getTotalPrice() + price);
+
+            cartRepository.save(existingcart);
+        }
+
+
     }
 
     @Override
