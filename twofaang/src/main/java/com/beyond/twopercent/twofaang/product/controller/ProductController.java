@@ -16,6 +16,8 @@ import com.beyond.twopercent.twofaang.product.entity.Product;
 import com.beyond.twopercent.twofaang.product.repository.LikesRepository;
 import com.beyond.twopercent.twofaang.product.repository.ProductRepository;
 import com.beyond.twopercent.twofaang.product.service.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -38,6 +40,7 @@ import static java.lang.Long.parseLong;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/product")
+@Tag(name = "회원 상품 관련 APIs", description = "회원 상품 관련 API 리스트")
 public class ProductController {
 
     private final ProductService productService;
@@ -52,7 +55,8 @@ public class ProductController {
 
 
     @GetMapping("/detail")
-    public String detatilProdcct(Model model, @RequestParam("id") long id
+    @Operation(summary = "회원 상품 상세", description = "회원이 상품 상세 페이지로 이동한다.")
+    public String detailProduct(Model model, @RequestParam("id") long id
             , @PageableDefault(size = 5, sort = "regDt", direction = Sort.Direction.DESC) Pageable pageable){
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -90,6 +94,7 @@ public class ProductController {
     }
 
     @GetMapping("/detail/order")
+    @Operation(summary = "회원 상품 주문", description = "회원이 상품 상세 페이지에서 주문 페이지로 이동한다.")
     public String detailOrder(@RequestParam("productId") String productId,
                               @RequestParam("amount") String amount,
                               @RequestParam("price") String price,
@@ -130,6 +135,7 @@ public class ProductController {
     }
 
     @PostMapping("/like")
+    @Operation(summary = "회원 상품 좋아요/취소", description = "회원이 상품에 좋아요/취소 를 한다.")
     public String productLike(LikesDto parameter){
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
