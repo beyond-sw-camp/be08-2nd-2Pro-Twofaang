@@ -83,9 +83,7 @@ public class    SecurityConfig {
                 "/images/**",
                 "/js/**",
                 "/product/**",
-                "/admin/**",
                 "/inquiries/**",
-                "/user/**",
                 "/grades/**",
                 "/mails/**"
         );
