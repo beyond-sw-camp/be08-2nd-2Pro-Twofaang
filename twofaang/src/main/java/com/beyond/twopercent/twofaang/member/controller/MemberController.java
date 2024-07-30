@@ -10,6 +10,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/members")
@@ -103,45 +105,34 @@ public class MemberController {
     }
 
     @PostMapping("/change-password")
-    @ResponseBody
-    public String changePassword(
+    public ResponseEntity<?> changePassword(
             @AuthenticationPrincipal CustomMemberDetails customMemberDetails,
             HttpServletRequest request,
             HttpServletResponse response,
-            RedirectAttributes redirectAttributes,
-            @ModelAttribute ChangePasswordDto passwordDto) {
+            @RequestBody ChangePasswordDto passwordDto) {
         try {
-            // 현재 사용자의 이메일과 암호화된 비밀번호를 가져옴
             String email = customMemberDetails.getEmail();
-            String encryptedPassword = customMemberDetails.getPassword();
+            String encryptedPassword = memberService.getPassword(email);
 
-            // 기존 비밀번호와 매치하는지 확인
             if (!bCryptPasswordEncoder.matches(passwordDto.getOldPassword(), encryptedPassword)) {
-                redirectAttributes.addFlashAttribute("errorMessage", "기존 비밀번호가 일치하지 않습니다.");
-                return "redirect:/changePassword";
+                return ResponseEntity.badRequest().body(Map.of("success", false, "message", "기존 비밀번호가 일치하지 않습니다."));
             }
 
-            // 새 비밀번호가 기존 비밀번호와 동일하지 않은지 확인
             if (bCryptPasswordEncoder.matches(passwordDto.getNewPassword(), encryptedPassword)) {
-                redirectAttributes.addFlashAttribute("errorMessage", "새 비밀번호는 기존 비밀번호와 달라야 합니다.");
-                return "redirect:/changePassword";
+                return ResponseEntity.badRequest().body(Map.of("success", false, "message", "새 비밀번호는 기존 비밀번호와 달라야 합니다."));
             }
 
-            // 비밀번호 업데이트
-            memberService.updatePassword(email, passwordDto.getNewPassword());
+            String updateMsg = memberService.updatePassword(email, passwordDto.getNewPassword());
 
-            // 로그아웃 처리 및 쿠키 삭제
             new SecurityContextLogoutHandler().logout(request, response, null);
             removeCookies(request, response);
 
-            // 로그아웃 후 메시지 전달
-            redirectAttributes.addFlashAttribute("message", "비밀번호 변경이 완료되었습니다.");
-            return "redirect:/login";
+            return ResponseEntity.ok(Map.of("success", true, "message", updateMsg));
         } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("errorMessage", "비밀번호 변경에 실패했습니다.");
-            return "redirect:/changePassword";
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("success", false, "message", "비밀번호 변경에 실패했습니다."));
         }
     }
+
 
 
     @PostMapping("/withdraw")
