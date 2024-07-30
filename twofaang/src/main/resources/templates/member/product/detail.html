@@ -603,7 +603,7 @@
                         <button class="btn btn-outline-dark flex-shrink-0" type="button" id="buyBtn">
                             바로 구매
                         </button>
-                        <form name="cartForm" method="post" th:action="@{/cart/add}">
+                        <form name="cartForm" method="post" th:action="@{/carts/add}">
                             <input type="hidden" name="productId" th:value="${detail.productId}"/>
                             <input type="hidden" name="productName" th:value="${detail.productName}"/>
                             <input type="hidden" name="urlFilename" th:value="${detail.urlFilename}"/>
