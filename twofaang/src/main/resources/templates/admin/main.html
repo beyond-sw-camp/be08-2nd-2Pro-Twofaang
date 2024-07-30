@@ -51,7 +51,7 @@
             <!--                    <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>-->
             <!--                </a>-->
             <!--            </form>-->
-            <a sec:authorize="!isAuthenticated()" href="/login" class="btn btn-outline-dark" role="button">
+            <a th:if="${#authentication == null}" href="/login" class="btn btn-outline-dark" role="button">
                 <i class="bi-person-fill me-1"></i>
                 login
             </a>
