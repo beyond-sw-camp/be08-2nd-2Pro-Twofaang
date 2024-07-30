@@ -3,8 +3,11 @@ package com.beyond.twopercent.twofaang.auth.controller;
 import com.beyond.twopercent.twofaang.member.entity.Member;
 import com.beyond.twopercent.twofaang.member.repository.CartRepository;
 import com.beyond.twopercent.twofaang.member.repository.MemberRepository;
+import com.beyond.twopercent.twofaang.product.dto.ProductDto;
 import com.beyond.twopercent.twofaang.product.entity.Product;
 import com.beyond.twopercent.twofaang.product.repository.ProductRepository;
+import com.beyond.twopercent.twofaang.review.entity.ReviewEntity;
+import com.beyond.twopercent.twofaang.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -27,6 +31,7 @@ public class HomeController {
     private final ProductRepository productRepository;
     private final MemberRepository memberRepository;
     private final CartRepository cartRepository;
+    private final ReviewRepository reviewRepository;
 
     @GetMapping("/")
     public String home(Model model,
@@ -52,6 +57,7 @@ public class HomeController {
 
             cartCount = cartRepository.countByMemberId(member.getMemberId());
         }
+
 
         model.addAttribute("cartCount", cartCount);
         model.addAttribute("list", list);

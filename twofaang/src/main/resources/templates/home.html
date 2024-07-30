@@ -126,15 +126,11 @@
                             <h5 class="fw-bolder" th:text="${x.productName}">Fancy Product</h5>
                             <!-- Product reviews-->
                             <div class="starRev">
-                                <span class="starR on"></span>
-                                <span class="starR on"></span>
-                                <span class="starR on"></span>
-                                <span class="starR on"></span>
-                                <span class="starR on"></span>
-<!--                                <span class="starR" th:classappend="${x.reviewCnt != 0 && sum/x.reviewCnt >= 2} ? 'on'"></span>-->
-<!--                                <span class="starR" th:classappend="${x.reviewCnt != 0 && sum/x.reviewCnt >= 3} ? 'on'"></span>-->
-<!--                                <span class="starR" th:classappend="${x.reviewCnt != 0 && sum/x.reviewCnt >= 4} ? 'on'"></span>-->
-<!--                                <span class="starR" th:classappend="${x.reviewCnt != 0 && sum/x.reviewCnt == 5} ? 'on'"></span>-->
+                                <span class="starR" th:classappend="${x.reviewCnt != 0 && x.reviewScore != 0 && x.reviewScore/x.reviewCnt >= 1} ? 'on'"></span>
+                                <span class="starR" th:classappend="${x.reviewCnt != 0 && x.reviewScore != 0 && x.reviewScore/x.reviewCnt >= 2} ? 'on'"></span>
+                                <span class="starR" th:classappend="${x.reviewCnt != 0 && x.reviewScore != 0 && x.reviewScore/x.reviewCnt >= 3} ? 'on'"></span>
+                                <span class="starR" th:classappend="${x.reviewCnt != 0 && x.reviewScore != 0 && x.reviewScore/x.reviewCnt >= 4} ? 'on'"></span>
+                                <span class="starR" th:classappend="${x.reviewCnt != 0 && x.reviewScore != 0 && x.reviewScore/x.reviewCnt == 5} ? 'on'"></span>
                             </div>
                             <!-- Product price-->
                             <p th:if="${!x.isSaleYn()}" th:text="${#numbers.formatInteger(x.price, 0, 'COMMA')}"></p>
