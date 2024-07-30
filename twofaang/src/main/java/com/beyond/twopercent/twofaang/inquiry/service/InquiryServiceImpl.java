@@ -59,7 +59,7 @@ public class InquiryServiceImpl implements InquiryService {
 
         existingInquiry.setInquiryTitle(updateInquiryDto.getTitle());
         existingInquiry.setInquiryText(updateInquiryDto.getContent());
-        existingInquiry.setInquiryDate(LocalDateTime.now());
+        existingInquiry.setUpdateDate(LocalDateTime.now());
 
         inquiryRepository.save(existingInquiry);
     }

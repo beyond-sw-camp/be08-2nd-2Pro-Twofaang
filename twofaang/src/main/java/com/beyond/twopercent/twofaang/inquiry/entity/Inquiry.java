@@ -46,4 +46,7 @@ public class Inquiry {
     @Column(name = "inquiry_password")
     private String inquiryPassword; // 문의 비밀번호
 
+    @Column(name = "update_date")
+    private LocalDateTime updateDate; //수정일
+
 }
