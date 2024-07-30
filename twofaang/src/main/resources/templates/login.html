@@ -10,11 +10,8 @@
 
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
 
-
-
     <!-- Bootstrap core CSS -->
-    <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <link href="/assets/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
@@ -30,9 +27,6 @@
             }
         }
     </style>
-
-
-    <!-- Custom styles for this template -->
     <link href="/css/signin.css" rel="stylesheet">
 </head>
 <body class="text-center">
@@ -40,11 +34,12 @@
 <main class="form-signin">
     <form th:action="@{/login}" method="post">
         <a href="/">
-            <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+            <img class="mb-4" src="/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
         </a>
         <h1 class="h3 mb-3 fw-normal">로그인</h1>
-        <div th:if="${param.error}" class="alert alert-danger py-0" role="alert">
-            <p class="mt-3" th:text="${errorMessage}"></p>
+        <!-- Display error message if present -->
+        <div th:if="${session.errorMessage}" class="alert alert-danger" role="alert">
+            <p th:text="${session.errorMessage}"></p>
         </div>
         <div class="form-floating">
             <input type="email" class="form-control" id="username" name="username" placeholder="name@example.com">
@@ -56,17 +51,15 @@
         </div>
 
         <div class="mb-2">
-            <a href="/user/find/password">비밀번호 찾기</a>
+            <a href="/reset-password">비밀번호 찾기</a>
+            <a href="/join">회원가입</a>
         </div>
         <button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
         <a href="/oauth2/authorization/google" class="w-100 btn btn-lg btn-primary mt-2" role="button">구글 로그인</a>
         <a href="/oauth2/authorization/naver" class="w-100 btn btn-lg btn-primary mt-2" role="button">네이버 로그인</a>
-        <a href="/join" class="w-100 btn btn-lg btn-primary mt-2" role="button">회원가입</a>
-        <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+        <p class="mt-5 mb-3 text-muted">&copy; 2024 TwoFanng</p>
     </form>
 </main>
-
-
 
 </body>
 </html>

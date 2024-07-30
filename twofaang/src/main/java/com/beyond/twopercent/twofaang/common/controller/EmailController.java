@@ -4,6 +4,7 @@ import com.beyond.twopercent.twofaang.common.dto.EmailMessage;
 import com.beyond.twopercent.twofaang.common.dto.EmailPostDto;
 import com.beyond.twopercent.twofaang.common.dto.EmailResponseDto;
 import com.beyond.twopercent.twofaang.common.service.EmailService;
+import com.beyond.twopercent.twofaang.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmailController {
 
     private final EmailService emailService;
+    private final MemberService memberService;
 
 
 	// 임시 비밀번호 발급 
