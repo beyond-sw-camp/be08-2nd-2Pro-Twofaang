@@ -199,31 +199,33 @@
 
 <br>
 
-## 테스트 영상
+## 📺 테스트 영상
 
-### 회원 기능
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/xvxtmgDkB2I/0.jpg)](https://www.youtube.com/watch?v=xvxtmgDkB2I)
-<br>
-### grade 스케줄러
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/5YLnrOVe9Yg/0.jpg)](https://www.youtube.com/watch?v=5YLnrOVe9Yg)
-### 상품 및 카테고리 기능
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/us_XRgZg79c/0.jpg)](https://www.youtube.com/watch?v=us_XRgZg79c)
-<br>
-### 주문 기능
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/onlgV-1qzGc/0.jpg)](https://www.youtube.com/watch?v=onlgV-1qzGc)
-<br>
-### 쿠폰
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/cu6-YNgBcVI/0.jpg)](https://www.youtube.com/watch?v=cu6-YNgBcVI)
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/s6CjbTBMwCA/0.jpg)](https://www.youtube.com/watch?v=s6CjbTBMwCA)
-<br>
-### 장바구니
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/vu2EmgpOZXQ/0.jpg)](https://www.youtube.com/watch?v=vu2EmgpOZXQ)
-### 문의 및 답변
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/llwlKC1fBOA/0.jpg)](https://www.youtube.com/watch?v=llwlKC1fBOA)
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/aHbI1AQW_Kg/0.jpg)](https://www.youtube.com/watch?v=aHbI1AQW_Kg)
-
-### 리뷰
-[![IMAGE ALT TEXT HERE](https://i9.ytimg.com/vi_webp/B29m6ZW9aIY/mq2.webp?sqp=CNyep7UG-oaymwEmCMACELQB8quKqQMa8AEB-AHGCYAC0AWKAgwIABABGGsgayhrMA8=&rs=AOn4CLCYE7zCofWcpSnOI-XpH73P6r7hsA)](https://www.youtube.com/watch?v=B29m6ZW9aIY)
+> ### ⚪ 회원 기능  
+> [![회원 기능](https://img.youtube.com/vi/xvxtmgDkB2I/0.jpg)](https://www.youtube.com/watch?v=xvxtmgDkB2I)
+> 
+> ### ⚪ grade 스케줄러  
+> [![grade 스케줄러](https://img.youtube.com/vi/5YLnrOVe9Yg/0.jpg)](https://www.youtube.com/watch?v=5YLnrOVe9Yg)
+> 
+> ### ⚪ 상품 및 카테고리 기능  
+> [![상품 및 카테고리 기능](https://img.youtube.com/vi/us_XRgZg79c/0.jpg)](https://www.youtube.com/watch?v=us_XRgZg79c)
+> 
+> ### ⚪ 주문 기능  
+> [![주문 기능](https://img.youtube.com/vi/onlgV-1qzGc/0.jpg)](https://www.youtube.com/watch?v=onlgV-1qzGc)
+> 
+> ### ⚪ 쿠폰  
+> [![쿠폰](https://img.youtube.com/vi/cu6-YNgBcVI/0.jpg)](https://www.youtube.com/watch?v=cu6-YNgBcVI)  
+> [![쿠폰](https://img.youtube.com/vi/s6CjbTBMwCA/0.jpg)](https://www.youtube.com/watch?v=s6CjbTBMwCA)
+> 
+> ### ⚪ 장바구니  
+> [![장바구니](https://img.youtube.com/vi/vu2EmgpOZXQ/0.jpg)](https://www.youtube.com/watch?v=vu2EmgpOZXQ)
+> 
+> ### ⚪ 문의 및 답변  
+> [![문의 및 답변](https://img.youtube.com/vi/llwlKC1fBOA/0.jpg)](https://www.youtube.com/watch?v=llwlKC1fBOA)  
+> [![문의 및 답변](https://img.youtube.com/vi/aHbI1AQW_Kg/0.jpg)](https://www.youtube.com/watch?v=aHbI1AQW_Kg)
+> 
+> ### ⚪ 리뷰  
+> [![리뷰](https://i9.ytimg.com/vi_webp/B29m6ZW9aIY/mq2.webp?sqp=CNyep7UG-oaymwEmCMACELQB8quKqQMa8AEB-AHGCYAC0AWKAgwIABABGGsgayhrMA8=&rs=AOn4CLCYE7zCofWcpSnOI-XpH73P6r7hsA)](https://www.youtube.com/watch?v=B29m6ZW9aIY)
 
 <br>
 ## 👍 팀 회고록
