@@ -221,5 +221,4 @@
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/cu6-YNgBcVI/0.jpg)](https://www.youtube.com/watch?v=cu6-llwlKC1fBOA)
 <br>
 ### 답변
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/cu6-YNgBcVI/0.jpg)](https://www.youtube.com/watch?v=cu6-YNgBcVI)
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/aHbI1AQW_Kg/0.jpg)](https://www.youtube.com/watch?v=cu6-aHbI1AQW_Kg)
