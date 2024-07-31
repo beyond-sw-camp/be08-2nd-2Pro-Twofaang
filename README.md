@@ -14,9 +14,85 @@
 
 ## 😄 팀원 소개
 
-|<img src="https://avatars.githubusercontent.com/u/122086362?v=4" width="150" height="150"/>|<img src="https://github.com/beyond-sw-camp/be08-1st-CDLKJ-SilverTown/blob/main/img/80668325.png?raw=true" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/97294927?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/77917850?v=4" width="150" height="150"/>|<img src="https://avatars.githubusercontent.com/u/167883838?v=4" width="150" height="150"/>|
-|:-:|:-:|:-:|:-:|:-:| 
-| 🦥 김종원 🦥<br/>[@jongwon-kr](https://github.com/jongwon-kr) | 🐬 정수진 🐬<br/>[@su-jina2024](https://github.com/Sujina2024) | 🐰 홍석민 🐰<br/>[@henhen7](https://github.com/mmvne) | 🐻‍❄️ 김태영 🐻‍❄️ <br/>[@tyeong1102](https://github.com/tyeong1102)| 🐱 이지정 🐱<br/>[@leejijung](https://github.com/leejijung) | 🐹 이주희 🐹<br/>[@juhi0916](https://github.com/juhi0916) 
+<br>
+
+<div align="center">
+<table>
+ <tr>
+        <td align="center">
+            <a>
+            </a>
+	<img src="https://avatars.githubusercontent.com/u/76871947?v=4" width=100, height=100>
+ </td>
+        <td align="center">
+            <a>
+	<img src="https://avatars.githubusercontent.com/u/167696022?v=4" width=100, height=100>
+	</a>
+        </td>
+        <td align="center">
+            <a>
+	<img src="https://avatars.githubusercontent.com/u/45449480?v=4" width=100, height=100>
+ 	</a>
+        </td>
+        <td align="center">
+            <a>
+	<img src="https://avatars.githubusercontent.com/u/97294927?v=4" width=100, height=100>
+	</a>
+        </td>
+        <td align="center">
+            <a>
+	<img src="https://avatars.githubusercontent.com/u/80452437?v=4" width=100, height=100>
+ 	</a>
+        </td> <td align="center">
+            <a>
+	<img src="https://avatars.githubusercontent.com/u/144869429?s=400&v=4" width=100, height=100>
+ 	</a>
+        </td>
+    </tr>
+    <tr>
+ <td align="center">
+            <b>🦥 김종원 🦥</b>
+        </td>
+        <td align="center">
+            <b>🐬 정수진 🐬</b>
+        </td>
+        <td align="center">
+            <b>🐰 홍석민 🐰</b>
+        </td>
+        <td align="center">
+            <b>🐻‍❄️ 김태영 🐻‍❄️</b>
+        </td>
+        <td align="center">
+            <b>🐱 이지정 🐱</b>
+        </td>
+    <td align="center">
+            <b>🐹 이주희 🐹</b>
+        </td>
+    </tr>
+    <tr>
+        <td align="center"">
+            <b>Team Leader</b>
+        </td>
+        <td align="center">
+            <b>Backend</b>
+        </td>
+        <td align="center">
+            <b>Backend</b>
+        </td>
+        <td align="center">
+            <b>Backend</b>
+        </td>
+        <td align="center">
+            <b>Backend</b>
+        </td>
+       <td align="center">
+            <b>Backend</b>
+        </td>
+    </tr>
+</table>
+</div>
+<br>
+
 
 <br>
 
@@ -48,44 +124,70 @@
 <br>
 
 ## 🔧 기술 스택
-
 <p align="center">
-  <img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white&color=black">
-  <img src="https://img.shields.io/badge/Git-F05032?style=flat&logo=Git&logoColor=white&color=ffa500">
-  <img src="https://img.shields.io/badge/MariaDB-003545?style=flat&logo=MariaDB&logoColor=white">
-  <img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=Notion&logoColor=white">
-  <img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat&logo=SpringBoot&logoColor=white">
   <img src="https://img.shields.io/badge/Java-007396?style=flat&logo=Java&logoColor=white">
+  <img src="https://img.shields.io/badge/Thymeleaf-%23005C0F?style=flat&logo=Thymeleaf&logoColor=white">
+  <img src="https://img.shields.io/badge/MariaDB-003545?style=flat&logo=MariaDB&logoColor=white">
+  <br>
+  <img src="https://img.shields.io/badge/spring-%236DB33F.svg?style=flat&logo=spring&logoColor=white">
+  <img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat&logo=SpringBoot&logoColor=white">
+  <img src="https://img.shields.io/badge/Spring Data JPA-6DB33F?style=flat&logo=SpringBoot&logoColor=white">
+  <br>
+  <img src="https://img.shields.io/badge/OAuth2-6DB33F?style=flat&logo=SpringBoot&logoColor=white">
+  <img src="https://img.shields.io/badge/Spring Security-6DB33F?style=flat&logo=Spring Security&logoColor=white">
+  <img src="https://img.shields.io/badge/JWT-black?style=flat&logo=JSON%20web%20tokens">
+  <br>
 </p>
 
+## 🛠 사용 tools</h1> 
+<p align="center">
+  <img src="https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=flat&logo=intellij-idea&logoColor=white">
+  <img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=Notion&logoColor=white">
+  <img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white&color=black">
+  <img src="https://img.shields.io/badge/-Swagger-%23Clojure?style=flat&logo=swagger&logoColor=white">
+</p>
 <br>
 
 ## 🗓️ 프로젝트 계획 (WBS)
 
-[프로젝트 계획 보기](https://docs.google.com/spreadsheets/d/109oncrp3JqBo9fVCrOZ5r66Zlr2R-9QtJLWFk_XZR8k/edit?gid=1999668146#gid=1999668146)
+[프로젝트 계획 보기](https://docs.google.com/spreadsheets/d/1YfwS4eHvrN3F9JukhwsFa7LOtYUGQdFebjIULqpz3d8/edit?gid=78448456#gid=78448456)
+![WBS](https://github.com/user-attachments/assets/ee8dd5ee-1103-483a-86c5-1f3c69d1d6bc)
+
+
 
 <br>
 
-## 📜 요구사항 명세서
+## 📙 요구사항 명세서
 
 [요구사항 명세서 보기](https://docs.google.com/spreadsheets/d/1YfwS4eHvrN3F9JukhwsFa7LOtYUGQdFebjIULqpz3d8/edit?gid=0#gid=0)
+![스크린샷 2023-11-20 144832](https://github.com/user-attachments/assets/12fd543b-5dc4-472c-9f76-3ace169f84a7)
+
+
+<br>
+
+## 📘 기능 명세서
+
+[기능 명세서 보기](https://docs.google.com/spreadsheets/d/1YfwS4eHvrN3F9JukhwsFa7LOtYUGQdFebjIULqpz3d8/edit?gid=910810164#gid=910810164)
+![스크린샷 2024-07-31 051617](https://github.com/user-attachments/assets/e1261519-39a6-4067-9780-9e3e2ed19288)
+
+
+<br>
+
+## 📗 테이블 명세서
+
+[테이블 명세서 보기](https://docs.google.com/spreadsheets/d/1YfwS4eHvrN3F9JukhwsFa7LOtYUGQdFebjIULqpz3d8/edit?gid=755143936#gid=755143936)
+![스크린샷 2024-07-31 051650](https://github.com/user-attachments/assets/a8e7aed0-1a1c-4a06-936a-ffad4418b82e)
+
+
 
 <br>
 
 ## 📊 ERD (Entity-Relationship Diagram)
 
-![ERD 이미지](https://github.com/user-attachments/assets/31a752c9-bae6-4f34-839e-b09f53d851db)
+[ERD 보기](https://www.erdcloud.com/d/eRgkYKkfvQi3s2viJ)
+![스크린샷 2023-11-13 211934](https://github.com/user-attachments/assets/07a7b06e-4e8c-460a-a71d-e1e76562b061)
+
 
 <br>
 
-## 📝 데이터 정의 언어 (DDL)
 
-(DDL 스크립트 추가)
-
-<br>
-
-## 👨‍💻 SQL 실행 결과
-
-(SQL 실행 결과 추가)
-
-<br>
