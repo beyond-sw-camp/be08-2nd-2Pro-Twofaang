@@ -195,4 +195,6 @@
 ### 회원 기능
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/xvxtmgDkB2I/0.jpg)](https://www.youtube.com/watch?v=xvxtmgDkB2I)
 
+### 상품 및 카테고리 기능
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/us_XRgZg79c/0.jpg)](https://www.youtube.com/watch?v=us_XRgZg79c)
 
