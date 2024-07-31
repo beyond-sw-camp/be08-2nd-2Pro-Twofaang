@@ -175,15 +175,16 @@
 
 ## 📗 테이블 명세서
 
-[테이블블 명세서 보기](https://docs.google.com/spreadsheets/d/1YfwS4eHvrN3F9JukhwsFa7LOtYUGQdFebjIULqpz3d8/edit?gid=755143936#gid=755143936)
-![스크린샷 2024-07-31 051741](https://github.com/user-attachments/assets/56634935-3e86-4f44-b80c-77de9199633c)
+[테이블 명세서 보기](https://docs.google.com/spreadsheets/d/1YfwS4eHvrN3F9JukhwsFa7LOtYUGQdFebjIULqpz3d8/edit?gid=755143936#gid=755143936)
+![스크린샷 2024-07-31 051650](https://github.com/user-attachments/assets/a8e7aed0-1a1c-4a06-936a-ffad4418b82e)
+
 
 
 <br>
 
 ## 📊 ERD (Entity-Relationship Diagram)
 
-[ERD 보기](https://docs.google.com/spreadsheets/d/1YfwS4eHvrN3F9JukhwsFa7LOtYUGQdFebjIULqpz3d8/edit?gid=755143936#gid=755143936)
+[ERD 보기](https://www.erdcloud.com/d/eRgkYKkfvQi3s2viJ)
 ![스크린샷 2023-11-13 211934](https://github.com/user-attachments/assets/07a7b06e-4e8c-460a-a71d-e1e76562b061)
 
 
