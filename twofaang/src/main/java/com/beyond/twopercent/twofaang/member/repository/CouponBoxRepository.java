@@ -15,4 +15,6 @@ public interface CouponBoxRepository extends JpaRepository<CouponBox, Long> {
     @Query("SELECT CASE WHEN COUNT(cb) > 0 THEN true ELSE false END FROM CouponBox cb WHERE cb.memberId = :memberId AND cb.coupon.couponCode = :couponCode")
     boolean findByMemberIdAndCouponCode(long memberId, String couponCode);
 
+    @Query("select cb from CouponBox cb where cb.memberId = :memberId and cb.coupon.couponId = :couponId")
+    CouponBox findByMemberIdAndCouponId(long memberId, Long couponId);
 }

@@ -1,6 +1,8 @@
 package com.beyond.twopercent.twofaang.order.service;
 
+import com.beyond.twopercent.twofaang.member.entity.CouponBox;
 import com.beyond.twopercent.twofaang.member.entity.Member;
+import com.beyond.twopercent.twofaang.member.repository.CouponBoxRepository;
 import com.beyond.twopercent.twofaang.member.repository.MemberRepository;
 import com.beyond.twopercent.twofaang.order.dto.OrderItemRequestDto;
 import com.beyond.twopercent.twofaang.order.dto.OrderItemResponseDto;
@@ -35,6 +37,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final MemberRepository memberRepository;
     private final ProductRepository productRepository;
+    private final CouponBoxRepository couponBoxRepository;
 
     // 모든 주문 조회
     @Override
@@ -96,9 +99,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderResponseDto createOrder(String email, String productIndexList, String productPriceList, String productAmountList, String productUrlFileList, String productNameList, int finalPrice) {
+    public OrderResponseDto createOrder(String email, String productIndexList, String productPriceList, String productAmountList, String productUrlFileList, String productNameList, int finalPrice, Long couponId) {
         Member member = memberRepository.findByEmail(email)
                 .orElseThrow(() -> new MemberNotFoundException(email));
+
+        if (couponId != null) {
+            CouponBox couponBox = couponBoxRepository.findByMemberIdAndCouponId(member.getMemberId(), couponId);
+
+            couponBoxRepository.delete(couponBox);
+
+        }
 
         // 파라미터를 처리하여 OrderItem 객체 리스트를 생성합니다.
         String[] productIndexes = productIndexList.split(",");

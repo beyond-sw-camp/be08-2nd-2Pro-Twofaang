@@ -569,13 +569,16 @@
             <h3><strong>쿠폰 등록</strong></h3>
         </div>
 
+        <!-- 쿠폰 ID를 저장할 숨겨진 입력 필드 -->
+        <input type="hidden" name="couponId" id="couponId" value="">
+
         <div>
             <ul>
                 <label>쿠폰 선택</label>
-                <select id="coupon" name="coupon"
+                <select id="coupon" name="coupon" onchange="updateCouponInfo()"
                         style="padding-left: 15px; height: 24px; width: 400px; margin-left: 56px; border: 1px solid #d4d5d8; border-top-left-radius: 5px; border-bottom-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px;">
-                    <option selected="selected" value="">쿠폰 선택</option>
-                    <option th:each="coupon : ${coupons}" th:value="${coupon.discountRate}" th:text="${coupon.couponName}"></option>
+                    <option selected="selected" value="0" data-id="">쿠폰 선택</option>
+                    <option th:each="coupon : ${coupons}" th:value="${coupon.coupon.discountRate}" th:data-id="${coupon.coupon.couponId}" th:text="${coupon.coupon.couponName}"></option>
                 </select>
             </ul>
         </div>
@@ -653,6 +656,15 @@
              style="cursor:pointer;position:absolute;right:-3px;top:-3px;z-index:1" onclick="closeDaumPostcode()"
              alt="닫기 버튼">
     </div>
+
+    <script>
+        function updateCouponInfo() {
+            var couponSelect = document.getElementById('coupon');
+            var selectedOption = couponSelect.options[couponSelect.selectedIndex];
+            var couponId = selectedOption.getAttribute('data-id'); // 쿠폰 ID 가져오기
+            document.getElementById('couponId').value = couponId; // 숨겨진 필드에 쿠폰 ID 설정
+        }
+    </script>
 
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script>
