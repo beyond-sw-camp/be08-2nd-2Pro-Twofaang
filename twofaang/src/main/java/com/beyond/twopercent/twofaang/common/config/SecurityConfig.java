@@ -33,7 +33,7 @@ import java.io.IOException;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class    SecurityConfig {
+public class SecurityConfig {
 
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JWTUtil jwtUtil;
