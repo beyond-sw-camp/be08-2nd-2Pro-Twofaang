@@ -190,4 +190,9 @@
 
 <br>
 
+## 테스트 영상
+
+### 회원 기능
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/xvxtmgDkB2I/0.jpg)](https://www.youtube.com/watch?v=xvxtmgDkB2I)
+
 
