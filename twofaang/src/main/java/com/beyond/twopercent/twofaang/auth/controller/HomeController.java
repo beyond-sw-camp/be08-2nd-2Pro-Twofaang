@@ -1,5 +1,6 @@
 package com.beyond.twopercent.twofaang.auth.controller;
 
+import com.beyond.twopercent.twofaang.auth.service.ReissueService;
 import com.beyond.twopercent.twofaang.member.entity.Member;
 import com.beyond.twopercent.twofaang.member.repository.CartRepository;
 import com.beyond.twopercent.twofaang.member.repository.MemberRepository;
@@ -8,6 +9,8 @@ import com.beyond.twopercent.twofaang.product.repository.ProductRepository;
 import com.beyond.twopercent.twofaang.review.repository.ReviewRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,14 +32,17 @@ public class HomeController {
     private final MemberRepository memberRepository;
     private final CartRepository cartRepository;
     private final ReviewRepository reviewRepository;
+    private final ReissueService reissueService;
 
     @GetMapping("/")
     @Operation(summary = "회원 메인", description = "회원 메인 페이지로 이동한다.")
     public String home(Model model,
                        @RequestParam(required = false, defaultValue = "") String searchText,
-                       @PageableDefault(size = 8, sort = "productId", direction = Sort.Direction.DESC) Pageable pageable
+                       @PageableDefault(size = 8, sort = "productId", direction = Sort.Direction.DESC) Pageable pageable,
+                       HttpServletRequest request,
+                       HttpServletResponse response
     ) {
-
+        reissueService.reissue(request, response);
         Page<Product> list = productRepository.findByProductNameContainingOrDescriptionContainingOrKeywordContaining(searchText, searchText, searchText, pageable);
 
         int startPage = 1;
