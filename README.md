@@ -216,9 +216,9 @@
 <br>
 ### 장바구니
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/vu2EmgpOZXQ/0.jpg)](https://www.youtube.com/watch?v=vu2EmgpOZXQ)
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/5YLnrOVe9Yg/0.jpg)](https://www.youtube.com/watch?v=cu6-5YLnrOVe9Yg)
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/5YLnrOVe9Yg/0.jpg)](https://www.youtube.com/watch?v=5YLnrOVe9Yg)
 ### 문의
-
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/llwlKC1fBOA/0.jpg)](https://www.youtube.com/watch?v=llwlKC1fBOA)
 <br>
 ### 답변
 
