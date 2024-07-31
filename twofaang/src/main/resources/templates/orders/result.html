@@ -108,7 +108,7 @@
                                  th:src="${x.urlFilename}" class="img-thumbnail" alt="상품 이미지"></td>
                         <td th:text="${x.productName}">상품이름</td>
                         <td th:text="${x.quantity}">상품수량</td>
-                        <td name="price" th:text="${#numbers.formatInteger(finalPrice * x.quantity, 0, 'COMMA') + ' 원'}">가격</td>
+                        <td name="price" th:text="${#numbers.formatInteger(finalPrice, 0, 'COMMA') + ' 원'}">가격</td>
                     </tr>
                     </tbody>
                 </table>
