@@ -204,6 +204,8 @@
 ### 회원 기능
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/xvxtmgDkB2I/0.jpg)](https://www.youtube.com/watch?v=xvxtmgDkB2I)
 <br>
+### grade 스케줄러
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/5YLnrOVe9Yg/0.jpg)](https://www.youtube.com/watch?v=5YLnrOVe9Yg)
 ### 상품 및 카테고리 기능
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/us_XRgZg79c/0.jpg)](https://www.youtube.com/watch?v=us_XRgZg79c)
 <br>
@@ -216,7 +218,6 @@
 <br>
 ### 장바구니
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/vu2EmgpOZXQ/0.jpg)](https://www.youtube.com/watch?v=vu2EmgpOZXQ)
-[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/5YLnrOVe9Yg/0.jpg)](https://www.youtube.com/watch?v=5YLnrOVe9Yg)
 ### 문의 및 답변
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/llwlKC1fBOA/0.jpg)](https://www.youtube.com/watch?v=llwlKC1fBOA)
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/aHbI1AQW_Kg/0.jpg)](https://www.youtube.com/watch?v=aHbI1AQW_Kg)
