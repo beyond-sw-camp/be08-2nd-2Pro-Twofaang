@@ -1,31 +1,17 @@
 package com.beyond.twopercent.twofaang.member.controller;
 
-import com.beyond.twopercent.twofaang.auth.service.ReissueService;
-import com.beyond.twopercent.twofaang.member.dto.ChangePasswordDto;
 import com.beyond.twopercent.twofaang.member.dto.GradeRequestDto;
 import com.beyond.twopercent.twofaang.member.dto.MemberResponseDto;
 import com.beyond.twopercent.twofaang.member.entity.Grade;
-import com.beyond.twopercent.twofaang.member.entity.enums.Status;
 import com.beyond.twopercent.twofaang.member.service.GradeService;
 import com.beyond.twopercent.twofaang.member.service.MemberService;
-import com.beyond.twopercent.twofaang.auth.dto.form.CustomMemberDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/admin")
