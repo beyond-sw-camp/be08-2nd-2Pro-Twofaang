@@ -1,12 +1,18 @@
 package com.beyond.twopercent.twofaang.member.service;
 
 import com.beyond.twopercent.twofaang.member.dto.MemberResponseDto;
+import com.beyond.twopercent.twofaang.member.entity.Grade;
 import com.beyond.twopercent.twofaang.member.entity.Member;
+import com.beyond.twopercent.twofaang.member.entity.enums.Role;
 import com.beyond.twopercent.twofaang.member.entity.enums.Status;
+import com.beyond.twopercent.twofaang.member.repository.GradeRepository;
 import com.beyond.twopercent.twofaang.member.repository.MemberRepository;
+import com.beyond.twopercent.twofaang.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +24,8 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final OrderRepository orderRepository;
+    private final GradeRepository gradeRepository;
 
     @Override
     public MemberResponseDto getCurrentMemberInfo(String email) {
@@ -136,6 +144,28 @@ public class MemberServiceImpl implements MemberService {
                 .addr(member.getAddr()) // 주소 추가
                 .addrDetail(member.getAddrDetail()) // 상세 주소 추가
                 .build();
+    }
+
+    @Transactional
+    @Scheduled(cron = "0 0 0 1 * ?")              //매월 1일마다 모든 회원 등급 변경
+//    @Scheduled(cron = "*/15 * * * * *")             // 15초마다 실행
+    public void memberGradeUpdate(){
+        List<Member> members = memberRepository.findAll();
+
+        if(members.size() > 0){
+            for(Member member : members){
+                if(member.getRole().equals(Role.ROLE_USER)){
+                    Integer totalPayment = orderRepository.totalPayment_MemberId((member.getMemberId()));
+                    int actualPayment = (totalPayment != null) ? totalPayment : 0;
+
+                    List<Grade> grades = gradeRepository.findGradesByMemberTotalPayment(actualPayment);
+
+                    member.setGrade(grades.get(0));
+
+                    memberRepository.save(member);
+                }
+            }
+        }
     }
 
 }

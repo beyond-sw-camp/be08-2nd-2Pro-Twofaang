@@ -2,8 +2,10 @@ package com.beyond.twopercent.twofaang.member.service;
 
 import com.beyond.twopercent.twofaang.member.dto.GradeRequestDto;
 import com.beyond.twopercent.twofaang.member.entity.Grade;
+import com.beyond.twopercent.twofaang.member.entity.Member;
 import com.beyond.twopercent.twofaang.member.entity.enums.GradeName;
 import com.beyond.twopercent.twofaang.member.repository.GradeRepository;
+import com.beyond.twopercent.twofaang.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import java.util.Optional;
 public class GradeServiceImpl implements GradeService {
 
     private final GradeRepository gradeRepository;
+    private final MemberRepository memberRepository;
 
     @Override
     public Grade createGrade(GradeRequestDto requestDto) {
@@ -45,5 +48,12 @@ public class GradeServiceImpl implements GradeService {
             return gradeRepository.save(updatedGrade);
         }
         return null;
+    }
+
+    @Override
+    public Grade getMyGrade(String email){
+        Optional<Member> member = memberRepository.findByEmail(email);
+
+        return member.isPresent() ? member.get().getGrade() : null;
     }
 }

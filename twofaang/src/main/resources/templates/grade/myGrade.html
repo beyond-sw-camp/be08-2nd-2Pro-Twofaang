@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>쿠폰 목록</title>
+    <title>등급</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico"/>
     <!-- Bootstrap icons-->
@@ -17,6 +17,14 @@
         .table thead th,
         .table tbody td {
             vertical-align: middle;
+            text-align: center;
+        }
+        .highlight1 {
+            font-weight: bold;
+            color: rebeccapurple;
+        }
+        .highlight2 {
+            font-weight: bold;
             text-align: center;
         }
     </style>
@@ -90,29 +98,24 @@
 </nav>
 <section class="py-5">
     <div class="container px-4 px-lg-5">
-        <h2 class="text-center">COUPON</h2>
+        <h2 class="highlight2">My Grade</h2>
+        <br>
+        <h3 class="text-center">회원의 등급은 <span th:text="${myGrade.gradeName}" class="highlight1"/> 입니다. </h3>
+        <br>
+        <br>
         <table class="table table-hover">
             <thead>
             <tr>
-                <th scope="col">코드</th>
-                <th scope="col">이름</th>
-                <th scope="col">기한</th>
+                <th scope="col">등급 이름</th>
+                <th scope="col">등급 조건(누적 결제액)</th>
                 <th scope="col">할인율</th>
-                <th scope="col"> </th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="coupon : ${coupons}">
-                <td th:text="${coupon.couponCode}"></td>
-                <td th:text="${coupon.couponName}"></td>
-                <td th:text="${coupon.couponDeadline}"></td>
-                <td th:text="${coupon.discountRate} + '%'"></td>
-                <td>
-                    <form th:action="@{/couponbox/add}" method="post">
-                        <input type="hidden" name="couponCode" th:value="${coupon.couponCode}" />
-                        <button type="submit" class="btn btn-outline-danger">쿠폰 추가</button>
-                    </form>
-                </td>
+            <tr th:each="grade : ${grades}">
+                <td th:text="${grade.gradeName}"></td>
+                <td th:text="${grade.targetAmount} + '원'"></td>
+                <td th:text="${grade.discountRate} + '%'"></td>
             </tr>
             </tbody>
         </table>
@@ -128,3 +131,5 @@
 <script src="/js/scripts.js"></script>
 </body>
 </html>
+
+
