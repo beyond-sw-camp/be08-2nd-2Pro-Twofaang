@@ -1,86 +1,136 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
     <title>쿠폰 목록</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico"/>
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="/css/styles.css" rel="stylesheet"/>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        .button-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .action-button {
-            padding: 8px 12px;
-            margin: 4px;
-            border: none;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-            border-radius: 4px;
+        .table thead th,
+        .table tbody td {
+            vertical-align: middle;
             text-align: center;
-            text-decoration: none;
-        }
-        .action-button:hover {
-            background-color: #0056b3;
-        }
-        .error-message {
-            color: red;
-            font-weight: bold;
-            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-<h1>사용 가능한 쿠폰</h1>
-
-<div th:if="${error}" class="error-message">
-    <p th:text="${error}"></p>
-</div>
-
-<table>
-    <thead>
-    <tr>
-        <th>코드</th>
-        <th>이름</th>
-        <th>기한</th>
-        <th>할인율</th>
-        <th>액션</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="coupon : ${coupons}">
-        <td th:text="${coupon.couponCode}"></td>
-        <td th:text="${coupon.couponName}"></td>
-        <td th:text="${coupon.couponDeadline}"></td>
-        <td th:text="${coupon.discountRate} + '%'"></td>
-        <td>
-            <form th:action="@{/couponbox/add}" method="post">
-                <input type="hidden" name="couponCode" th:value="${coupon.couponCode}" />
-                <button type="submit" class="action-button">쿠폰 추가</button>
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="/">Twofaang</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="/coupon/list">Coupon</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">내 정보</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <form th:action="@{/members/myinfo}" method="get">
+                            <button type="submit" class="dropdown-item">
+                                회원 정보
+                            </button>
+                        </form>
+                        <li>
+                            <hr class="dropdown-divider"/>
+                        </li>
+                        <form th:action="@{/orders/list}" method="get">
+                            <button type="submit" class="dropdown-item">
+                                주문 내역
+                            </button>
+                        </form>
+<!--                        <form th:action="@{/inquirys}" method="get">-->
+<!--                            <button type="submit" class="dropdown-item">-->
+<!--                                문의 하기-->
+<!--                            </button>-->
+<!--                        </form>-->
+                        <form th:action="@{/couponbox/list}" method="get">
+                            <button type="submit" class="dropdown-item">
+                                내 쿠폰함
+                            </button>
+                        </form>
+                        </form>
+                        <form th:action="@{/grades/mygrade}" method="get">
+                            <button type="submit" class="dropdown-item">
+                                내 등급
+                            </button>
+                        </form>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <a href="/carts" class="btn btn-outline-dark" role="button">
+                    <i class="bi-cart-fill me-1"></i>
+                    Cart
+                    <span class="badge bg-dark text-white ms-1 rounded-pill" th:text="${cartCount}">0</span>
+                </a>
             </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
+            <!-- 로그인 버튼 -->
+            <form th:action="@{/login}" method="get" th:if="${#authentication == null}">
+                <button type="submit" class="btn btn-outline-dark">
+                    <i class="bi-person-fill me-1"></i>
+                    login
+                </button>
+            </form>
+            <!-- 로그아웃 버튼 -->
+            <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+                <button type="submit" class="btn btn-outline-dark">
+                    <i class="bi-person-fill me-1"></i>
+                    logout
+                </button>
+            </form>
+        </div>
+    </div>
+</nav>
+<section class="py-5">
+    <div class="container px-4 px-lg-5">
+        <h2 class="text-center">COUPON</h2>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">코드</th>
+                <th scope="col">이름</th>
+                <th scope="col">기한</th>
+                <th scope="col">할인율</th>
+                <th scope="col"> </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="coupon : ${coupons}">
+                <td th:text="${coupon.couponCode}"></td>
+                <td th:text="${coupon.couponName}"></td>
+                <td th:text="${coupon.couponDeadline}"></td>
+                <td th:text="${coupon.discountRate} + '%'"></td>
+                <td>
+                    <form th:action="@{/couponbox/add}" method="post">
+                        <input type="hidden" name="couponCode" th:value="${coupon.couponCode}" />
+                        <button type="submit" class="btn btn-outline-danger">쿠폰 추가</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
+</footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="/js/scripts.js"></script>
 </body>
 </html>

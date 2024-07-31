@@ -95,7 +95,6 @@ public class SecurityConfig {
                 "/js/**",
                 "/product/**",
                 "/inquiries/**",
-                "/grades/**",
                 "/mails/**"
         );
     }

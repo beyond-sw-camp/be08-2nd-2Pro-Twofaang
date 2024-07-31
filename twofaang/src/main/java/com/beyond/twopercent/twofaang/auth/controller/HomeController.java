@@ -1,5 +1,6 @@
 package com.beyond.twopercent.twofaang.auth.controller;
 
+import com.beyond.twopercent.twofaang.auth.dto.form.CustomMemberDetails;
 import com.beyond.twopercent.twofaang.auth.service.ReissueService;
 import com.beyond.twopercent.twofaang.member.entity.Member;
 import com.beyond.twopercent.twofaang.member.repository.CartRepository;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,11 +40,10 @@ public class HomeController {
     @Operation(summary = "회원 메인", description = "회원 메인 페이지로 이동한다.")
     public String home(Model model,
                        @RequestParam(required = false, defaultValue = "") String searchText,
-                       @PageableDefault(size = 8, sort = "productId", direction = Sort.Direction.DESC) Pageable pageable,
-                       HttpServletRequest request,
-                       HttpServletResponse response
+                       @PageableDefault(size = 8, sort = "productId", direction = Sort.Direction.DESC) Pageable pageable
     ) {
-        reissueService.reissue(request, response);
+
+
         Page<Product> list = productRepository.findByProductNameContainingOrDescriptionContainingOrKeywordContaining(searchText, searchText, searchText, pageable);
 
         int startPage = 1;

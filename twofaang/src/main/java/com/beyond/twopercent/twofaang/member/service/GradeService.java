@@ -12,4 +12,5 @@ public interface GradeService {
     Grade getGradeByGradeName(GradeName gradeName);
     List<Grade> getAllGrades();
     Grade updateGrade(Long id, Grade updatedGrade);
+    Grade getMyGrade(String email);
 }

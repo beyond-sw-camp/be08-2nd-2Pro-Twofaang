@@ -1,117 +1,158 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
     <title>장바구니</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico"/>
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet"/>
+    <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/css/styles.css" rel="stylesheet"/>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
+        .product-img {
+            max-width: 100px;
+            max-height: 100px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
         }
-        .container {
-            width: 80%;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h2 {
+        .table thead th,
+        .table tbody td {
+            vertical-align: middle;
             text-align: center;
-            color: #333;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-        th, td {
-            padding: 12px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        .actions {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            margin-top: 20px;
-        }
-        .actions span {
-            margin-right: auto;
-            font-size: 1.2em;
-            font-weight: bold;
-        }
-        .actions button {
-            padding: 10px 20px;
-            background-color: #28a745;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .actions button:hover {
-            background-color: #218838;
         }
     </style>
-    <script>
-        function updateTotal() {
-            let checkboxes = document.querySelectorAll('input[name="selectedItems"]:checked');
-            let total = 0;
-            checkboxes.forEach(checkbox => {
-                let row = checkbox.closest('tr');
-                let price = parseFloat(row.querySelector('.price').innerText.replace(/[^0-9.-]+/g, ""));
-                total += price;
-            });
-            document.getElementById('totalAmount').innerText = '총 금액: ' + total.toLocaleString('ko-KR') + '원';
-        }
-
-    </script>
 </head>
 <body>
-<div class="container">
-    <h2>장바구니</h2>
-    <table>
-        <thead>
-        <tr>
-            <th>선택</th>
-            <th>상품ID</th>
-            <th>상품명</th>
-            <th>수량</th>
-            <th>총 가격</th>
-            <th>삭제</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="cartItem : ${cartItems}">
-            <td><input type="checkbox" name="selectedItems" th:value="${cartItem.cartId}" onchange="updateTotal()"/></td>
-            <td th:text="${cartItem.productId}"></td>
-            <td th:text="${cartItem.productName}"></td>
-            <td th:text="${cartItem.quantity}"></td>
-            <td class="price" th:text="${cartItem.price}"></td>
-            <td>
-                <form th:action="@{/carts/delete}" method="post" style="display: inline;">
-                    <input type="hidden" name="cartId" th:value="${cartItem.cartId}"/>
-                    <button type="submit">삭제</button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <div class="actions">
-        <span id="totalAmount">총 금액: 0원</span>
-        <button type="button">결제하기</button>
+<!-- Navigation-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" href="/">Twofaang</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="/coupon/list">Coupon</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">내 정보</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <form th:action="@{/members/myinfo}" method="get">
+                            <button type="submit" class="dropdown-item">
+                                회원 정보
+                            </button>
+                        </form>
+                        <li>
+                            <hr class="dropdown-divider"/>
+                        </li>
+                        <form th:action="@{/orders/list}" method="get">
+                            <button type="submit" class="dropdown-item">
+                                주문 내역
+                            </button>
+                        </form>
+<!--                        <form th:action="@{/inquirys}" method="get">-->
+<!--                            <button type="submit" class="dropdown-item">-->
+<!--                                문의 하기-->
+<!--                            </button>-->
+<!--                        </form>-->
+                        <form th:action="@{/couponbox/list}" method="get">
+                            <button type="submit" class="dropdown-item">
+                                내 쿠폰함
+                            </button>
+                        </form>
+                    </ul>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <a href="/carts" class="btn btn-outline-dark" role="button">
+                    <i class="bi-cart-fill me-1"></i>
+                    Cart
+                    <span class="badge bg-dark text-white ms-1 rounded-pill" th:text="${cartCount}">0</span>
+                </a>
+            </form>
+            <!-- 로그인 버튼 -->
+            <form th:action="@{/login}" method="get" th:if="${#authentication == null}">
+                <button type="submit" class="btn btn-outline-dark">
+                    <i class="bi-person-fill me-1"></i>
+                    login
+                </button>
+            </form>
+            <!-- 로그아웃 버튼 -->
+            <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+                <button type="submit" class="btn btn-outline-dark">
+                    <i class="bi-person-fill me-1"></i>
+                    logout
+                </button>
+            </form>
+        </div>
     </div>
-</div>
+</nav>
+<section class="py-5">
+    <div class="container px-4 px-lg-5">
+        <h2 class="text-center">My Carts</h2>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">선택</th>
+                <th scope="col">상품이미지</th>
+                <th scope="col">상품ID</th>
+                <th scope="col">상품명</th>
+                <th scope="col">수량</th>
+                <th scope="col">총 가격</th>
+                <th scope="col">삭제</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cartItem : ${cartItems}">
+                <td><input type="checkbox" name="selectedItems" th:value="${cartItem.cartId}" onchange="updateTotal()"/></td>
+                <td><img class="product-img" th:src="${cartItem.productImage}" alt="상품 이미지"></td>
+                <td th:text="${cartItem.productId}"></td>
+                <td>
+                    <a th:href="@{/product/detail(id=${cartItem.productId})}" th:text="${cartItem.productName}"></a>
+                </td>
+                <td th:text="${cartItem.quantity}"></td>
+                <td class="price" th:text="${cartItem.price}"></td>
+                <td>
+                    <form th:action="@{/carts/delete}" method="post" style="display: inline;">
+                        <input type="hidden" name="cartId" th:value="${cartItem.cartId}"/>
+                        <button type="submit" class="btn btn-outline-danger">삭제</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="actions d-flex justify-content-between">
+            <span id="totalAmount" class="fs-4 fw-bold">총 금액: 0원</span>
+            <button type="button" class="btn btn-outline-success">결제하기</button>
+        </div>
+    </div>
+</section>
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+    <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Twofaang 2022</p></div>
+</footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/scripts.js"></script>
+<script>
+    function updateTotal() {
+        let checkboxes = document.querySelectorAll('input[name="selectedItems"]:checked');
+        let total = 0;
+        checkboxes.forEach(checkbox => {
+            let row = checkbox.closest('tr');
+            let price = parseFloat(row.querySelector('.price').innerText.replace(/[^0-9.-]+/g, ""));
+            total += price;
+        });
+        document.getElementById('totalAmount').innerText = '총 금액: ' + total.toLocaleString('ko-KR') + '원';
+    }
+</script>
 </body>
 </html>

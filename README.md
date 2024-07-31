@@ -185,7 +185,7 @@
 
 ## 📝 API 명세서
 
-[API 명세서 보기](docs.google.com/spreadsheets/d/1r0r7sdq8AP9m8c79Noa5ZlMV9PN6CxKC-S4kdA6b7Uw/edit?gid=0#gid=0)
+[API 명세서 보기](http://docs.google.com/spreadsheets/d/1r0r7sdq8AP9m8c79Noa5ZlMV9PN6CxKC-S4kdA6b7Uw/edit?gid=0#gid=0)
 <br>
 ![스크린샷 2024-07-31 051617](https://github.com/user-attachments/assets/96d97c55-dfb3-4f8b-b277-43d4281a0f66)
 
@@ -209,6 +209,17 @@
 <br>
 ### 주문 기능
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/onlgV-1qzGc/0.jpg)](https://www.youtube.com/watch?v=onlgV-1qzGc)
+<br>
+### 쿠폰
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/cu6-YNgBcVI/0.jpg)](https://www.youtube.com/watch?v=cu6-YNgBcVI)
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/s6CjbTBMwCA/0.jpg)](https://www.youtube.com/watch?v=s6CjbTBMwCA)
+<br>
+### 장바구니
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/vu2EmgpOZXQ/0.jpg)](https://www.youtube.com/watch?v=vu2EmgpOZXQ)
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/5YLnrOVe9Yg/0.jpg)](https://www.youtube.com/watch?v=5YLnrOVe9Yg)
+### 문의 및 답변
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/llwlKC1fBOA/0.jpg)](https://www.youtube.com/watch?v=llwlKC1fBOA)
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/aHbI1AQW_Kg/0.jpg)](https://www.youtube.com/watch?v=aHbI1AQW_Kg)
 
 <br>
 ## 👍팀 회고록
@@ -233,4 +244,6 @@
 > 이번 프로젝트를 통해 Swagger와 Spring을 다루는 경험을 쌓을 수 있었고, 수업 시간에 학습한 내용을 실제로 적용하는 기회를 가졌습니다. 덕분에 백엔드 기술에 대한 이해도가 크게 향상되었으며, API 문서화 및 관리, 데이터 처리에 대한 실질적인 지식을 얻을 수 있었습니다.
 프로젝트 진행 중 부족한 부분이 많았던 저에게 아낌없이 지식을 공유해주시고 지원해주신 2% 팀원들께 깊은 감사를 드립니다. 여러분 덕분에 많은 것을 배울 수 있었고, 프로젝트를 성공적으로 마무리할 수 있었습니다.
 모두가 밤새가며 열심히 노력한 덕분에 좋은 결과를 얻을 수 있었습니다. 정말 수고 많으셨습니다!
+
+
 

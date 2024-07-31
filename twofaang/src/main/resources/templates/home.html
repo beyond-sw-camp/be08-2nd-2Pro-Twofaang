@@ -43,6 +43,7 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="/coupon/list">Coupon</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">내 정보</a>
@@ -58,6 +59,16 @@
                         <form th:action="@{/orders/list}" method="get">
                             <button type="submit" class="dropdown-item">
                                 주문 내역
+                            </button>
+                        </form>
+                        <form th:action="@{/couponbox/list}" method="get">
+                            <button type="submit" class="dropdown-item">
+                                내 쿠폰함
+                            </button>
+                        </form>
+                        <form th:action="@{/grades/mygrade}" method="get">
+                            <button type="submit" class="dropdown-item">
+                                내 등급
                             </button>
                         </form>
 <!--                        <form th:action="@{/inquirys}" method="get">-->
