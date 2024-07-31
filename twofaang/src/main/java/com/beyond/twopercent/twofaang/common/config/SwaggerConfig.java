@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
         info = @Info(
                 title = "Twofaang Service",
                 description = "Twofaang Service API",
-                version="v1.0.0"
+                version = "v1.0.0"
         )
 )
 public class SwaggerConfig {

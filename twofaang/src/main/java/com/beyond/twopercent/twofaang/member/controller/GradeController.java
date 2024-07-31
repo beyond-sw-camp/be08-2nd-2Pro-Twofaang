@@ -1,6 +1,5 @@
 package com.beyond.twopercent.twofaang.member.controller;
 
-import com.beyond.twopercent.twofaang.member.dto.GradeRequestDto;
 import com.beyond.twopercent.twofaang.member.entity.Grade;
 import com.beyond.twopercent.twofaang.member.entity.enums.GradeName;
 import com.beyond.twopercent.twofaang.member.service.GradeService;
@@ -12,6 +11,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @Controller
@@ -23,7 +26,7 @@ public class GradeController {
     private final GradeService gradeService;
 
     // 모든 Grade 조회
-    @GetMapping
+    @GetMapping("/list")
     @Operation(summary = "모든 등급 조회", description = "모든 등급 정보를 조회한다.")
     @ResponseBody
     public List<Grade> getAllGrades() {

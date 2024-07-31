@@ -12,7 +12,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -77,7 +80,7 @@ public class SignController {
 
     @PostMapping("/reissue")
     @ResponseBody
-    @Operation(summary = "인증 갱신", description = "refresh 토큰을 재발급한다.")
+    @Operation(summary = "인증 갱신", description = "refresh 토큰과 access토큰을 재발급한다.")
     public ResponseEntity<?> reissue(HttpServletRequest request, HttpServletResponse response) {
         return reissueService.reissue(request, response);
     }

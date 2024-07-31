@@ -2,7 +2,6 @@ package com.beyond.twopercent.twofaang.member.entity;
 
 import com.beyond.twopercent.twofaang.member.entity.enums.Role;
 import com.beyond.twopercent.twofaang.member.entity.enums.Status;
-
 import com.beyond.twopercent.twofaang.order.entity.Order;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

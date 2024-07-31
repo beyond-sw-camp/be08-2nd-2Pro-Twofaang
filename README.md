@@ -151,6 +151,7 @@
 ## 🗓️ 프로젝트 계획 (WBS)
 
 [프로젝트 계획 보기](https://docs.google.com/spreadsheets/d/1YfwS4eHvrN3F9JukhwsFa7LOtYUGQdFebjIULqpz3d8/edit?gid=78448456#gid=78448456)
+<br>
 ![WBS](https://github.com/user-attachments/assets/ee8dd5ee-1103-483a-86c5-1f3c69d1d6bc)
 
 
@@ -160,24 +161,8 @@
 ## 📙 요구사항 명세서
 
 [요구사항 명세서 보기](https://docs.google.com/spreadsheets/d/1YfwS4eHvrN3F9JukhwsFa7LOtYUGQdFebjIULqpz3d8/edit?gid=0#gid=0)
+<br>
 ![스크린샷 2023-11-20 144832](https://github.com/user-attachments/assets/12fd543b-5dc4-472c-9f76-3ace169f84a7)
-
-
-<br>
-
-## 📘 기능 명세서
-
-[기능 명세서 보기](https://docs.google.com/spreadsheets/d/1YfwS4eHvrN3F9JukhwsFa7LOtYUGQdFebjIULqpz3d8/edit?gid=910810164#gid=910810164)
-![스크린샷 2024-07-31 051617](https://github.com/user-attachments/assets/e1261519-39a6-4067-9780-9e3e2ed19288)
-
-
-<br>
-
-## 📗 테이블 명세서
-
-[테이블 명세서 보기](https://docs.google.com/spreadsheets/d/1YfwS4eHvrN3F9JukhwsFa7LOtYUGQdFebjIULqpz3d8/edit?gid=755143936#gid=755143936)
-![스크린샷 2024-07-31 051650](https://github.com/user-attachments/assets/a8e7aed0-1a1c-4a06-936a-ffad4418b82e)
-
 
 
 <br>
@@ -185,8 +170,32 @@
 ## 📊 ERD (Entity-Relationship Diagram)
 
 [ERD 보기](https://www.erdcloud.com/d/eRgkYKkfvQi3s2viJ)
+<br>
 ![스크린샷 2023-11-13 211934](https://github.com/user-attachments/assets/07a7b06e-4e8c-460a-a71d-e1e76562b061)
 
+<br>
+
+## 📗 테이블 명세서
+
+[테이블 명세서 보기](https://docs.google.com/spreadsheets/d/1YfwS4eHvrN3F9JukhwsFa7LOtYUGQdFebjIULqpz3d8/edit?gid=755143936#gid=755143936)
+<br>
+![스크린샷 2024-07-31 051650](https://github.com/user-attachments/assets/a8e7aed0-1a1c-4a06-936a-ffad4418b82e)
+
+<br>
+
+## 📝 API 명세서
+
+[API 명세서 보기](docs.google.com/spreadsheets/d/1r0r7sdq8AP9m8c79Noa5ZlMV9PN6CxKC-S4kdA6b7Uw/edit?gid=0#gid=0)
+<br>
+![스크린샷 2024-07-31 051617](https://github.com/user-attachments/assets/96d97c55-dfb3-4f8b-b277-43d4281a0f66)
+
+<br>
+
+## 📘 기능 명세서
+
+[기능 명세서 보기](https://docs.google.com/spreadsheets/d/1YfwS4eHvrN3F9JukhwsFa7LOtYUGQdFebjIULqpz3d8/edit?gid=910810164#gid=910810164)
+<br>
+![스크린샷 2024-07-31 051617](https://github.com/user-attachments/assets/e1261519-39a6-4067-9780-9e3e2ed19288)
 
 <br>
 
@@ -194,7 +203,9 @@
 
 ### 회원 기능
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/xvxtmgDkB2I/0.jpg)](https://www.youtube.com/watch?v=xvxtmgDkB2I)
-
+<br>
 ### 상품 및 카테고리 기능
 [![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/us_XRgZg79c/0.jpg)](https://www.youtube.com/watch?v=us_XRgZg79c)
-
+<br>
+### 주문 기능
+[![IMAGE ALT TEXT HERE](https://img.youtube.com/vi/onlgV-1qzGc/0.jpg)](https://www.youtube.com/watch?v=onlgV-1qzGc)
