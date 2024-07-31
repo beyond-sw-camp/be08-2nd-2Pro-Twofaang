@@ -185,7 +185,7 @@
 
 ## 📝 API 명세서
 
-[API 명세서 보기](docs.google.com/spreadsheets/d/1r0r7sdq8AP9m8c79Noa5ZlMV9PN6CxKC-S4kdA6b7Uw/edit?gid=0#gid=0)
+[API 명세서 보기](http://docs.google.com/spreadsheets/d/1r0r7sdq8AP9m8c79Noa5ZlMV9PN6CxKC-S4kdA6b7Uw/edit?gid=0#gid=0)
 <br>
 ![스크린샷 2024-07-31 051617](https://github.com/user-attachments/assets/96d97c55-dfb3-4f8b-b277-43d4281a0f66)
 
