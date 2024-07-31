@@ -20,4 +20,5 @@ public class CartResponseDto {
 
     private int price;
 
+    private String productImage;
 }
