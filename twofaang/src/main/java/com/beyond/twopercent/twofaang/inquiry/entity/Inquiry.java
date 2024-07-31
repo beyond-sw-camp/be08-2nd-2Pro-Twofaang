@@ -1,5 +1,8 @@
 package com.beyond.twopercent.twofaang.inquiry.entity;
 
+import com.beyond.twopercent.twofaang.member.entity.Member;
+import com.beyond.twopercent.twofaang.product.entity.Product;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,15 +22,15 @@ public class Inquiry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "inquiry_id")
-    private long inquiryId; //게시글 번호
+    private long inquiryId; //문의번호
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member; //회원번호
 
-    @Column(name = "member_id")
-    private long memberId; //회원 번호
-
-
-    @Column(name = "product_id")
-    private long productId; //상품번호
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "productId")
+    private Product product;
 
     @Column(name = "inquiry_title")
     private String inquiryTitle; //제목
@@ -48,5 +51,4 @@ public class Inquiry {
 
     @Column(name = "update_date")
     private LocalDateTime updateDate; //수정일
-
 }

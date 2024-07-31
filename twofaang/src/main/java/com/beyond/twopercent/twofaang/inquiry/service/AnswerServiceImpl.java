@@ -1,5 +1,6 @@
 package com.beyond.twopercent.twofaang.inquiry.service;
 
+import com.beyond.twopercent.twofaang.inquiry.dto.AnswerResponseDto;
 import com.beyond.twopercent.twofaang.inquiry.dto.CreateAnswerDto;
 import com.beyond.twopercent.twofaang.inquiry.dto.UpdateAnswerDto;
 import com.beyond.twopercent.twofaang.inquiry.entity.Answer;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,21 +25,36 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Answer> getAllAnswers() {
+    public List<AnswerResponseDto> getAllAnswers() {
+        return answerRepository.findAll().stream()
+                .map(this::convertToAnswerResponseDTO)
+                .collect(Collectors.toList());
+    }
 
-        return answerRepository.findAll();
+    private AnswerResponseDto convertToAnswerResponseDTO(Answer answer) {
+        AnswerResponseDto answerResponseDto = new AnswerResponseDto();
 
+        answerResponseDto.setAnswerId(answer.getAnswerId());
+        answerResponseDto.setInquiryId(answer.getInquiryId());
+        answerResponseDto.setMemberEmail(answer.getMember().getEmail());
+        answerResponseDto.setComment(answer.getComment());
+        answerResponseDto.setResponseDate(answer.getResponseDate());
+        answerResponseDto.setUpdateDate(answer.getUpdateDate());
+
+        return answerResponseDto;
     }
 
     @Override
     @Transactional
-    public void addAnswer(CreateAnswerDto createAnswerDto, long memberId) {
-        if (!isAdmin(memberId)) {
+    public void addAnswer(CreateAnswerDto createAnswerDto, String email) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다."));
+        if (isAdmin(email)) {
             throw new RuntimeException("권한이 없습니다.");
         }
         Answer answer = Answer.builder()
                 .inquiryId(createAnswerDto.getInquiryId())
-                .memberId(memberId)
+                .member(member)
                 .comment(createAnswerDto.getComment())
                 .responseDate(LocalDateTime.now())
                 .build();
@@ -46,31 +63,40 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     @Transactional
-    public void updateAnswer(long answerId, UpdateAnswerDto updateAnswerDto, long memberId) {
-        if (!isAdmin(memberId)) {
+    public void updateAnswer(long answerId, UpdateAnswerDto updateAnswerDto, String email) {
+        if (isAdmin(email)) {
             throw new RuntimeException("권한이 없습니다.");
         }
-        answerRepository.findById(answerId).ifPresent(existingAnswer -> {
-            existingAnswer.setComment(updateAnswerDto.getComment());
-            existingAnswer.setUpdateDate(LocalDateTime.now());
-            answerRepository.save(existingAnswer);
-        });
+        Answer existingAnswer = answerRepository.findById(answerId)
+                .orElseThrow(() -> new RuntimeException("답변 번호를 찾을 수 없습니다."));
+
+        if (!existingAnswer.getMember().getEmail().equals(email)) {
+            throw new RuntimeException("권한이 없습니다.");
+        }
+
+        existingAnswer.setComment(updateAnswerDto.getComment());
+        existingAnswer.setUpdateDate(LocalDateTime.now());
+        answerRepository.save(existingAnswer);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean isAdmin(String email) {
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("회원 정보를 찾을 수 없습니다."));
+        return member.getRole() != Role.ROLE_ADMIN;
     }
 
     @Override
     @Transactional
-    public void deleteAnswer(long answerId, long memberId) {
-        if (!isAdmin(memberId)) {
+    public void deleteAnswer(long answerId, String email) {
+        Answer existingAnswer = answerRepository.findById(answerId)
+                .orElseThrow(() -> new RuntimeException("답변 번호를 찾을 수 없습니다."));
+
+        if (!existingAnswer.getMember().getEmail().equals(email)) {
             throw new RuntimeException("권한이 없습니다.");
         }
+
         answerRepository.deleteById(answerId);
     }
-
-    @Transactional(readOnly = true)
-    public boolean isAdmin(long memberId) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new RuntimeException("Member not found"));
-        return member.getRole() == Role.ROLE_ADMIN;
-    }
-
 }

@@ -10,4 +10,6 @@ public class UpdateInquiryDto {
 
     @NotBlank
     private String content;
+
+
 }
