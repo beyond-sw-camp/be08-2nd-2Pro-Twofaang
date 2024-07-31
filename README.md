@@ -151,7 +151,8 @@
 ## 🗓️ 프로젝트 계획 (WBS)
 
 [프로젝트 계획 보기](https://docs.google.com/spreadsheets/d/1YfwS4eHvrN3F9JukhwsFa7LOtYUGQdFebjIULqpz3d8/edit?gid=78448456#gid=78448456)
-![스크린샷 2024-07-31 051741](https://github.com/user-attachments/assets/35a09643-4499-43af-a6a2-4b236ae9becb)
+![WBS](https://github.com/user-attachments/assets/ee8dd5ee-1103-483a-86c5-1f3c69d1d6bc)
+
 
 
 <br>
