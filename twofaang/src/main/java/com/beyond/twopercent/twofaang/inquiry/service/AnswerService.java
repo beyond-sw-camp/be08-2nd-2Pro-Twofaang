@@ -1,15 +1,19 @@
 package com.beyond.twopercent.twofaang.inquiry.service;
 
+import com.beyond.twopercent.twofaang.inquiry.dto.AnswerResponseDto;
 import com.beyond.twopercent.twofaang.inquiry.dto.CreateAnswerDto;
 import com.beyond.twopercent.twofaang.inquiry.dto.UpdateAnswerDto;
-import com.beyond.twopercent.twofaang.inquiry.entity.Answer;
 
 import java.util.List;
 
 public interface AnswerService {
-	List<Answer> getAllAnswers();
-//	List<AnswerDto> getAnswersByInquiryId(long inquiryId);
-	void addAnswer(CreateAnswerDto createAnswerDto, long memberId);
-	void updateAnswer(long answerId, UpdateAnswerDto updateAnswerDto, long memberId);
-	void deleteAnswer(long answerId, long memberId);
+	List<AnswerResponseDto> getAllAnswers(); //DTO 데이터
+
+	void addAnswer(CreateAnswerDto createAnswerDto, String email);
+
+	void updateAnswer(long answerId, UpdateAnswerDto updateAnswerDto, String email);
+
+	void deleteAnswer(long answerId, String email);
+
+	boolean isAdmin(String email);
 }

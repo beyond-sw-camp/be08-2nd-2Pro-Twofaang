@@ -1,5 +1,6 @@
 package com.beyond.twopercent.twofaang.inquiry.entity;
 
+import com.beyond.twopercent.twofaang.member.entity.Member;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,13 +19,15 @@ public class Answer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "answer_id")
     private long answerId; //답변번호
+
     @Column(name = "inquiry_id")
     private long inquiryId; //문의번호
-    @Column(name = "member_id")
-    private long memberId; //회원번호
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member; //회원 객체
 
     @Lob
     @Column(name = "comment")

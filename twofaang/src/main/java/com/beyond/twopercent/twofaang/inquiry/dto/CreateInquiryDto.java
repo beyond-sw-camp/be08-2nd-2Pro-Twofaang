@@ -7,10 +7,6 @@ import lombok.Data;
 
 @Data
 public class CreateInquiryDto {
-
-    @NotNull
-    private long memberId; // 회원 번호
-
     @NotNull
     private long productId; // 상품번호
 
