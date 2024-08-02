@@ -225,7 +225,7 @@
 > [![문의 및 답변](https://img.youtube.com/vi/aHbI1AQW_Kg/0.jpg)](https://www.youtube.com/watch?v=aHbI1AQW_Kg)
 > 
 > ### ⚪ 리뷰  
-> [![리뷰](https://i9.ytimg.com/vi_webp/B29m6ZW9aIY/mq2.webp?sqp=CNyep7UG-oaymwEmCMACELQB8quKqQMa8AEB-AHGCYAC0AWKAgwIABABGGsgayhrMA8=&rs=AOn4CLCYE7zCofWcpSnOI-XpH73P6r7hsA)](https://www.youtube.com/watch?v=B29m6ZW9aIY)
+> [![리뷰](https://img.youtube.com/vi/watch?v=B29m6ZW9aIY/0.jpg)](https://www.youtube.com/watch?v=B29m6ZW9aIY)
 
 <br>
 ## 👍 팀 회고록
